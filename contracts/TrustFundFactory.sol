@@ -7,7 +7,7 @@ contract TrustFundFactory {
   uint nextId;
 
   // Create TrustFund
-  // Should be able to add an array of addresses for multisig emergency exit
+  // TODO: Allow an array of addresses for multisig emergency exit
   function createFund(uint expiration) public {
     require(funds[nextId] == address(0), 'id already in use');
     TrustFund fund = new TrustFund(expiration);
@@ -15,7 +15,7 @@ contract TrustFundFactory {
     nextId++;
   }
 
-  // Get funds owned by an address
+  // TODO: Get funds owned by an address
 
-  // Get a fund by id
+  // TODO: Get a fund by id
 }
