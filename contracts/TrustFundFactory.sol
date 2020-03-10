@@ -4,7 +4,7 @@ import './TrustFund.sol';
 
 contract TrustFundFactory {
   mapping(uint => address) funds;
-  uint nextId;
+  uint public nextId;
 
   // Create TrustFund
   // TODO: Allow an array of addresses for multisig emergency exit
@@ -17,5 +17,8 @@ contract TrustFundFactory {
 
   // TODO: Get funds owned by an address
 
-  // TODO: Get a fund by id
+  // Get a fund by id
+  function getFund(uint id) public returns(address) {
+    return funds[id];
+  }
 }

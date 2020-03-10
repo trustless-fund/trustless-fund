@@ -2,6 +2,20 @@
   "contractName": "TrustFundFactory",
   "abi": [
     {
+      "constant": true,
+      "inputs": [],
+      "name": "nextId",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
@@ -14,23 +28,42 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getFund",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"createFund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol\":\"TrustFundFactory\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol\":{\"keccak256\":\"0xa3205f2bf22adde722df9531ecd3799b8da098325a9ec543fb18dc737d2c9604\",\"urls\":[\"bzzr://6e75ac6ca3d74f488840e94e82972bc66f55bc0503db97b1796bf91fb937e99b\"]},\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol\":{\"keccak256\":\"0x9c6a5ca31f34c206e82d731e6fb685ed0968ceed38c3a3e0066bec686f7684b6\",\"urls\":[\"bzzr://275b847248a7eaedd53930937bc312d62356b281126dd661349ee55da8bee62e\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610295806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c806342fa071314610030575b600080fd5b61005c6004803603602081101561004657600080fd5b810190808035906020019092919050505061005e565b005b600073ffffffffffffffffffffffffffffffffffffffff16600080600154815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614610134576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f696420616c726561647920696e2075736500000000000000000000000000000081525060200191505060405180910390fd5b600081604051610143906101d5565b80828152602001915050604051809103906000f080158015610169573d6000803e3d6000fd5b50905080600080600154815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506001600081548092919060010191905055505050565b6088806101e28339019056fe6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029a165627a7a72305820361f1a54f78608f64ad8c634e7e499ca36273799c60dcf29a3267141c5be7e930029",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c806342fa071314610030575b600080fd5b61005c6004803603602081101561004657600080fd5b810190808035906020019092919050505061005e565b005b600073ffffffffffffffffffffffffffffffffffffffff16600080600154815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614610134576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f696420616c726561647920696e2075736500000000000000000000000000000081525060200191505060405180910390fd5b600081604051610143906101d5565b80828152602001915050604051809103906000f080158015610169573d6000803e3d6000fd5b50905080600080600154815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506001600081548092919060010191905055505050565b6088806101e28339019056fe6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029a165627a7a72305820361f1a54f78608f64ad8c634e7e499ca36273799c60dcf29a3267141c5be7e930029",
-  "sourceMap": "55:465:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:465:2;;;;;;;",
-  "deployedSourceMap": "55:465:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:465:2;;;;;;;;;;;;;;;;;;;240:214;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;240:214:2;;;;;;;;;;;;;;;;;:::i;:::-;;;324:1;299:27;;:5;:13;305:6;;299:13;;;;;;;;;;;;;;;;;;;;;:27;;;291:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;355:14;386:10;372:25;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;372:25:2;355:42;;428:4;404:5;:13;410:6;;404:13;;;;;;;;;;;;:29;;;;;;;;;;;;;;;;;;440:6;;:8;;;;;;;;;;;;;240:214;;:::o;55:465::-;;;;;;;;:::o",
-  "source": "pragma solidity 0.5.8;\r\n\r\nimport './TrustFund.sol';\r\n\r\ncontract TrustFundFactory {\r\n  mapping(uint => address) funds;\r\n  uint nextId;\r\n\r\n  // Create TrustFund\r\n  // Should be able to add an array of addresses for multisig emergency exit\r\n  function createFund(uint expiration) public {\r\n    require(funds[nextId] == address(0), 'id already in use');\r\n    TrustFund fund = new TrustFund(expiration);\r\n    funds[nextId] = address(fund);\r\n    nextId++;\r\n  }\r\n\r\n  // Get funds owned by an address\r\n\r\n  // Get a fund by id\r\n}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"createFund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"getFund\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nextId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol\":\"TrustFundFactory\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol\":{\"keccak256\":\"0xa3205f2bf22adde722df9531ecd3799b8da098325a9ec543fb18dc737d2c9604\",\"urls\":[\"bzzr://6e75ac6ca3d74f488840e94e82972bc66f55bc0503db97b1796bf91fb937e99b\"]},\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol\":{\"keccak256\":\"0xf23bc2a23187d1a503caaa4f3ff15075cc48a920141edaadbf12c7e1a841864d\",\"urls\":[\"bzzr://a6e4970c557dbaab0e937f5d4f119b3c48e654dd6114c5adc169807eb74ea1eb\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610379806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806342fa07131461004657806352c8df641461007457806361b8ce8c146100e2575b600080fd5b6100726004803603602081101561005c57600080fd5b8101908080359060200190929190505050610100565b005b6100a06004803603602081101561008a57600080fd5b8101908080359060200190929190505050610277565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ea6102b3565b6040518082815260200191505060405180910390f35b600073ffffffffffffffffffffffffffffffffffffffff16600080600154815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146101d6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f696420616c726561647920696e2075736500000000000000000000000000000081525060200191505060405180910390fd5b6000816040516101e5906102b9565b80828152602001915050604051809103906000f08015801561020b573d6000803e3d6000fd5b50905080600080600154815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506001600081548092919060010191905055505050565b600080600083815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60015481565b6088806102c68339019056fe6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029a165627a7a72305820107191ec33ae8e02f8069af9c514aef204c0bed176d84874e9871e2f83f7fd960029",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806342fa07131461004657806352c8df641461007457806361b8ce8c146100e2575b600080fd5b6100726004803603602081101561005c57600080fd5b8101908080359060200190929190505050610100565b005b6100a06004803603602081101561008a57600080fd5b8101908080359060200190929190505050610277565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ea6102b3565b6040518082815260200191505060405180910390f35b600073ffffffffffffffffffffffffffffffffffffffff16600080600154815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146101d6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f696420616c726561647920696e2075736500000000000000000000000000000081525060200191505060405180910390fd5b6000816040516101e5906102b9565b80828152602001915050604051809103906000f08015801561020b573d6000803e3d6000fd5b50905080600080600154815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506001600081548092919060010191905055505050565b600080600083815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60015481565b6088806102c68339019056fe6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029a165627a7a72305820107191ec33ae8e02f8069af9c514aef204c0bed176d84874e9871e2f83f7fd960029",
+  "sourceMap": "55:551:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:551:2;;;;;;;",
+  "deployedSourceMap": "55:551:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;55:551:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;237:214;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;237:214:2;;;;;;;;;;;;;;;;;:::i;:::-;;524:79;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;524:79:2;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;121:18;;;:::i;:::-;;;;;;;;;;;;;;;;;;;237:214;321:1;296:27;;:5;:13;302:6;;296:13;;;;;;;;;;;;;;;;;;;;;:27;;;288:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;352:14;383:10;369:25;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;369:25:2;352:42;;425:4;401:5;:13;407:6;;401:13;;;;;;;;;;;;:29;;;;;;;;;;;;;;;;;;437:6;;:8;;;;;;;;;;;;;237:214;;:::o;524:79::-;565:7;588:5;:9;594:2;588:9;;;;;;;;;;;;;;;;;;;;;581:16;;524:79;;;:::o;121:18::-;;;;:::o;55:551::-;;;;;;;;:::o",
+  "source": "pragma solidity 0.5.8;\r\n\r\nimport './TrustFund.sol';\r\n\r\ncontract TrustFundFactory {\r\n  mapping(uint => address) funds;\r\n  uint public nextId;\r\n\r\n  // Create TrustFund\r\n  // TODO: Allow an array of addresses for multisig emergency exit\r\n  function createFund(uint expiration) public {\r\n    require(funds[nextId] == address(0), 'id already in use');\r\n    TrustFund fund = new TrustFund(expiration);\r\n    funds[nextId] = address(fund);\r\n    nextId++;\r\n  }\r\n\r\n  // TODO: Get funds owned by an address\r\n\r\n  // Get a fund by id\r\n  function getFund(uint id) public returns(address) {\r\n    return funds[id];\r\n  }\r\n}",
   "sourcePath": "C:/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol",
   "ast": {
     "absolutePath": "/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol",
     "exportedSymbols": {
       "TrustFundFactory": [
-        96
+        108
       ]
     },
-    "id": 97,
+    "id": 109,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -48,7 +81,7 @@
         "file": "./TrustFund.sol",
         "id": 54,
         "nodeType": "ImportDirective",
-        "scope": 97,
+        "scope": 109,
         "sourceUnit": 52,
         "src": "26:25:2",
         "symbolAliases": [],
@@ -62,9 +95,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 96,
+        "id": 108,
         "linearizedBaseContracts": [
-          96
+          108
         ],
         "name": "TrustFundFactory",
         "nodeType": "ContractDefinition",
@@ -74,7 +107,7 @@
             "id": 58,
             "name": "funds",
             "nodeType": "VariableDeclaration",
-            "scope": 96,
+            "scope": 108,
             "src": "86:30:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -120,8 +153,8 @@
             "id": 60,
             "name": "nextId",
             "nodeType": "VariableDeclaration",
-            "scope": 96,
-            "src": "121:11:2",
+            "scope": 108,
+            "src": "121:18:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -139,13 +172,13 @@
               }
             },
             "value": null,
-            "visibility": "internal"
+            "visibility": "public"
           },
           {
             "body": {
               "id": 94,
               "nodeType": "Block",
-              "src": "284:170:2",
+              "src": "281:170:2",
               "statements": [
                 {
                   "expression": {
@@ -171,7 +204,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 58,
-                            "src": "299:5:2",
+                            "src": "296:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
                               "typeString": "mapping(uint256 => address)"
@@ -185,7 +218,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 60,
-                            "src": "305:6:2",
+                            "src": "302:6:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -196,7 +229,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "299:13:2",
+                          "src": "296:13:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -217,7 +250,7 @@
                               "kind": "number",
                               "lValueRequested": false,
                               "nodeType": "Literal",
-                              "src": "324:1:2",
+                              "src": "321:1:2",
                               "subdenomination": null,
                               "typeDescriptions": {
                                 "typeIdentifier": "t_rational_0_by_1",
@@ -239,7 +272,7 @@
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "316:7:2",
+                            "src": "313:7:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
@@ -254,13 +287,13 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "316:10:2",
+                          "src": "313:10:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address_payable",
                             "typeString": "address payable"
                           }
                         },
-                        "src": "299:27:2",
+                        "src": "296:27:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -276,7 +309,7 @@
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "328:19:2",
+                        "src": "325:19:2",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_d0ca88835ef0a8af7be518b7be77ba8bd0a9975d2974e19ebcbe7ff6182a9edd",
@@ -300,11 +333,11 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        114,
-                        115
+                        126,
+                        127
                       ],
-                      "referencedDeclaration": 115,
-                      "src": "291:7:2",
+                      "referencedDeclaration": 127,
+                      "src": "288:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
@@ -318,7 +351,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "291:57:2",
+                    "src": "288:57:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -326,7 +359,7 @@
                   },
                   "id": 75,
                   "nodeType": "ExpressionStatement",
-                  "src": "291:57:2"
+                  "src": "288:57:2"
                 },
                 {
                   "assignments": [
@@ -339,7 +372,7 @@
                       "name": "fund",
                       "nodeType": "VariableDeclaration",
                       "scope": 94,
-                      "src": "355:14:2",
+                      "src": "352:14:2",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -352,7 +385,7 @@
                         "name": "TrustFund",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 51,
-                        "src": "355:9:2",
+                        "src": "352:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_TrustFund_$51",
                           "typeString": "contract TrustFund"
@@ -373,7 +406,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 62,
-                        "src": "386:10:2",
+                        "src": "383:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -393,7 +426,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "NewExpression",
-                      "src": "372:13:2",
+                      "src": "369:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_creation_nonpayable$_t_uint256_$returns$_t_contract$_TrustFund_$51_$",
                         "typeString": "function (uint256) returns (contract TrustFund)"
@@ -404,7 +437,7 @@
                         "name": "TrustFund",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 51,
-                        "src": "376:9:2",
+                        "src": "373:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_TrustFund_$51",
                           "typeString": "contract TrustFund"
@@ -419,14 +452,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "372:25:2",
+                    "src": "369:25:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_TrustFund_$51",
                       "typeString": "contract TrustFund"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "355:42:2"
+                  "src": "352:42:2"
                 },
                 {
                   "expression": {
@@ -445,7 +478,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 58,
-                        "src": "404:5:2",
+                        "src": "401:5:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
                           "typeString": "mapping(uint256 => address)"
@@ -459,7 +492,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 60,
-                        "src": "410:6:2",
+                        "src": "407:6:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -470,7 +503,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "404:13:2",
+                      "src": "401:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -488,7 +521,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 77,
-                          "src": "428:4:2",
+                          "src": "425:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_TrustFund_$51",
                             "typeString": "contract TrustFund"
@@ -508,7 +541,7 @@
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "ElementaryTypeNameExpression",
-                        "src": "420:7:2",
+                        "src": "417:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_address_$",
                           "typeString": "type(address)"
@@ -523,13 +556,13 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "420:13:2",
+                      "src": "417:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "404:29:2",
+                    "src": "401:29:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -537,7 +570,7 @@
                   },
                   "id": 90,
                   "nodeType": "ExpressionStatement",
-                  "src": "404:29:2"
+                  "src": "401:29:2"
                 },
                 {
                   "expression": {
@@ -550,7 +583,7 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "440:8:2",
+                    "src": "437:8:2",
                     "subExpression": {
                       "argumentTypes": null,
                       "id": 91,
@@ -558,7 +591,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 60,
-                      "src": "440:6:2",
+                      "src": "437:6:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -571,7 +604,7 @@
                   },
                   "id": 93,
                   "nodeType": "ExpressionStatement",
-                  "src": "440:8:2"
+                  "src": "437:8:2"
                 }
               ]
             },
@@ -592,7 +625,7 @@
                   "name": "expiration",
                   "nodeType": "VariableDeclaration",
                   "scope": 95,
-                  "src": "260:15:2",
+                  "src": "257:15:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -603,7 +636,7 @@
                     "id": 61,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "260:4:2",
+                    "src": "257:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -613,35 +646,169 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "259:17:2"
+              "src": "256:17:2"
             },
             "returnParameters": {
               "id": 64,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "284:0:2"
+              "src": "281:0:2"
             },
-            "scope": 96,
-            "src": "240:214:2",
+            "scope": 108,
+            "src": "237:214:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 106,
+              "nodeType": "Block",
+              "src": "574:29:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "baseExpression": {
+                      "argumentTypes": null,
+                      "id": 102,
+                      "name": "funds",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 58,
+                      "src": "588:5:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+                        "typeString": "mapping(uint256 => address)"
+                      }
+                    },
+                    "id": 104,
+                    "indexExpression": {
+                      "argumentTypes": null,
+                      "id": 103,
+                      "name": "id",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 97,
+                      "src": "594:2:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "588:9:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 101,
+                  "id": 105,
+                  "nodeType": "Return",
+                  "src": "581:16:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 107,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getFund",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 98,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 97,
+                  "name": "id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 107,
+                  "src": "541:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 96,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "541:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "540:9:2"
+            },
+            "returnParameters": {
+              "id": 101,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 100,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 107,
+                  "src": "565:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 99,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "565:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "564:9:2"
+            },
+            "scope": 108,
+            "src": "524:79:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 97,
-        "src": "55:465:2"
+        "scope": 109,
+        "src": "55:551:2"
       }
     ],
-    "src": "0:520:2"
+    "src": "0:606:2"
   },
   "legacyAST": {
     "absolutePath": "/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFundFactory.sol",
     "exportedSymbols": {
       "TrustFundFactory": [
-        96
+        108
       ]
     },
-    "id": 97,
+    "id": 109,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -659,7 +826,7 @@
         "file": "./TrustFund.sol",
         "id": 54,
         "nodeType": "ImportDirective",
-        "scope": 97,
+        "scope": 109,
         "sourceUnit": 52,
         "src": "26:25:2",
         "symbolAliases": [],
@@ -673,9 +840,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 96,
+        "id": 108,
         "linearizedBaseContracts": [
-          96
+          108
         ],
         "name": "TrustFundFactory",
         "nodeType": "ContractDefinition",
@@ -685,7 +852,7 @@
             "id": 58,
             "name": "funds",
             "nodeType": "VariableDeclaration",
-            "scope": 96,
+            "scope": 108,
             "src": "86:30:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -731,8 +898,8 @@
             "id": 60,
             "name": "nextId",
             "nodeType": "VariableDeclaration",
-            "scope": 96,
-            "src": "121:11:2",
+            "scope": 108,
+            "src": "121:18:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -750,13 +917,13 @@
               }
             },
             "value": null,
-            "visibility": "internal"
+            "visibility": "public"
           },
           {
             "body": {
               "id": 94,
               "nodeType": "Block",
-              "src": "284:170:2",
+              "src": "281:170:2",
               "statements": [
                 {
                   "expression": {
@@ -782,7 +949,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 58,
-                            "src": "299:5:2",
+                            "src": "296:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
                               "typeString": "mapping(uint256 => address)"
@@ -796,7 +963,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 60,
-                            "src": "305:6:2",
+                            "src": "302:6:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -807,7 +974,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "299:13:2",
+                          "src": "296:13:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -828,7 +995,7 @@
                               "kind": "number",
                               "lValueRequested": false,
                               "nodeType": "Literal",
-                              "src": "324:1:2",
+                              "src": "321:1:2",
                               "subdenomination": null,
                               "typeDescriptions": {
                                 "typeIdentifier": "t_rational_0_by_1",
@@ -850,7 +1017,7 @@
                             "isPure": true,
                             "lValueRequested": false,
                             "nodeType": "ElementaryTypeNameExpression",
-                            "src": "316:7:2",
+                            "src": "313:7:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_type$_t_address_$",
                               "typeString": "type(address)"
@@ -865,13 +1032,13 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "316:10:2",
+                          "src": "313:10:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address_payable",
                             "typeString": "address payable"
                           }
                         },
-                        "src": "299:27:2",
+                        "src": "296:27:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -887,7 +1054,7 @@
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "328:19:2",
+                        "src": "325:19:2",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_d0ca88835ef0a8af7be518b7be77ba8bd0a9975d2974e19ebcbe7ff6182a9edd",
@@ -911,11 +1078,11 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        114,
-                        115
+                        126,
+                        127
                       ],
-                      "referencedDeclaration": 115,
-                      "src": "291:7:2",
+                      "referencedDeclaration": 127,
+                      "src": "288:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
@@ -929,7 +1096,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "291:57:2",
+                    "src": "288:57:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -937,7 +1104,7 @@
                   },
                   "id": 75,
                   "nodeType": "ExpressionStatement",
-                  "src": "291:57:2"
+                  "src": "288:57:2"
                 },
                 {
                   "assignments": [
@@ -950,7 +1117,7 @@
                       "name": "fund",
                       "nodeType": "VariableDeclaration",
                       "scope": 94,
-                      "src": "355:14:2",
+                      "src": "352:14:2",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -963,7 +1130,7 @@
                         "name": "TrustFund",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 51,
-                        "src": "355:9:2",
+                        "src": "352:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_TrustFund_$51",
                           "typeString": "contract TrustFund"
@@ -984,7 +1151,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 62,
-                        "src": "386:10:2",
+                        "src": "383:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1004,7 +1171,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "NewExpression",
-                      "src": "372:13:2",
+                      "src": "369:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_creation_nonpayable$_t_uint256_$returns$_t_contract$_TrustFund_$51_$",
                         "typeString": "function (uint256) returns (contract TrustFund)"
@@ -1015,7 +1182,7 @@
                         "name": "TrustFund",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 51,
-                        "src": "376:9:2",
+                        "src": "373:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_TrustFund_$51",
                           "typeString": "contract TrustFund"
@@ -1030,14 +1197,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "372:25:2",
+                    "src": "369:25:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_TrustFund_$51",
                       "typeString": "contract TrustFund"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "355:42:2"
+                  "src": "352:42:2"
                 },
                 {
                   "expression": {
@@ -1056,7 +1223,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 58,
-                        "src": "404:5:2",
+                        "src": "401:5:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
                           "typeString": "mapping(uint256 => address)"
@@ -1070,7 +1237,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 60,
-                        "src": "410:6:2",
+                        "src": "407:6:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1081,7 +1248,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "404:13:2",
+                      "src": "401:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -1099,7 +1266,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 77,
-                          "src": "428:4:2",
+                          "src": "425:4:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_TrustFund_$51",
                             "typeString": "contract TrustFund"
@@ -1119,7 +1286,7 @@
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "ElementaryTypeNameExpression",
-                        "src": "420:7:2",
+                        "src": "417:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_address_$",
                           "typeString": "type(address)"
@@ -1134,13 +1301,13 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "420:13:2",
+                      "src": "417:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "404:29:2",
+                    "src": "401:29:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1148,7 +1315,7 @@
                   },
                   "id": 90,
                   "nodeType": "ExpressionStatement",
-                  "src": "404:29:2"
+                  "src": "401:29:2"
                 },
                 {
                   "expression": {
@@ -1161,7 +1328,7 @@
                     "nodeType": "UnaryOperation",
                     "operator": "++",
                     "prefix": false,
-                    "src": "440:8:2",
+                    "src": "437:8:2",
                     "subExpression": {
                       "argumentTypes": null,
                       "id": 91,
@@ -1169,7 +1336,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 60,
-                      "src": "440:6:2",
+                      "src": "437:6:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1182,7 +1349,7 @@
                   },
                   "id": 93,
                   "nodeType": "ExpressionStatement",
-                  "src": "440:8:2"
+                  "src": "437:8:2"
                 }
               ]
             },
@@ -1203,7 +1370,7 @@
                   "name": "expiration",
                   "nodeType": "VariableDeclaration",
                   "scope": 95,
-                  "src": "260:15:2",
+                  "src": "257:15:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1214,7 +1381,7 @@
                     "id": 61,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "260:4:2",
+                    "src": "257:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1224,26 +1391,160 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "259:17:2"
+              "src": "256:17:2"
             },
             "returnParameters": {
               "id": 64,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "284:0:2"
+              "src": "281:0:2"
             },
-            "scope": 96,
-            "src": "240:214:2",
+            "scope": 108,
+            "src": "237:214:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 106,
+              "nodeType": "Block",
+              "src": "574:29:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "baseExpression": {
+                      "argumentTypes": null,
+                      "id": 102,
+                      "name": "funds",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 58,
+                      "src": "588:5:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+                        "typeString": "mapping(uint256 => address)"
+                      }
+                    },
+                    "id": 104,
+                    "indexExpression": {
+                      "argumentTypes": null,
+                      "id": 103,
+                      "name": "id",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 97,
+                      "src": "594:2:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "588:9:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 101,
+                  "id": 105,
+                  "nodeType": "Return",
+                  "src": "581:16:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 107,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getFund",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 98,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 97,
+                  "name": "id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 107,
+                  "src": "541:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 96,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "541:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "540:9:2"
+            },
+            "returnParameters": {
+              "id": 101,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 100,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 107,
+                  "src": "565:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 99,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "565:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "564:9:2"
+            },
+            "scope": 108,
+            "src": "524:79:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 97,
-        "src": "55:465:2"
+        "scope": 109,
+        "src": "55:551:2"
       }
     ],
-    "src": "0:520:2"
+    "src": "0:606:2"
   },
   "compiler": {
     "name": "solc",
@@ -1253,12 +1554,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x00DF98E9101436daA392E09B35998b04F9cA1209",
-      "transactionHash": "0x8938521c4d479d947aa6542c3191f5e486a22dd95484e94b8604b7f1304b7b67"
+      "address": "0x3f185d60BbBc14B8eba3ee0dd020092a5aAd8BCd",
+      "transactionHash": "0x7f0601bf9a5cd6446bea0db2019aaf44f87cbf6142e96de984703c84e86e7525"
     }
   },
   "schemaVersion": "3.0.17",
-  "updatedAt": "2020-03-10T22:25:26.917Z",
+  "updatedAt": "2020-03-10T23:09:19.043Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
