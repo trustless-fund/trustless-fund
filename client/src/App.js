@@ -1,10 +1,16 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route
+} from "react-router-dom";
+
 import TrustFundFactory from './contracts/TrustFundFactory.json';
 import getWeb3 from "./getWeb3";
 
-import Form from './components/Form';
+import Index from './pages/Index';
+import Fund from './pages/Fund';
 
-import "./App.css";
+// import './layout/config/_base.sass';
 
 class App extends Component {
   state = { 
@@ -49,9 +55,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Trust Fund</h1>
-        <Form {...this.state} />
+      <div className="app">
+        {this.state &&
+          <Router basename="/">
+            <Route 
+              exact path="/" 
+              component={Index} 
+              {...this.state}
+            />
+            <Route 
+              path="/fund/:fundId" 
+              component={Fund}
+              {...this.state} 
+            />
+          </Router>
+        }
       </div>
     );
   }
