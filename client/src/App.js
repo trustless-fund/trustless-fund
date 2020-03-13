@@ -56,17 +56,15 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        {this.state &&
+        {this.state.factory &&
           <Router basename="/">
             <Route 
               exact path="/" 
-              component={Index} 
-              {...this.state}
+              component={Index}
             />
             <Route 
               path="/fund/:fundId" 
               component={Fund}
-              {...this.state} 
             />
           </Router>
         }
