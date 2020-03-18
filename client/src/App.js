@@ -4,7 +4,7 @@ import {
   Route
 } from "react-router-dom";
 
-import TrustFundFactory from './contracts/TrustFundFactory.json';
+import TrustlessFundFactory from './contracts/TrustlessFundFactory.json';
 import getWeb3 from "./getWeb3";
 
 import Index from './pages/Index';
@@ -30,9 +30,9 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = TrustFundFactory.networks[networkId];
+      const deployedNetwork = TrustlessFundFactory.networks[networkId];
       const factory = new web3.eth.Contract(
-        TrustFundFactory.abi,
+        TrustlessFundFactory.abi,
         deployedNetwork && deployedNetwork.address,
       );
 

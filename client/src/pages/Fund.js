@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import TrustFund from '../contracts/TrustFund.json';
+import TrustlessFund from '../contracts/TrustlessFund.json';
 
 class Fund extends Component {
   state = {
@@ -30,7 +30,7 @@ class Fund extends Component {
     }
 
     const fund = new this.props.web3.eth.Contract(
-      TrustFund.abi, this.state.fundAddress
+      TrustlessFund.abi, this.state.fundAddress
     );
     this.setState({fund});
   }

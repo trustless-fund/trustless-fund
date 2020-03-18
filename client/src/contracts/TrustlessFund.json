@@ -1,5 +1,5 @@
 {
-  "contractName": "TrustFund",
+  "contractName": "TrustlessFund",
   "abi": [
     {
       "inputs": [
@@ -13,17 +13,17 @@
       "type": "constructor"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"name\":\"_expiration\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol\":\"TrustFund\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol\":{\"keccak256\":\"0xa3205f2bf22adde722df9531ecd3799b8da098325a9ec543fb18dc737d2c9604\",\"urls\":[\"bzzr://6e75ac6ca3d74f488840e94e82972bc66f55bc0503db97b1796bf91fb937e99b\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029",
-  "deployedBytecode": "0x6080604052600080fdfea165627a7a72305820ddebc208ecc9fc2ca6e42f7a1f409771edade3d55b85c0da2f3671594a151dff0029",
-  "sourceMap": "26:248:1:-;;;72:74;8:9:-1;5:2;;;30:1;27;20:12;5:2;72:74:1;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;72:74:1;;;;;;;;;;;;;;;;129:11;116:10;:24;;;;72:74;26:248;;;;;;",
-  "deployedSourceMap": "26:248:1:-;;;;;",
-  "source": "pragma solidity 0.5.8;\r\n\r\ncontract TrustFund {\r\n  uint expiration;\r\n\r\n  constructor(uint _expiration) public {\r\n    expiration = _expiration;\r\n  }\r\n\r\n  // function deposit(uint _amount) public payable {\r\n  //   require(msg.value == _amount, 'incorrect amount');\r\n\r\n  // }\r\n}",
-  "sourcePath": "C:\\Users\\kaden\\Documents\\code\\trust-fund\\contracts\\TrustFund.sol",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"name\":\"_expiration\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/kaden/Documents/code/trustless-fund/contracts/TrustlessFund.sol\":\"TrustlessFund\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/kaden/Documents/code/trustless-fund/contracts/TrustlessFund.sol\":{\"keccak256\":\"0x100e9bfb8283c62ba11dbd8605b405fd375646f0a5d2faedc8eea638f5098c5e\",\"urls\":[\"bzzr://2213036831e2d4a83e69f39a4f2fe2aaeb3dc8f84e8c7f78243d0a6a9ad1b2ae\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50604051602080608883398101806040526020811015602d57600080fd5b8101908080519060200190929190505050806000819055505060358060536000396000f3fe6080604052600080fdfea165627a7a72305820df21949431ad8508aa9b0e489c902882a98a3130dc3f11061cce8e55683827300029",
+  "deployedBytecode": "0x6080604052600080fdfea165627a7a72305820df21949431ad8508aa9b0e489c902882a98a3130dc3f11061cce8e55683827300029",
+  "sourceMap": "26:252:1:-;;;76:74;8:9:-1;5:2;;;30:1;27;20:12;5:2;76:74:1;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;76:74:1;;;;;;;;;;;;;;;;133:11;120:10;:24;;;;76:74;26:252;;;;;;",
+  "deployedSourceMap": "26:252:1:-;;;;;",
+  "source": "pragma solidity 0.5.8;\r\n\r\ncontract TrustlessFund {\r\n  uint expiration;\r\n\r\n  constructor(uint _expiration) public {\r\n    expiration = _expiration;\r\n  }\r\n\r\n  // function deposit(uint _amount) public payable {\r\n  //   require(msg.value == _amount, 'incorrect amount');\r\n\r\n  // }\r\n}",
+  "sourcePath": "C:\\Users\\kaden\\Documents\\code\\trustless-fund\\contracts\\TrustlessFund.sol",
   "ast": {
-    "absolutePath": "/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol",
+    "absolutePath": "/C/Users/kaden/Documents/code/trustless-fund/contracts/TrustlessFund.sol",
     "exportedSymbols": {
-      "TrustFund": [
+      "TrustlessFund": [
         51
       ]
     },
@@ -50,7 +50,7 @@
         "linearizedBaseContracts": [
           51
         ],
-        "name": "TrustFund",
+        "name": "TrustlessFund",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
@@ -59,7 +59,7 @@
             "name": "expiration",
             "nodeType": "VariableDeclaration",
             "scope": 51,
-            "src": "50:15:1",
+            "src": "54:15:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -70,7 +70,7 @@
               "id": 39,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
-              "src": "50:4:1",
+              "src": "54:4:1",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -83,7 +83,7 @@
             "body": {
               "id": 49,
               "nodeType": "Block",
-              "src": "109:37:1",
+              "src": "113:37:1",
               "statements": [
                 {
                   "expression": {
@@ -100,7 +100,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 40,
-                      "src": "116:10:1",
+                      "src": "120:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -115,13 +115,13 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42,
-                      "src": "129:11:1",
+                      "src": "133:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "116:24:1",
+                    "src": "120:24:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -129,7 +129,7 @@
                   },
                   "id": 48,
                   "nodeType": "ExpressionStatement",
-                  "src": "116:24:1"
+                  "src": "120:24:1"
                 }
               ]
             },
@@ -150,7 +150,7 @@
                   "name": "_expiration",
                   "nodeType": "VariableDeclaration",
                   "scope": 50,
-                  "src": "84:16:1",
+                  "src": "88:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -161,7 +161,7 @@
                     "id": 41,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "84:4:1",
+                    "src": "88:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -171,31 +171,31 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "83:18:1"
+              "src": "87:18:1"
             },
             "returnParameters": {
               "id": 44,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "109:0:1"
+              "src": "113:0:1"
             },
             "scope": 51,
-            "src": "72:74:1",
+            "src": "76:74:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 52,
-        "src": "26:248:1"
+        "src": "26:252:1"
       }
     ],
-    "src": "0:274:1"
+    "src": "0:278:1"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/kaden/Documents/code/trust-fund/contracts/TrustFund.sol",
+    "absolutePath": "/C/Users/kaden/Documents/code/trustless-fund/contracts/TrustlessFund.sol",
     "exportedSymbols": {
-      "TrustFund": [
+      "TrustlessFund": [
         51
       ]
     },
@@ -222,7 +222,7 @@
         "linearizedBaseContracts": [
           51
         ],
-        "name": "TrustFund",
+        "name": "TrustlessFund",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
@@ -231,7 +231,7 @@
             "name": "expiration",
             "nodeType": "VariableDeclaration",
             "scope": 51,
-            "src": "50:15:1",
+            "src": "54:15:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -242,7 +242,7 @@
               "id": 39,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
-              "src": "50:4:1",
+              "src": "54:4:1",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -255,7 +255,7 @@
             "body": {
               "id": 49,
               "nodeType": "Block",
-              "src": "109:37:1",
+              "src": "113:37:1",
               "statements": [
                 {
                   "expression": {
@@ -272,7 +272,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 40,
-                      "src": "116:10:1",
+                      "src": "120:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -287,13 +287,13 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42,
-                      "src": "129:11:1",
+                      "src": "133:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "116:24:1",
+                    "src": "120:24:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -301,7 +301,7 @@
                   },
                   "id": 48,
                   "nodeType": "ExpressionStatement",
-                  "src": "116:24:1"
+                  "src": "120:24:1"
                 }
               ]
             },
@@ -322,7 +322,7 @@
                   "name": "_expiration",
                   "nodeType": "VariableDeclaration",
                   "scope": 50,
-                  "src": "84:16:1",
+                  "src": "88:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -333,7 +333,7 @@
                     "id": 41,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "84:4:1",
+                    "src": "88:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -343,26 +343,26 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "83:18:1"
+              "src": "87:18:1"
             },
             "returnParameters": {
               "id": 44,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "109:0:1"
+              "src": "113:0:1"
             },
             "scope": 51,
-            "src": "72:74:1",
+            "src": "76:74:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 52,
-        "src": "26:248:1"
+        "src": "26:252:1"
       }
     ],
-    "src": "0:274:1"
+    "src": "0:278:1"
   },
   "compiler": {
     "name": "solc",
@@ -370,7 +370,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.17",
-  "updatedAt": "2020-03-10T23:09:18.459Z",
+  "updatedAt": "2020-03-18T16:57:26.365Z",
   "devdoc": {
     "methods": {}
   },
