@@ -20,8 +20,9 @@ contract TrustlessFund {
     return owner;
   }
 
-  function approve(address _token, uint _amount) public {
-    // token.approve(address(this), _amount)
+  function approveToken(address _token, uint _amount) public {
+    ERC20 token = ERC20(_token);
+    token.approve(address(this), _amount)
   }
 
   function deposit(uint _amount, address _token) public payable {
