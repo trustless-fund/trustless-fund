@@ -4,9 +4,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol"
 
 contract TrustlessFund {
   uint expiration;
+  address beneficiary
 
-  constructor(uint _expiration) public {
+  constructor(uint _expiration, address _beneficiary) public {
     expiration = _expiration;
+    beneficiary = _beneficiary;
   }
 
   function approve(address _token, uint _amount) public {
