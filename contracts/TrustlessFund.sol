@@ -8,8 +8,19 @@ contract TrustlessFund {
 
   /*** STORAGE VARIABLES ***/
 
+  /**
+    * @notice Date time in seconds when timelock expires.
+  */
   uint expiration;
+
+  /**
+    * @notice Address permitted to withdraw funds after unlock.
+  */
   address beneficiary;
+
+  /**
+    * @notice The contract owner.
+  */
   address owner;
 
   mapping(address => uint) balances;
