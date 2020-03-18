@@ -7,10 +7,9 @@ contract TrustlessFundFactory {
   uint public nextId;
 
   // Create TrustlessFund
-  // TODO: Allow an array of addresses for multisig emergency exit
   function createFund(uint expiration, address beneficiary) public {
     require(funds[nextId] == address(0), 'id already in use');
-    TrustlessFund fund = new TrustlessFund(expiration, beneficiary);
+    TrustlessFund fund = new TrustlessFund(expiration, beneficiary, msg.sender);
     funds[nextId] = address(fund);
     nextId++;
   }

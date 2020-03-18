@@ -4,11 +4,20 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol"
 
 contract TrustlessFund {
   uint expiration;
-  address beneficiary
+  address beneficiary;
+  address owner;
 
-  constructor(uint _expiration, address _beneficiary) public {
+  constructor(uint _expiration, address _beneficiary, address _owner) public {
     expiration = _expiration;
     beneficiary = _beneficiary;
+    owner = _owner;
+  }
+
+  /**
+    * @dev Returns the address of the current owner.
+  */
+  function owner() public view returns (address) {
+    return owner;
   }
 
   function approve(address _token, uint _amount) public {
@@ -25,5 +34,13 @@ contract TrustlessFund {
       token.transferFrom(msg.sender, address(this), _amount);
       // Update user balance
     }
+  }
+
+  /**
+    * @dev Throws if called by any account other than the owner.
+  */
+  modifier onlyOwner() {
+    require(owner == msg.sender, "Ownable: caller is not the owner");
+    _;
   }
 }
