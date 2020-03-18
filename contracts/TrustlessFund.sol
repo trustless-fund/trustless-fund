@@ -1,6 +1,6 @@
 pragma solidity 0.5.8;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol"
 
 contract TrustlessFund {
   uint expiration;
@@ -23,12 +23,12 @@ contract TrustlessFund {
   }
 
   function approveToken(address _token, uint _amount) public {
-    ERC20 token = ERC20(_token);
+    IERC20 token = IERC20(_token);
     require(token.approve(address(this), _amount), 'failed approval');
   }
 
   function tokenAllowance(address _token, address _owner) public view returns (uint) {
-    ERC20 token = ERC20(_token);
+    IERC20 token = IERC20(_token);
     return token.allowance(_owner, address(this));
   }
 
@@ -38,7 +38,7 @@ contract TrustlessFund {
       balances[_token] += _amount;
     }
     else {
-      ERC20 token = ERC20(_token);
+      IERC20 token = IERC20(_token);
       require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
       balances[_token] += _amount;
     }
