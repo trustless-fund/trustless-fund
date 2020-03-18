@@ -1,8 +1,11 @@
 pragma solidity 0.5.8;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+import "@openzeppelin/contracts/math/SafeMath.sol"
 
 contract TrustlessFund {
+  using SafeMath for uint;
+
   /*** STORAGE VARIABLES ***/
 
   uint expiration;
@@ -22,6 +25,22 @@ contract TrustlessFund {
   */
   modifier onlyOwner() {
     require(owner == msg.sender, "Ownable: caller is not the owner");
+    _;
+  }
+
+  /**
+    * @dev Throws if the contract has not yet reached its expiration.
+  */
+  modifier isExpired() {
+    require(expiration < block.timestamp, 'contract is still locked');
+    _;
+  }
+
+  /**
+    * @dev Throws if msg.sender is not the beneficiary.
+  */
+  modifier onlyBeneficiary() {
+    require(msg.sender == beneficiary, 'only the beneficiary can perform this function');
     _;
   }
 
@@ -84,6 +103,27 @@ contract TrustlessFund {
       IERC20 token = IERC20(_token);
       require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
       balances[_token] += _amount;
+    }
+  }
+
+  /**
+    * @dev Withdraw funds to msg.sender, but only if the timelock is expired 
+           and msg.sender is the beneficiary.
+           If _token is 0 address, withdraw ETH.
+    * @param _amount The amount to withdraw.
+    * @param _token The token to withdraw.
+  */
+  function withdraw(uint _amount, address _token) public isExpired() onlyBeneficiary() {
+    if(_token == address(0)) {
+      require(address(this).balance >= _amount, 'not enough balance');
+      balances[_token] -= _amount;
+      (bool success, ) = msg.sender.call.value(_amount)("");
+      require(success, "Transfer failed.");
+    } else {
+      require(token.balanceOf(address(this)) >= _amount, 'not enough balance');
+      IERC20 token = IERC20(_token);
+      token.transfer(address(this), msg.sender, _amount);
+      balances[_token] -= _amount;
     }
   }
 }
