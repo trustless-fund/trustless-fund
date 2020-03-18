@@ -7,6 +7,8 @@ contract TrustlessFund {
   address beneficiary;
   address owner;
 
+  mapping(address => uint) balances;
+
   constructor(uint _expiration, address _beneficiary, address _owner) public {
     expiration = _expiration;
     beneficiary = _beneficiary;
@@ -33,12 +35,12 @@ contract TrustlessFund {
   function deposit(uint _amount, address _token) public payable {
     if(_token == 0) {
       require(msg.value == _amount, 'incorrect amount');
-      // Update user balance
+      balances[_token] += _amount;
     }
     else {
       ERC20 token = ERC20(_token);
-      token.transferFrom(msg.sender, address(this), _amount);
-      // Update user balance
+      require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
+      balances[_token] += _amount;
     }
   }
 
