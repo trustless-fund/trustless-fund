@@ -22,7 +22,12 @@ contract TrustlessFund {
 
   function approveToken(address _token, uint _amount) public {
     ERC20 token = ERC20(_token);
-    token.approve(address(this), _amount)
+    require(token.approve(address(this), _amount), 'failed approval');
+  }
+
+  function tokenAllowance(address _token, address _owner) public view returns (uint) {
+    ERC20 token = ERC20(_token);
+    return token.allowance(_owner, address(this));
   }
 
   function deposit(uint _amount, address _token) public payable {
