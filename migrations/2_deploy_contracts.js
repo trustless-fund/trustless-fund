@@ -1,5 +1,5 @@
-var TrustFundFactory = artifacts.require("./TrustFundFactory.sol");
+var TrustlessFundFactory = artifacts.require("./TrustlessFundFactory.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(TrustFundFactory);
+  deployer.deploy(TrustlessFundFactory);
 };

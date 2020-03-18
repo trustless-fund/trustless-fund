@@ -1,6 +1,6 @@
 pragma solidity 0.5.8;
 
-contract TrustFund {
+contract TrustlessFund {
   uint expiration;
 
   constructor(uint _expiration) public {
