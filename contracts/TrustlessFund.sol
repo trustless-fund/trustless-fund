@@ -1,7 +1,7 @@
-pragma solidity 0.5.8;
+pragma solidity ^0.6.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol"
-import "@openzeppelin/contracts/math/SafeMath.sol"
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract TrustlessFund {
   using SafeMath for uint;
@@ -131,9 +131,9 @@ contract TrustlessFund {
       (bool success, ) = msg.sender.call.value(_amount)("");
       require(success, "Transfer failed.");
     } else {
-      require(token.balanceOf(address(this)) >= _amount, 'not enough balance');
       IERC20 token = IERC20(_token);
-      token.transfer(address(this), msg.sender, _amount);
+      require(token.balanceOf(address(this)) >= _amount, 'not enough balance');
+      token.transfer(msg.sender, _amount);
       balances[_token] -= _amount;
     }
   }

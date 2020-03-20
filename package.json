@@ -1,0 +1,29 @@
+{
+  "name": "trustless-fund",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "openzeppelin-solidity": "^2.5.0",
+    "solc": "^0.6.0",
+    "solc-js": "^1.0.1",
+    "truffle": "^5.1.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KadenZipfel/trust-fund.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KadenZipfel/trust-fund/issues"
+  },
+  "homepage": "https://github.com/KadenZipfel/trust-fund#readme"
+}
