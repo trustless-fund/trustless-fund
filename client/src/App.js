@@ -58,6 +58,8 @@ class App extends Component {
         });
       }
     }, 1000);
+
+    console.log(this.state);
   };
 
   // GET ERC20 TOKEN
@@ -127,10 +129,17 @@ class App extends Component {
   handleDepositSubmit = (e) => {
     e.preventDefault();
 
-    this.state.fund.methods.deposit(
-      this.state.depositAmount,
-      this.state.depositToken
-    ).send({from: this.state.account});
+    if(this.state.depositToken === "0x0000000000000000000000000000000000000000") {
+      this.state.fund.methods.deposit(
+        this.state.depositAmount,
+        this.state.depositToken
+      ).send({from: this.state.account, value: this.state.depositAmount});
+    } else {
+      this.state.fund.methods.deposit(
+        this.state.depositAmount,
+        this.state.depositToken
+      ).send({from: this.state.account});
+    }
 
     this.setState({depositAmount: '', depositToken: ''});
   }
