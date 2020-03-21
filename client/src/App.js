@@ -23,6 +23,8 @@ class App extends Component {
     depositAmount: '',
     depositToken: '',
     approveToken: '',
+    withdrawAmount: '',
+    withdrawToken: ''
   };
 
   componentDidMount = async () => {
@@ -133,6 +135,27 @@ class App extends Component {
     this.setState({depositAmount: '', depositToken: ''});
   }
 
+  // HANDLE WITHDRAW
+
+  handleWithdrawAmountChange = (e) => {
+    this.setState({withdrawAmount: e.target.value});
+  }
+
+  handleWithdrawTokenChange = (e) => {
+    this.setState({withdrawToken: e.target.value});
+  }
+
+  handleWithdrawSubmit = (e) => {
+    e.preventDefault();
+
+    this.state.fund.methods.withdraw(
+      this.state.withdrawAmount,
+      this.state.withdrawToken
+    ).send({from: this.state.account});
+
+    this.setState({withdrawAmount: '', withdrawToken: ''});
+  }
+
   render() {
     return (
       <div className="app">
@@ -154,6 +177,7 @@ class App extends Component {
         <h1>Trust Fund</h1>
 
         {/* Approve Token */}
+
         <h2>Approve Token</h2>
         <form onSubmit={this.handleApproveSubmit}>
           <input 
@@ -172,6 +196,7 @@ class App extends Component {
         </form>
         
         {/* Token Allowance */}
+
         <h2>Token Allowance</h2>
         <form onSubmit={this.handleAllowanceSubmit}>
           <input 
@@ -208,6 +233,24 @@ class App extends Component {
 
         {/* Withdraw */}
 
+        <h2>Withdraw</h2>
+        <form onSubmit={this.handleWithdrawSubmit}>
+          <input
+            type="number"
+            value={this.state.withdrawAmount}
+            placeholder="amount"
+            onChange={this.handleWithdrawAmountChange}
+          />
+          <input
+            type="text"
+            value={this.state.withdrawToken}
+            placeholder="token"
+            onChange={this.handleWithdrawTokenChange}
+          />
+          <button>
+            Submit
+          </button>
+        </form>
       </div>
     );
   }
