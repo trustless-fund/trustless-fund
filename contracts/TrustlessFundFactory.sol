@@ -1,4 +1,4 @@
-pragma solidity 0.5.8;
+pragma solidity 0.5.16;
 
 import './TrustlessFund.sol';
 
@@ -15,7 +15,7 @@ contract TrustlessFundFactory {
     * @param _id The id of the fund.
   */
   function getFund(uint _id) public view returns(address) {
-    return funds[id];
+    return funds[_id];
   }
 
   /*** OTHER FUNCTIONS ***/
