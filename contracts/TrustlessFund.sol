@@ -75,29 +75,7 @@ contract TrustlessFund {
     return owner;
   }
 
-  /**
-    * @dev Returns the contract's spending allowance of a user's tokens.
-    * @param _token The token address.
-    * @param _spender The user to check the spending allowance for.
-  */
-  function tokenAllowance(address _token, address _spender) public view returns (uint) {
-    IERC20 token = IERC20(_token);
-    return token.allowance(_spender, address(this));
-  }
-
   /*** OTHER FUNCTIONS ***/
-
-  /**
-    * @dev Approves an ERC20 token to be spent by the contract.
-           Returns true if successful.
-      @param _token Address of the token to be approved.
-      @param _amount Amount approved for transfer.
-  */
-  function approveToken(address _token, uint _amount) public returns (bool) {
-    IERC20 token = IERC20(_token);
-    require(token.approve(address(this), _amount), 'failed approval');
-    return true;
-  }
 
   /**
     * @dev Allows a user to deposit ETH or an ERC20 into the contract.
@@ -112,13 +90,13 @@ contract TrustlessFund {
     }
     else {
       IERC20 token = IERC20(_token);
-      require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
+      token.transferFrom(msg.sender, address(this), _amount);
       balances[_token] += _amount;
     }
   }
 
   /**
-    * @dev Withdraw funds to msg.sender, but only if the timelock is expired 
+    * @dev Withdraw funds to msg.sender, but only if the timelock is expired
            and msg.sender is the beneficiary.
            If _token is 0 address, withdraw ETH.
     * @param _amount The amount to withdraw.
