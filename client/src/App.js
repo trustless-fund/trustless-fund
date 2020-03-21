@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import TrustlessFund from './contracts/TrustlessFund.json';
+import ERC20 from './contracts/ERC20.json';
 import getWeb3 from "./getWeb3";
 
 import Index from './pages/Index';
@@ -18,8 +19,11 @@ class App extends Component {
     accounts: null,
     account: null,
     fund: null,
+    erc20: null,
     depositAmount: '',
-    depositToken: ''
+    depositToken: '',
+    approveSpender: '',
+    approveToken: ''
   };
 
   componentDidMount = async () => {
@@ -54,6 +58,47 @@ class App extends Component {
       }
     }, 1000);
   };
+
+  // GET ERC20 TOKEN
+
+  getERC20Token = (address) => {
+    const erc20 = new this.state.web3.eth.Contract(
+      ERC20.abi,
+      address
+    );
+
+    this.setState({erc20});
+  }
+
+  // HANDLE APPROVE
+
+  handleApproveSpenderChange = (e) => {
+    this.setState({approveSpender: e.target.value});
+  }
+
+  handleApproveTokenChange = (e) => {
+    this.setState({approveToken: e.target.value});
+  }
+
+  handleApproveAmountChange = (e) => {
+    this.setState({approveAmount: e.target.value});
+  }
+
+  handleApproveSubmit = async (e) => {
+    e.preventDefault();
+
+    await this.getERC20Token(this.state.approveToken);
+
+    this.state.erc20.methods.approve(
+      this.state.account,
+      this.state.approveSpender,
+      this.state.approveAmount
+    ).send({from: this.state.account});
+
+    this.setState({approveSpender: '', approveToken: '', approveAmount: ''});
+  }
+
+  // HANDLE DEPOSIT
 
   handleDepositAmountChange = (e) => {
     this.setState({depositAmount: e.target.value});
@@ -95,8 +140,34 @@ class App extends Component {
         <h1>Trust Fund</h1>
 
         {/* Approve Token */}
+        <h2>Approve Token</h2>
+        <form onSubmit={this.handleApproveSubmit}>
+          <input 
+            type="text"
+            value={this.state.approveSpender}
+            placeholder="spender"
+            onChange={this.handleApproveSpenderChange}
+          />
+          <input 
+            type="text"
+            value={this.state.approveToken}
+            placeholder="token"
+            onChange={this.handleApproveTokenChange}
+          />
+          <input 
+            type="number"
+            value={this.state.approveAmount}
+            placeholder="amount"
+            onChange={this.handleApproveAmountChange}
+          />
+          <button>Submit</button>
+        </form>
         
         {/* Token Allowance */}
+        <h2>Token Allowance</h2>
+        <form>
+          
+        </form>
 
         {/* Deposit */}
 
