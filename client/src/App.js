@@ -22,8 +22,7 @@ class App extends Component {
     erc20: null,
     depositAmount: '',
     depositToken: '',
-    approveSpender: '',
-    approveToken: ''
+    approveToken: '',
   };
 
   componentDidMount = async () => {
@@ -72,10 +71,6 @@ class App extends Component {
 
   // HANDLE APPROVE
 
-  handleApproveSpenderChange = (e) => {
-    this.setState({approveSpender: e.target.value});
-  }
-
   handleApproveTokenChange = (e) => {
     this.setState({approveToken: e.target.value});
   }
@@ -91,11 +86,30 @@ class App extends Component {
 
     this.state.erc20.methods.approve(
       this.state.account,
-      this.state.approveSpender,
+      this.state.fund.address,
       this.state.approveAmount
     ).send({from: this.state.account});
 
-    this.setState({approveSpender: '', approveToken: '', approveAmount: ''});
+    this.setState({approveToken: '', approveAmount: ''});
+  }
+
+  // HANDLE ALLOWANCE
+
+  handleAllowanceTokenChange = (e) => {
+    this.setState({allowanceToken: e.target.value});
+  }
+
+  handleAllowanceSubmit = async (e) => {
+    await this.getERC20Token(this.state.allowanceToken);
+
+    this.state.erc20.methods.allowance(
+      this.state.account,
+      this.state.fund.address
+    ).call();
+
+    // Return allowance
+
+    this.setState({allowanceToken: ''});
   }
 
   // HANDLE DEPOSIT
@@ -144,12 +158,6 @@ class App extends Component {
         <form onSubmit={this.handleApproveSubmit}>
           <input 
             type="text"
-            value={this.state.approveSpender}
-            placeholder="spender"
-            onChange={this.handleApproveSpenderChange}
-          />
-          <input 
-            type="text"
             value={this.state.approveToken}
             placeholder="token"
             onChange={this.handleApproveTokenChange}
@@ -165,8 +173,14 @@ class App extends Component {
         
         {/* Token Allowance */}
         <h2>Token Allowance</h2>
-        <form>
-          
+        <form onSubmit={this.handleAllowanceSubmit}>
+          <input 
+            type="text"
+            value={this.state.allowanceToken}
+            placeholder="token"
+            onChange={this.handleAllowanceTokenChange}
+          />
+          <button>Submit</button>
         </form>
 
         {/* Deposit */}
