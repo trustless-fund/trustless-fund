@@ -66,7 +66,7 @@ class App extends Component {
 
   getERC20Token = (address) => {
     const erc20 = new this.state.web3.eth.Contract(
-      ERC20.abi,
+      ERC20,
       address
     );
 
@@ -89,8 +89,7 @@ class App extends Component {
     await this.getERC20Token(this.state.approveToken);
 
     this.state.erc20.methods.approve(
-      this.state.account,
-      this.state.fund.address,
+      this.state.fund._address,
       this.state.approveAmount
     ).send({from: this.state.account});
 
@@ -111,7 +110,7 @@ class App extends Component {
       this.state.fund.address
     ).call();
 
-    // Return allowance
+    // TODO: Return allowance
 
     this.setState({allowanceToken: ''});
   }
