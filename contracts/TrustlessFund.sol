@@ -90,8 +90,8 @@ contract TrustlessFund {
     }
     else {
       IERC20 token = IERC20(_token);
+      require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
       balances[_token] += _amount;
-      token.transferFrom(msg.sender, address(this), _amount);
     }
   }
 
