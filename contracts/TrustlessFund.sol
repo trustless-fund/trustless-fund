@@ -42,7 +42,10 @@ contract TrustlessFund is Ownable {
   */
   event IncreaseTime(uint _newExpiration);
 
-  // Update Beneficiary
+  /**
+    * @notice Emits when the beneficiary is updated.
+  */
+  event UpdateBeneficiary(address indexed _newBeneficiary);
 
   /*** MODIFIERS ***/
 
@@ -139,5 +142,6 @@ contract TrustlessFund is Ownable {
   function updateBeneficiary(address _newBeneficiary) public onlyOwner() {
     require(_newBeneficiary != beneficiary, 'same beneficiary');
     beneficiary = _newBeneficiary;
+    emit UpdateBeneficiary(_newBeneficiary);
   }
 }
