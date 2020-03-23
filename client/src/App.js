@@ -103,14 +103,16 @@ class App extends Component {
   }
 
   handleAllowanceSubmit = async (e) => {
+    e.preventDefault();
+
     await this.getERC20Token(this.state.allowanceToken);
 
-    this.state.erc20.methods.allowance(
+    const allowance = await this.state.erc20.methods.allowance(
       this.state.account,
-      this.state.fund.address
+      this.state.fund._address
     ).call();
 
-    // TODO: Return allowance
+    console.log(allowance);
 
     this.setState({allowanceToken: ''});
   }
