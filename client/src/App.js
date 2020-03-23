@@ -74,6 +74,16 @@ class App extends Component {
     this.setState({erc20});
   }
 
+  // HANDLE GET OWNER
+
+  handleGetOwnerSubmit = async (e) => {
+    e.preventDefault();
+
+    const owner = await this.state.fund.methods.owner().call();
+
+    console.log(owner);
+  }
+
   // HANDLE APPROVE
 
   handleApproveTokenChange = (e) => {
@@ -206,6 +216,13 @@ class App extends Component {
         } */}
 
         <h1>Trust Fund</h1>
+
+        {/* Get Owner */}
+
+        <h2>Get Owner</h2>
+        <form onSubmit={this.handleGetOwnerSubmit}>
+          <button>Get Owner</button>
+        </form>
 
         {/* Approve Token */}
 

@@ -2,8 +2,9 @@ pragma solidity 0.5.16;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract TrustlessFund {
+contract TrustlessFund is Ownable {
   using SafeMath for uint;
 
   /*** STORAGE VARIABLES ***/
@@ -18,11 +19,6 @@ contract TrustlessFund {
   */
   address beneficiary;
 
-  /**
-    * @notice The contract owner.
-  */
-  address owner;
-
   mapping(address => uint) balances;
 
   /*** EVENTS ***/
@@ -30,14 +26,6 @@ contract TrustlessFund {
 
 
   /*** MODIFIERS ***/
-
-  /**
-    * @dev Throws if called by any account other than the owner.
-  */
-  modifier onlyOwner() {
-    require(owner == msg.sender, "Ownable: caller is not the owner");
-    _;
-  }
 
   /**
     * @dev Throws if the contract has not yet reached its expiration.
@@ -63,17 +51,12 @@ contract TrustlessFund {
   constructor(uint _expiration, address _beneficiary, address _owner) public {
     expiration = _expiration;
     beneficiary = _beneficiary;
-    owner = _owner;
+    transferOwnership(_owner);
   }
 
   /*** VIEW/PURE FUNCTIONS ***/
 
-  /**
-    * @dev Returns the address of the current owner.
-  */
-  function getOwner() public view returns (address) {
-    return owner;
-  }
+
 
   /*** OTHER FUNCTIONS ***/
 
