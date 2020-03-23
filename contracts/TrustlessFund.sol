@@ -37,7 +37,10 @@ contract TrustlessFund is Ownable {
   */
   event Withdraw(address indexed _to, uint _value, address indexed _token);
 
-  // Increase Time
+  /**
+    * @notice Emits when the expiration is increased.
+  */
+  event IncreaseTime(uint _newExpiration);
 
   // Update Beneficiary
 
@@ -126,6 +129,7 @@ contract TrustlessFund is Ownable {
   function increaseTime(uint _newExpiration) public onlyOwner() {
     require(_newExpiration > expiration, 'can only increase expiration');
     expiration = _newExpiration;
+    emit IncreaseTime(_newExpiration);
   }
 
   /**
