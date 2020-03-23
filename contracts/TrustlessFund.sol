@@ -32,7 +32,10 @@ contract TrustlessFund is Ownable {
   */
   event Deposit(address indexed _from, uint _value, address indexed _token);
 
-  // Withdraw
+  /**
+    * @notice Emits when a withdrawal is made.
+  */
+  event Withdraw(address indexed _to, uint _value, address indexed _token);
 
   // Increase Time
 
@@ -106,11 +109,13 @@ contract TrustlessFund is Ownable {
       balances[_token] -= _amount;
       (bool success, ) = msg.sender.call.value(_amount)("");
       require(success, "Transfer failed.");
+      emit Withdraw(msg.sender, _amount, _token);
     } else {
       IERC20 token = IERC20(_token);
       require(token.balanceOf(address(this)) >= _amount, 'not enough balance');
       balances[_token] -= _amount;
       require(token.transfer(msg.sender, _amount), 'transfer failed');
+      emit Withdraw(msg.sender, _amount, _token);
     }
   }
 
