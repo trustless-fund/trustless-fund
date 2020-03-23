@@ -3,6 +3,7 @@ pragma solidity 0.5.16;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/ownership/Ownable.sol";
+// import "@openzeppelin/contracts/utils/Address.sol";
 
 contract TrustlessFund is Ownable {
   using SafeMath for uint;
@@ -17,7 +18,7 @@ contract TrustlessFund is Ownable {
   /**
     * @notice Address permitted to withdraw funds after unlock.
   */
-  address beneficiary;
+  address public beneficiary;
 
   /**
     * @notice Token balances.
@@ -109,5 +110,14 @@ contract TrustlessFund is Ownable {
   function increaseTime(uint _newExpiration) public onlyOwner() {
     require(_newExpiration > expiration, 'can only increase expiration');
     expiration = _newExpiration;
+  }
+
+  /**
+    * @dev Update the beneficiary address. Only the owner can perform this.
+    * @param _newBeneficiary New beneficiary address.
+  */
+  function updateBeneficiary(address _newBeneficiary) public onlyOwner() {
+    require(_newBeneficiary != beneficiary, 'same beneficiary');
+    beneficiary = _newBeneficiary;
   }
 }

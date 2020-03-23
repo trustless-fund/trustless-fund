@@ -26,7 +26,8 @@ class App extends Component {
     withdrawAmount: '',
     withdrawToken: '',
     balanceToken: '',
-    increaseTimeAmount: ''
+    increaseTimeAmount: '',
+    updateBeneficiaryAddress: ''
   };
 
   componentDidMount = async () => {
@@ -95,6 +96,16 @@ class App extends Component {
     console.log(expiration);
   }
 
+  // HANDLE GET BENEFICIARY
+
+  handleGetBeneficiarySubmit = async (e) => {
+    e.preventDefault();
+
+    const beneficiary = await this.state.fund.methods.beneficiary().call();
+
+    console.log(beneficiary);
+  }
+
   // HANDLE INCREASE TIME
 
   handleIncreaseTimeAmountChange = (e) => {
@@ -109,6 +120,22 @@ class App extends Component {
     ).send({from: this.state.account});
 
     this.setState({increaseTimeAmount: ''});
+  }
+
+  // HANDLE UPDATE BENEFICIARY
+
+  handleUpdateBeneficiaryAddressChange = (e) => {
+    this.setState({updateBeneficiaryAddress: e.target.value});
+  }
+
+  handleUpdateBeneficiaryAddressSubmit = async (e) => {
+    e.preventDefault();
+
+    this.state.fund.methods.updateBeneficiary(
+      this.state.updateBeneficiaryAddress
+    ).send({from: this.state.account});
+
+    this.setState({updateBeneficiaryAddress: ''});
   }
 
   // HANDLE APPROVE
@@ -258,6 +285,13 @@ class App extends Component {
           <button>Get Expiration</button>
         </form>
 
+        {/* Get Beneficiary */}
+
+        <h2>Get Beneficiary</h2>
+        <form onSubmit={this.handleGetBeneficiarySubmit}>
+          <button>Get Beneficiary</button>
+        </form>
+
         {/* Increase Time */}
 
         <h2>Increase Time</h2>
@@ -267,6 +301,19 @@ class App extends Component {
             value={this.state.increaseTimeAmount}
             placeholder="amount"
             onChange={this.handleIncreaseTimeAmountChange}
+          />
+          <button>Submit</button>
+        </form>
+
+        {/* Update Beneficiary */}
+
+        <h2>Update Beneficiary</h2>
+        <form onSubmit={this.handleUpdateBeneficiaryAddressSubmit}>
+          <input 
+            type="text"
+            value={this.state.updateBeneficiaryAddress}
+            placeholder="address"
+            onChange={this.handleUpdateBeneficiaryAddressChange}
           />
           <button>Submit</button>
         </form>
