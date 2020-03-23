@@ -24,7 +24,8 @@ class App extends Component {
     depositToken: '',
     approveToken: '',
     withdrawAmount: '',
-    withdrawToken: ''
+    withdrawToken: '',
+    balanceToken: ''
   };
 
   componentDidMount = async () => {
@@ -115,6 +116,26 @@ class App extends Component {
     console.log(allowance);
 
     this.setState({allowanceToken: ''});
+  }
+
+  // HANDLE BALANCE
+
+  handleBalanceTokenChange = (e) => {
+    this.setState({balanceToken: e.target.value});
+  }
+
+  handleBalanceSubmit = async (e) => {
+    e.preventDefault();
+
+    await this.getERC20Token(this.state.balanceToken);
+
+    const balance = await this.state.erc20.methods.balanceOf(
+      this.state.fund._address
+    ).call();
+
+    console.log(balance);
+
+    this.setState({balanceToken: ''});
   }
 
   // HANDLE DEPOSIT
@@ -214,6 +235,18 @@ class App extends Component {
             value={this.state.allowanceToken}
             placeholder="token"
             onChange={this.handleAllowanceTokenChange}
+          />
+          <button>Submit</button>
+        </form>
+
+        {/* Contract Balance */}
+        <h2>Contract Balance</h2>
+        <form onSubmit={this.handleBalanceSubmit}>
+          <input 
+            type="text"
+            value={this.state.balanceToken}
+            placeholder="token"
+            onChange={this.handleBalanceTokenChange}
           />
           <button>Submit</button>
         </form>
