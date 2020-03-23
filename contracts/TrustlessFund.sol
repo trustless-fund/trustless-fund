@@ -27,7 +27,16 @@ contract TrustlessFund is Ownable {
 
   /*** EVENTS ***/
 
+  /**
+    * @notice Emits when a deposit is made.
+  */
+  event Deposit(address indexed _from, uint _value, address indexed _token);
 
+  // Withdraw
+
+  // Increase Time
+
+  // Update Beneficiary
 
   /*** MODIFIERS ***/
 
@@ -74,11 +83,13 @@ contract TrustlessFund is Ownable {
     if(_token == address(0)) {
       require(msg.value == _amount, 'incorrect amount');
       balances[_token] += _amount;
+      emit Deposit(msg.sender, _amount, _token);
     }
     else {
       IERC20 token = IERC20(_token);
       require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
       balances[_token] += _amount;
+      emit Deposit(msg.sender, _amount, _token);
     }
   }
 
