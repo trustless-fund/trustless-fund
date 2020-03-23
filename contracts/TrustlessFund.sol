@@ -12,7 +12,7 @@ contract TrustlessFund is Ownable {
   /**
     * @notice Date time in seconds when timelock expires.
   */
-  uint expiration;
+  uint public expiration;
 
   /**
     * @notice Address permitted to withdraw funds after unlock.
@@ -100,5 +100,10 @@ contract TrustlessFund is Ownable {
       balances[_token] -= _amount;
       require(token.transfer(msg.sender, _amount), 'transfer failed');
     }
+  }
+
+  function increaseTime(uint _newExpiration) public onlyOwner() {
+    require(_newExpiration > expiration, 'can only increase expiration');
+    expiration = _newExpiration;
   }
 }

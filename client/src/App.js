@@ -25,7 +25,8 @@ class App extends Component {
     approveToken: '',
     withdrawAmount: '',
     withdrawToken: '',
-    balanceToken: ''
+    balanceToken: '',
+    increaseTimeAmount: ''
   };
 
   componentDidMount = async () => {
@@ -82,6 +83,32 @@ class App extends Component {
     const owner = await this.state.fund.methods.owner().call();
 
     console.log(owner);
+  }
+
+  // HANDLE GET EXPIRATION
+
+  handleGetExpirationSubmit = async (e) => {
+    e.preventDefault();
+
+    const expiration = await this.state.fund.methods.expiration().call();
+
+    console.log(expiration);
+  }
+
+  // HANDLE INCREASE TIME
+
+  handleIncreaseTimeAmountChange = (e) => {
+    this.setState({increaseTimeAmount: e.target.value});
+  }
+
+  handleIncreaseTimeSubmit = async (e) => {
+    e.preventDefault();
+
+    this.state.fund.methods.increaseTime(
+      this.state.increaseTimeAmount
+    ).send({from: this.state.account});
+
+    this.setState({increaseTimeAmount: ''});
   }
 
   // HANDLE APPROVE
@@ -222,6 +249,26 @@ class App extends Component {
         <h2>Get Owner</h2>
         <form onSubmit={this.handleGetOwnerSubmit}>
           <button>Get Owner</button>
+        </form>
+
+        {/* Get Expiration */}
+
+        <h2>Get Expiration</h2>
+        <form onSubmit={this.handleGetExpirationSubmit}>
+          <button>Get Expiration</button>
+        </form>
+
+        {/* Increase Time */}
+
+        <h2>Increase Time</h2>
+        <form onSubmit={this.handleIncreaseTimeSubmit}>
+          <input 
+            type="number"
+            value={this.state.increaseTimeAmount}
+            placeholder="amount"
+            onChange={this.handleIncreaseTimeAmountChange}
+          />
+          <button>Submit</button>
         </form>
 
         {/* Approve Token */}
