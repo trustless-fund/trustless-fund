@@ -102,6 +102,10 @@ contract TrustlessFund is Ownable {
     }
   }
 
+  /**
+    * @dev Increase the time until spender. Only the owner can perform this.
+    * @param _newExpiration New date time in seconds when timelock expires.
+  */
   function increaseTime(uint _newExpiration) public onlyOwner() {
     require(_newExpiration > expiration, 'can only increase expiration');
     expiration = _newExpiration;
