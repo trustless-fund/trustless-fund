@@ -3,7 +3,6 @@ pragma solidity 0.5.16;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/ownership/Ownable.sol";
-// import "@openzeppelin/contracts/utils/Address.sol";
 
 contract TrustlessFund is Ownable {
   using SafeMath for uint;
