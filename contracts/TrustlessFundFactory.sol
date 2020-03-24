@@ -5,7 +5,19 @@ import './TrustlessFund.sol';
 contract TrustlessFundFactory {
   /*** STORAGE VARIABLES ***/
 
+  /**
+    * @notice Maps unique IDs to funds.
+  */
   mapping(uint => address) funds;
+
+  /**
+    * @notice Maps user address to their corresponding funds.
+  */
+  mapping(address => address[]) userFunds;
+
+  /**
+    * @notice Get the next fund ID.
+  */
   uint public nextId;
 
   /*** PURE/VIEW FUNCTIONS ***/
@@ -16,6 +28,14 @@ contract TrustlessFundFactory {
   */
   function getFund(uint _id) public view returns(address) {
     return funds[_id];
+  }
+
+  /**
+    * @dev Given a user address, return all owned funds.
+    * @param _user The address of the user.
+  */
+  function getUserFunds(address _user) public view returns(address[]) {
+    return userFunds[_user];
   }
 
   /*** OTHER FUNCTIONS ***/
@@ -29,8 +49,7 @@ contract TrustlessFundFactory {
     require(funds[nextId] == address(0), 'id already in use');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
     funds[nextId] = address(fund);
+    userFunds[msg.sender].push(address(fund));
     nextId++;
   }
-
-  // TODO: Get funds owned by an address
 }
