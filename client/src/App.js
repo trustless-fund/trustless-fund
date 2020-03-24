@@ -31,7 +31,8 @@ class App extends Component {
     increaseTimeAmount: '',
     updateBeneficiaryAddress: '',
     fundExpiration: '',
-    fundBeneficiary: ''
+    fundBeneficiary: '',
+    getFundId: ''
   };
 
   componentDidMount = async () => {
@@ -101,6 +102,24 @@ class App extends Component {
     console.log('Fund created');
 
     this.setState({fundExpiration: '', fundBeneficiary: ''});
+  }
+
+  // GET FUND
+
+  handleGetFundIdChange = (e) => {
+    this.setState({getFundId: e.target.value});
+  }
+
+  handleGetFundSubmit = async (e) => {
+    e.preventDefault();
+
+    const fund = await this.state.factory.methods.getFund(
+      this.state.getFundId
+    ).call();
+
+    console.log(fund);
+
+    this.setState({getFundId: ''});
   }
 
   // ==============
@@ -328,6 +347,19 @@ class App extends Component {
             value={this.state.fundBeneficiary}
             placeholder="beneficiary"
             onChange={this.handleFundBeneficiaryChange}
+          />
+          <button>Submit</button>
+        </form>
+
+        {/* Get Fund */}
+
+        <h2>Get Fund</h2>
+        <form onSubmit={this.handleGetFundSubmit}>
+          <input 
+            type="text"
+            value={this.state.getFundId}
+            placeholder="id"
+            onChange={this.handleGetFundIdChange}
           />
           <button>Submit</button>
         </form>
