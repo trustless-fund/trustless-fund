@@ -46,10 +46,10 @@ contract TrustlessFundFactory {
     * @param _beneficiary Address permitted to withdraw funds after unlock.
   */
   function createFund(uint _expiration, address _beneficiary) public {
-    // require(funds[nextId] == address(0), 'id already in use');
+    require(funds[nextId] == address(0), 'id already in use');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
     funds[nextId] = address(fund);
-    // userFunds[msg.sender].push(address(fund));
+    userFunds[msg.sender].push(address(fund));
     nextId++;
   }
 }
