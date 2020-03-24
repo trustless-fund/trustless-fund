@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import TrustlessFund from './contracts/TrustlessFund.json';
+import TrustlessFundFactory from './contracts/TrustlessFundFactory.json';
 import ERC20 from './contracts/ERC20.json';
 import getWeb3 from "./getWeb3";
 
@@ -19,6 +20,7 @@ class App extends Component {
     accounts: null,
     account: null,
     fund: null,
+    factory: null,
     erc20: null,
     depositAmount: '',
     depositToken: '',
@@ -27,7 +29,9 @@ class App extends Component {
     withdrawToken: '',
     balanceToken: '',
     increaseTimeAmount: '',
-    updateBeneficiaryAddress: ''
+    updateBeneficiaryAddress: '',
+    fundExpiration: '',
+    fundBeneficiary: ''
   };
 
   componentDidMount = async () => {
@@ -38,7 +42,7 @@ class App extends Component {
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
-      // Get the contract instance.
+      // Get the fund instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = TrustlessFund.networks[networkId];
       const fund = new web3.eth.Contract(
@@ -46,9 +50,16 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
+      // Get the factory instance
+      const deployedFactoryNetwork = TrustlessFundFactory.networks[networkId];
+      const factory = new web3.eth.Contract(
+        TrustlessFundFactory.abi,
+        deployedFactoryNetwork && deployedFactoryNetwork.address,
+      );
+
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, fund });
+      this.setState({ web3, accounts, fund, factory });
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +75,37 @@ class App extends Component {
 
     console.log(this.state);
   };
+
+  // ======================
+  // TRUSTLESS FUND FACTORY
+  // ======================
+
+  // CREATE FUND
+
+  handleFundExpirationChange = (e) => {
+    this.setState({fundExpiration: e.target.value});
+  }
+
+  handleFundBeneficiaryChange = (e) => {
+    this.setState({fundBeneficiary: e.target.value});
+  }
+
+  handleCreateFundSubmit = async (e) => {
+    e.preventDefault();
+
+    await this.state.factory.methods.createFund(
+      this.state.fundExpiration,
+      this.state.fundBeneficiary
+    ).send({from: this.state.account});
+
+    console.log('Fund created');
+
+    this.setState({fundExpiration: '', fundBeneficiary: ''});
+  }
+
+  // ==============
+  // TRUSTLESS FUND
+  // ==============
 
   // GET ERC20 TOKEN
 
@@ -268,6 +310,27 @@ class App extends Component {
             />
           </Router>
         } */}
+
+        <h1>Trust Fund Factory</h1>
+        
+        {/* Create Fund */}
+
+        <h2>Create Fund</h2>
+        <form onSubmit={this.handleCreateFundSubmit}>
+          <input 
+            type="number"
+            value={this.state.fundExpiration}
+            placeholder="expiration"
+            onChange={this.handleFundExpirationChange}
+          />
+          <input 
+            type="text"
+            value={this.state.fundBeneficiary}
+            placeholder="beneficiary"
+            onChange={this.handleFundBeneficiaryChange}
+          />
+          <button>Submit</button>
+        </form>
 
         <h1>Trust Fund</h1>
 
