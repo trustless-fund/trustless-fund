@@ -32,7 +32,8 @@ class App extends Component {
     updateBeneficiaryAddress: '',
     fundExpiration: '',
     fundBeneficiary: '',
-    getFundId: ''
+    getFundId: '',
+    getUserFundsAddress: ''
   };
 
   componentDidMount = async () => {
@@ -120,6 +121,24 @@ class App extends Component {
     console.log(fund);
 
     this.setState({getFundId: ''});
+  }
+
+  // GET USER FUNDS
+
+  handleGetUserFundsAddressChange = (e) => {
+    this.setState({getUserFundsAddress: e.target.value});
+  }
+
+  handleGetUserFundsSubmit = async (e) => {
+    e.preventDefault();
+
+    const funds = await this.state.factory.methods.getUserFunds(
+      this.state.getUserFundsAddress
+    ).call();
+
+    console.log(funds);
+
+    this.setState({getUserFundsAddress: ''});
   }
 
   // ==============
@@ -330,6 +349,8 @@ class App extends Component {
           </Router>
         } */}
 
+        {/* TRUST FUND FACTORY */}
+
         <h1>Trust Fund Factory</h1>
         
         {/* Create Fund */}
@@ -356,13 +377,28 @@ class App extends Component {
         <h2>Get Fund</h2>
         <form onSubmit={this.handleGetFundSubmit}>
           <input 
-            type="text"
+            type="number"
             value={this.state.getFundId}
             placeholder="id"
             onChange={this.handleGetFundIdChange}
           />
           <button>Submit</button>
         </form>
+
+        {/* Get User Funds */}
+
+        <h2>Get User Funds</h2>
+        <form onSubmit={this.handleGetUserFundsSubmit}>
+          <input 
+            type="text"
+            value={this.state.getUserFundsAddress}
+            placeholder="address"
+            onChange={this.handleGetUserFundsAddressChange}
+          />
+          <button>Submit</button>
+        </form>
+
+        {/* TRUST FUND */}
 
         <h1>Trust Fund</h1>
 
