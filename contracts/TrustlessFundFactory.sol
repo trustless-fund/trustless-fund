@@ -27,6 +27,11 @@ contract TrustlessFundFactory is Ownable {
   */
   uint public fee;
 
+  /**
+    * @notice The total amount of fees, in wei, collected.
+  */
+  uint public feesAccrued;
+
   /*** PURE/VIEW FUNCTIONS ***/
 
   /**
@@ -74,5 +79,16 @@ contract TrustlessFundFactory is Ownable {
   */
   function setFee(uint _newFee) public onlyOwner() {
     fee = _newFee;
+  }
+
+  /**
+    * @dev Collect accrued fees.
+    * @param _amount The amount to collect, in wei.
+  */
+  function collectFees(uint _amount) public onlyOwner() {
+    require(feesAccrued > 0, 'no fees accrued');
+    feesAccrued -= _amount;
+    (bool success, ) = msg.sender.call.value(_amount)("");
+    require(success, "Transfer failed.");
   }
 }
