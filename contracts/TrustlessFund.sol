@@ -140,6 +140,7 @@ contract TrustlessFund is Ownable {
   */
   function updateBeneficiary(address _newBeneficiary) public onlyOwner() {
     require(_newBeneficiary != beneficiary, 'same beneficiary');
+    require(_newBeneficiary != address(0), 'cannot set as burn address');
     beneficiary = _newBeneficiary;
     emit UpdateBeneficiary(_newBeneficiary);
   }
