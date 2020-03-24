@@ -1,8 +1,9 @@
 pragma solidity 0.5.16;
 
 import './TrustlessFund.sol';
+import "@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract TrustlessFundFactory {
+contract TrustlessFundFactory is Ownable {
   /*** STORAGE VARIABLES ***/
 
   /**
@@ -19,6 +20,12 @@ contract TrustlessFundFactory {
     * @notice Get the next fund ID.
   */
   uint public nextId;
+
+  /**
+    * @notice The fee, in wei, charged to open a contract.
+              Note: This will remain 0 indefinitely.
+  */
+  uint public fee;
 
   /*** PURE/VIEW FUNCTIONS ***/
 
@@ -38,6 +45,13 @@ contract TrustlessFundFactory {
     return userFunds[_user];
   }
 
+  /**
+    * @dev Returns the fee, in wei, to open a contract.
+  */
+  function getFee() public view returns(uint) {
+    return fee;
+  }
+
   /*** OTHER FUNCTIONS ***/
 
   /**
@@ -45,11 +59,20 @@ contract TrustlessFundFactory {
     * @param _expiration Date time in seconds when timelock expires.
     * @param _beneficiary Address permitted to withdraw funds after unlock.
   */
-  function createFund(uint _expiration, address _beneficiary) public {
+  function createFund(uint _expiration, address _beneficiary) public payable {
     require(funds[nextId] == address(0), 'id already in use');
+    require(msg.value == fee, 'must pay fee');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
     funds[nextId] = address(fund);
     userFunds[msg.sender].push(address(fund));
     nextId++;
+  }
+
+  /**
+    * @dev Sets the fee, in wei, to open a contract.
+    * @param _newFee The new fee, in wei.
+  */
+  function setFee(uint _newFee) public onlyOwner() {
+    fee = _newFee;
   }
 }
