@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import { loadAccounts } from './actions';
+import { loadAccounts } from './actions/accountsActions';
 
 const store = configureStore();
 
