@@ -1,9 +1,9 @@
-import connect from '../connect';
+import accountsConnect from '../connect/accounts';
 import * as types from './actionTypes';
 
 export function loadAccounts() {
   return (dispatch) => {
-    return connect.getAccounts().then(accounts => {
+    return accountsConnect.getAccounts().then(accounts => {
       dispatch(loadAccountsSuccess(accounts));
     }).catch(err => {
       throw(err);

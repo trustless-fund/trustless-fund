@@ -1,6 +1,6 @@
 import getWeb3 from "../getWeb3";
 
-class Connect {
+class accountsConnect {
   static getAccounts = async () => {
     const web3 = await getWeb3();
     const accounts = await web3.eth.getAccounts();
@@ -8,4 +8,4 @@ class Connect {
   }
 }
 
-export default Connect;
+export default accountsConnect;
