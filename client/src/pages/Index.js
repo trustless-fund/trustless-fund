@@ -1,20 +1,26 @@
 import React, { Component } from "react";
-
-import Form from '../components/Form';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 class Index extends Component {
-  componentDidMount = () => {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <div className="index">
         <h1>Trust Fund Factory</h1>
-        <Form {...this.state} />
+        {this.props.accounts}
       </div>
     );
   }
 }
 
-export default Index;
+function mapStateToProps(state, ownProps) {
+  return {
+    accounts: state.accounts
+  };
+}
+
+Index.propTypes = {
+  accounts: PropTypes.array.isRequired
+};
+
+export default connect(mapStateToProps)(Index);

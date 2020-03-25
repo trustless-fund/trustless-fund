@@ -4,8 +4,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
+import { loadAccounts } from './actions';
 
 const store = configureStore();
+
+store.dispatch(loadAccounts());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -3,11 +3,19 @@ import React, {Component} from 'react';
 class Form extends Component {
   state = {
     expiration: '',
-    fundId: null
+    fundId: null,
+    accounts: []
   }
 
   handleExpirationChange = (e) => {
     this.setState({expiration: e.target.value});
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if(this.props.accounts !== nextProps.accounts) {
+      this.setState({accounts: nextProps.accounts});
+    }
+    console.log(this.state);
   }
 
   handleSubmit = async (e) => {
@@ -53,6 +61,8 @@ class Form extends Component {
             Submit
           </button>
         </form>
+
+        {this.state.accounts}
       </section>
     );
   }
