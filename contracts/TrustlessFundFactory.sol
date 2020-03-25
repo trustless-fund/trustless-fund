@@ -32,6 +32,17 @@ contract TrustlessFundFactory is Ownable {
   */
   uint public feesAccrued;
 
+  /*** EVENTS ***/
+
+  /**
+    * @notice Emits when a fund is created.
+  */
+  event CreateFund(
+    uint expiration,
+    address indexed beneficiary,
+    address indexed owner
+  );
+
   /*** PURE/VIEW FUNCTIONS ***/
 
   /**
@@ -71,6 +82,7 @@ contract TrustlessFundFactory is Ownable {
     funds[nextId] = address(fund);
     userFunds[msg.sender].push(address(fund));
     nextId++;
+    emit CreateFund(_expiration, _beneficiary, msg.sender);
   }
 
   /**

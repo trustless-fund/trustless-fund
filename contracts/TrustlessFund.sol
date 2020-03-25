@@ -125,7 +125,7 @@ contract TrustlessFund is Ownable {
   }
 
   /**
-    * @dev Increase the time until spender. Only the owner can perform this.
+    * @dev Increase the time until expiration. Only the owner can perform this.
     * @param _newExpiration New date time in seconds when timelock expires.
   */
   function increaseTime(uint _newExpiration) public onlyOwner() {
