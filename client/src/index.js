@@ -8,8 +8,6 @@ import { loadAccounts } from './actions/accountsActions';
 
 const store = configureStore();
 
-store.dispatch(loadAccounts());
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
