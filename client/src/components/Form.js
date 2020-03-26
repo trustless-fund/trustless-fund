@@ -29,13 +29,14 @@ class Form extends Component {
 
     // TODO: Add error handling and transaction receipts
 
-    // this.props.factory.methods.nextId().call((err, res) => {
-    //   if(err) {
-    //     console.log(err);
-    //   } else {
-    //     console.log(res);
-    //   }
-    // });
+    await this.props.factory.methods.nextId().call((err, res) => {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(res);
+        this.setState({fundId: res});
+      }
+    });
   }
 
   render() {
@@ -66,6 +67,11 @@ class Form extends Component {
             Submit
           </button>
         </form>
+        {this.state.fundId &&
+          <a href={`/fund/${this.state.fundId}`}>
+            Go to fund
+          </a>
+        }
       </section>
     );
   }

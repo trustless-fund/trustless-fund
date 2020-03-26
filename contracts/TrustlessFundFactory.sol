@@ -75,7 +75,7 @@ contract TrustlessFundFactory is Ownable {
     * @param _expiration Date time in seconds when timelock expires.
     * @param _beneficiary Address permitted to withdraw funds after unlock.
   */
-  function createFund(uint _expiration, address _beneficiary) public payable {
+  function createFund(uint _expiration, address _beneficiary) public payable returns(uint) {
     require(funds[nextId] == address(0), 'id already in use');
     require(msg.value == fee, 'must pay fee');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
@@ -83,6 +83,7 @@ contract TrustlessFundFactory is Ownable {
     userFunds[msg.sender].push(address(fund));
     nextId++;
     emit CreateFund(_expiration, _beneficiary, msg.sender);
+    return nextId - 1;
   }
 
   /**
