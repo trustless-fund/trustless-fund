@@ -1,3 +1,4 @@
 export default {
-  accounts: []
+  accounts: [],
+  factory: null
 }

@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import accounts from './accountsReducer';
+import factory from './factoryReducer';
 
 const rootReducer = combineReducers({
-  accounts
+  accounts,
+  factory
 });
 
 export default rootReducer;
