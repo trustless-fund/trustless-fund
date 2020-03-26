@@ -8887,12 +8887,12 @@
         }
       },
       "links": {},
-      "address": "0x7393E72cA8d0a5b9C52fc54CC5922D5A1D2408E6",
-      "transactionHash": "0x1be1b90e552d18585f60eeea68f45e63c4b1b7529c42f880f8fa6c671f964250"
+      "address": "0x6B4A4C8283231f3e04F8A783CE5525E1CbBC4a40",
+      "transactionHash": "0x4dedd9a9c7a3e98a07cf47adc704f98e15ad661521a591765b710e85aa9552d5"
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-03-26T16:48:44.570Z",
+  "updatedAt": "2020-03-26T17:36:10.166Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

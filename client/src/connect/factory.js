@@ -4,6 +4,7 @@ import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
 class factoryConnect {
   static getFactory = async () => {
     const web3 = await web3Connect();
+    console.log(web3);
     const networkId = await web3.eth.net.getId();
     const factoryNetwork = TrustlessFundFactory.networks[networkId];
     const factory = new web3.eth.Contract(
