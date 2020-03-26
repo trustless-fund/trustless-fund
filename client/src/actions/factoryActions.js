@@ -14,3 +14,17 @@ export function loadFactory() {
 export function loadFactorySuccess(factory) {
   return {type: types.LOAD_FACTORY_SUCCESS, factory};
 }
+
+export function loadFundAddress(fundId) {
+  return (dispatch) => {
+    return factoryConnect.getFundAddress(fundId).then(fundAddress => {
+      dispatch(loadFundAddressSuccess(fundAddress));
+    }).catch(err => {
+      throw(err);
+    });
+  }
+}
+
+export function loadFundAddressSuccess(fundAddress) {
+  return {type: types.LOAD_FUND_ADDRESS_SUCCESS, fundAddress};
+}

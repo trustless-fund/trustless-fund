@@ -7,8 +7,6 @@ import * as factoryActions from '../actions/factoryActions';
 
 class Fund extends Component {
   state = {
-    fundId: null,
-    fundAddress: null,
     fund: null,
     account: this.props.accounts[0],
     factory: this.props.factory,
@@ -24,9 +22,8 @@ class Fund extends Component {
     });
 
     const fundId = this.props.match.params.fundId;
-    await this.setState({fundId});
 
-    // this.state.factory && this.getFundAddress();
+    this.props.actions.loadFundAddress(fundId);
   }
 
   componentWillReceiveProps = (newProps) => {
@@ -66,7 +63,7 @@ class Fund extends Component {
   // }
 
   render() {
-    console.log('render factory: ', this.props.factory);
+    console.log('fundAddress: ', this.state.factory.fundAddress);
     return (
       <div className="fund">
         <h1>Trust Fund</h1>
@@ -77,6 +74,7 @@ class Fund extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  // console.log('map', state);
   return {
     accounts: state.accounts,
     factory: state.factory
