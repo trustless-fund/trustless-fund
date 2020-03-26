@@ -38,7 +38,7 @@ class Index extends Component {
     return (
       <div className="index">
         <h1>Trust Fund Factory</h1>
-        {'Account: ', this.state.account}
+        {'Account: ' + this.state.account}
       </div>
     );
   }

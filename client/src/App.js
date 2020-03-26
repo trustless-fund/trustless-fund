@@ -4,9 +4,6 @@ import {
   Route
 } from "react-router-dom";
 
-import TrustlessFundFactory from './contracts/TrustlessFundFactory.json';
-import getWeb3 from "./getWeb3";
-
 import Index from './pages/Index';
 import Fund from './pages/Fund';
 
