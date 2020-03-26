@@ -3,19 +3,16 @@ import React, {Component} from 'react';
 class Form extends Component {
   state = {
     expiration: '',
-    fundId: null,
-    accounts: []
+    beneficiary: '',
+    fundId: null
   }
 
   handleExpirationChange = (e) => {
     this.setState({expiration: e.target.value});
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if(this.props.accounts !== nextProps.accounts) {
-      this.setState({accounts: nextProps.accounts});
-    }
-    console.log(this.state);
+  handleBeneficiaryChange = (e) => {
+    this.setState({beneficiary: e.target.value});
   }
 
   handleSubmit = async (e) => {
@@ -26,18 +23,19 @@ class Form extends Component {
       // Return error
     
     await this.props.factory.methods.createFund(
-      this.state.expiration
+      this.state.expiration,
+      this.state.beneficiary
     ).send({from: this.props.account});
 
     // TODO: Add error handling and transaction receipts
 
-    this.props.factory.methods.nextId().call((err, res) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(res);
-      }
-    });
+    // this.props.factory.methods.nextId().call((err, res) => {
+    //   if(err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log(res);
+    //   }
+    // });
   }
 
   render() {
@@ -57,12 +55,17 @@ class Form extends Component {
             onChange={this.handleExpirationChange}
             value={this.state.expiration}
           />
+          <input 
+            type="text"
+            className="form__input"
+            placeholder="Beneficiary"
+            onChange={this.handleBeneficiaryChange}
+            value={this.state.beneficiary}
+          />
           <button className="form__button">
             Submit
           </button>
         </form>
-
-        {this.state.accounts}
       </section>
     );
   }

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as accountsActions from '../actions/accountsActions';
 import * as factoryActions from '../actions/factoryActions';
+import Form from '../components/Form';
 
 class Index extends Component {
   constructor(props) {
@@ -33,12 +34,11 @@ class Index extends Component {
   }
 
   render() {
-    console.log('Factory: ', this.state.factory);
-
     return (
       <div className="index">
         <h1>Trust Fund Factory</h1>
         {'Account: ' + this.state.account}
+        <Form {...this.state} />
       </div>
     );
   }
