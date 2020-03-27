@@ -10,23 +10,15 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: this.props.accounts[0],
-      factory: this.props.factory
+      account: this.props.accounts.list[0],
+      factory: this.props.factory,
+      fundId: this.props.factory.fundId
     }
   }
 
-  componentDidMount = () => {
-    this.props.actions.loadAccounts();
-    this.props.actions.loadFactory();
-
-    window.ethereum.on('accountsChanged', (accounts) => {
-      this.setState({account: accounts[0]});
-    });
-  }
-
   componentWillReceiveProps = (newProps) => {
-    if(this.state.account !== newProps.accounts[0]) {
-      this.setState({account: newProps.accounts[0]});
+    if(this.state.account !== newProps.accounts.list[0]) {
+      this.setState({account: newProps.accounts.list[0]});
     }
     if(this.state.factory !== newProps.factory) {
       this.setState({factory: newProps.factory});
@@ -38,7 +30,7 @@ class Index extends Component {
       <div className="index">
         <h1>Trust Fund Factory</h1>
         {'Account: ' + this.state.account}
-        <Form {...this.state} />
+        <Form {...this.state} actions={this.props.actions} />
       </div>
     );
   }

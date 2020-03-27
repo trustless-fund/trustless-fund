@@ -4,8 +4,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
+import {loadAccounts} from './actions/accountsActions';
+import {loadFactory} from './actions/factoryActions';
 
 const store = configureStore();
+
+store.dispatch(loadAccounts());
+store.dispatch(loadFactory());
+
+window.ethereum.on('accountsChanged', () => {
+  store.dispatch(loadAccounts());
+});
 
 ReactDOM.render(
   <Provider store={store}>

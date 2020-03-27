@@ -22,19 +22,19 @@ class Form extends Component {
       // Only allow future times
       // Return error
     
-    await this.props.factory.methods.createFund(
+    await this.props.factory.instance.methods.createFund(
       this.state.expiration,
       this.state.beneficiary
     ).send({from: this.props.account});
 
     // TODO: Add error handling and transaction receipts
 
-    await this.props.factory.methods.nextId().call((err, res) => {
+    await this.props.factory.instance.methods.nextId().call((err, res) => {
       if(err) {
         console.log(err);
       } else {
         console.log(res);
-        this.setState({fundId: res});
+        this.setState({fundId: res - 1});
       }
     });
   }
