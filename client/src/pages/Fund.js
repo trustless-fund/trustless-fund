@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
+import InvalidFund from '../components/InvalidFund';
 
 import TrustlessFund from '../contracts/TrustlessFund.json';
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
@@ -32,10 +33,22 @@ const drizzleOptions = {
 const drizzle = new Drizzle(drizzleOptions);
 
 class Fund extends Component {
+  state = {
+    invalidFund: false
+  }
+
   setFundAddress = async () => {
     const fundId = this.props.match.params.fundId;
     const fundAddress = await drizzle.contracts.TrustlessFundFactory.methods.getFund(fundId).call();
     drizzle.contracts.TrustlessFund.address = fundAddress;
+
+    this.isInvalidFund(fundAddress);
+  }
+
+  isInvalidFund = (address) => {
+    if(address === '0x0000000000000000000000000000000000000000') {
+      this.setState({invalidFund: true});
+    }
   }
 
   render() {
@@ -50,6 +63,10 @@ class Fund extends Component {
             }
 
             this.setFundAddress();
+
+            if(this.state.invalidFund) {
+              return (<InvalidFund />);
+            }
 
             return(
               <div className="fund">

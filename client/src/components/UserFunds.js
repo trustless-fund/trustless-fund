@@ -15,7 +15,6 @@ class UserFunds extends Component {
   }
 
   render() {
-    console.log(this.state.userFunds)
     return (
       <section className="user-funds">
         <h2 className="user-funds__header">
