@@ -36,7 +36,8 @@ const drizzle = new Drizzle(drizzleOptions);
 
 class Fund extends Component {
   state = {
-    invalidFund: false
+    invalidFund: false,
+    renderWithdrawalForm: false
   }
 
   setFundAddress = async () => {
@@ -53,6 +54,26 @@ class Fund extends Component {
     }
   }
 
+  getExpiration = async () => {
+    const expiration = await drizzle.contracts.TrustlessFund.methods.expiration().call();
+    return expiration;
+  }
+
+  getBeneficiary = async () => {
+    const beneficiary = await drizzle.contracts.TrustlessFund.methods.beneficiary().call();
+    return beneficiary;
+  }
+
+  renderWithdrawalForm = async (state) => {
+    const beneficiary = await this.getBeneficiary();
+    const expiration = await this.getExpiration();
+    const ts = Math.round((new Date()).getTime() / 1000);
+
+    if(beneficiary === state.accounts[0] && expiration < ts) {
+      this.setState({renderWithdrawalForm: true});
+    }
+  }
+
   render() {
     return (
       <DrizzleContext.Provider drizzle={drizzle}>
@@ -65,6 +86,7 @@ class Fund extends Component {
             }
 
             this.setFundAddress();
+            this.renderWithdrawalForm(drizzleState);
 
             if(this.state.invalidFund) {
               return (<InvalidFund />);
@@ -74,7 +96,9 @@ class Fund extends Component {
               <div className="fund">
                 <h1>Trust Fund</h1>
                 <DepositForm drizzle={drizzle} drizzleState={drizzleState} />
-                <WithdrawForm drizzle={drizzle} drizzleState={drizzleState} />
+                {this.state.renderWithdrawalForm &&
+                  <WithdrawForm drizzle={drizzle} drizzleState={drizzleState} />
+                }
               </div>
             );
           }}
