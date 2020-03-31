@@ -32,6 +32,12 @@ const drizzleOptions = {
 const drizzle = new Drizzle(drizzleOptions);
 
 class Fund extends Component {
+  setFundAddress = async () => {
+    const fundId = this.props.match.params.fundId;
+    const fundAddress = await drizzle.contracts.TrustlessFundFactory.methods.getFund(fundId).call();
+    drizzle.contracts.TrustlessFund.address = fundAddress;
+  }
+
   render() {
     return (
       <DrizzleContext.Provider drizzle={drizzle}>
@@ -42,6 +48,8 @@ class Fund extends Component {
             if(!initialized) {
               return "Loading..."
             }
+
+            this.setFundAddress();
 
             return(
               <div className="fund">
