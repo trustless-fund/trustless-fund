@@ -2,22 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from './store/configureStore';
-import { Provider } from 'react-redux';
-import {loadAccounts} from './actions/accountsActions';
-import {loadFactory} from './actions/factoryActions';
-
-store.dispatch(loadAccounts());
-store.dispatch(loadFactory());
-
-window.ethereum.on('accountsChanged', () => {
-  store.dispatch(loadAccounts());
-});
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>, 
+  <App />,
   document.getElementById('root')
 );
 
