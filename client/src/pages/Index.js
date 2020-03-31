@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Form from '../components/Form';
+import UserFunds from '../components/UserFunds';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 
@@ -34,6 +35,7 @@ class Index extends Component {
               <div className="index">
                 <h1>Trust Fund Factory</h1>
                 <Form drizzle={drizzle} drizzleState={drizzleState} />
+                <UserFunds drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );
           }}

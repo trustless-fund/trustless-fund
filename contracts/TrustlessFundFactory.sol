@@ -14,7 +14,7 @@ contract TrustlessFundFactory is Ownable {
   /**
     * @notice Maps user address to their corresponding funds.
   */
-  mapping(address => address[]) userFunds;
+  mapping(address => uint[]) userFunds;
 
   /**
     * @notice Get the next fund ID.
@@ -57,7 +57,7 @@ contract TrustlessFundFactory is Ownable {
     * @dev Given a user address, return all owned funds.
     * @param _user The address of the user.
   */
-  function getUserFunds(address _user) public view returns(address[] memory) {
+  function getUserFunds(address _user) public view returns(uint[] memory) {
     return userFunds[_user];
   }
 
@@ -80,7 +80,7 @@ contract TrustlessFundFactory is Ownable {
     require(msg.value == fee, 'must pay fee');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
     funds[nextId] = address(fund);
-    userFunds[msg.sender].push(address(fund));
+    userFunds[msg.sender].push(nextId);
     nextId++;
     emit CreateFund(_expiration, _beneficiary, msg.sender);
     return nextId - 1;
