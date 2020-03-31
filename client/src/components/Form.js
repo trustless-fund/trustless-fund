@@ -15,6 +15,7 @@ class Form extends Component {
   }
 
   render() {
+    console.log(this.props);
     return(
       <section className="form">
         <h1 className="form__header">

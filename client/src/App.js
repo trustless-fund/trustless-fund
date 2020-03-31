@@ -12,18 +12,16 @@ import Fund from './pages/Fund';
 class App extends Component {
   render() {
     return (
-      <div className="app">
-        <Router basename="/">
-          <Route 
-            exact path="/" 
-            component={Index}
-          />
-          <Route 
-            path="/fund/:fundId" 
-            component={Fund}
-          />
-        </Router>
-      </div>
+      <Router basename="/">
+        <Route 
+          exact path="/" 
+          component={Index}
+        />
+        <Route 
+          path="/fund/:fundId" 
+          component={Fund}
+        />
+      </Router>
     );
   }
 }
