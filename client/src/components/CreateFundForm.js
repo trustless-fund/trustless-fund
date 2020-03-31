@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Form extends Component {
+class CreateFundForm extends Component {
   state = {
     expiration: '',
     beneficiary: '',
@@ -65,4 +65,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default CreateFundForm;

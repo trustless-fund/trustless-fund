@@ -19,10 +19,12 @@ contract TrustlessFund is Ownable {
   */
   address public beneficiary;
 
+  address[] tokens
+
   /**
     * @notice Token balances.
   */
-  mapping(address => uint) balances;
+  mapping(address => uint) public balances;
 
   /*** EVENTS ***/
 
