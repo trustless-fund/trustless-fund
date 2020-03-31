@@ -3,6 +3,7 @@ import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 import InvalidFund from '../components/InvalidFund';
 import DepositForm from '../components/DepositForm';
+import WithdrawForm from '../components/WithdrawForm';
 
 import TrustlessFund from '../contracts/TrustlessFund.json';
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
@@ -73,6 +74,7 @@ class Fund extends Component {
               <div className="fund">
                 <h1>Trust Fund</h1>
                 <DepositForm drizzle={drizzle} drizzleState={drizzleState} />
+                <WithdrawForm drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );
           }}
