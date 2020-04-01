@@ -75,19 +75,6 @@ class Fund extends Component {
     }
   }
 
-  getAssets = async () => {
-    const tokenLUTSize = await drizzle.contracts.TrustlessFund.methods.getTokenSize().call();
-
-    if(tokenLUTSize > 0) {
-      for(let i = 0; i < tokenLUTSize; i++) {
-        const tokenAddress = await drizzle.contracts.TrustlessFund.methods.tokenLUT(i).call();
-        const token = await drizzle.contracts.TrustlessFund.methods.tokens(tokenAddress).call();
-        // console.log(tokenAddress);
-        // console.log(token);
-      }
-    }
-  }
-
   render() {
     return (
       <DrizzleContext.Provider drizzle={drizzle}>
@@ -101,7 +88,6 @@ class Fund extends Component {
 
             this.setFundAddress();
             this.renderWithdrawalForm(drizzleState);
-            this.getAssets();
 
             if(this.state.invalidFund) {
               return (<InvalidFund />);

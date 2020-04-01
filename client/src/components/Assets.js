@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Asset from './Asset';
 
 class Assets extends Component {
   constructor(props) {
@@ -29,7 +30,9 @@ class Assets extends Component {
   render() {
     return (
       <div>
-
+        {this.state.tokenList.map((token, i) => {
+          return (<Asset key={i} token={token} />);
+        })}
       </div>
     );
   }
