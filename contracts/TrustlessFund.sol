@@ -19,12 +19,24 @@ contract TrustlessFund is Ownable {
   */
   address public beneficiary;
 
-  address[] tokens
+  /**
+    * @notice Tracks token balance and whether it exists in
+              the lookup table.
+  */
+  struct Token {
+    uint balance;
+    bool exists;
+  }
 
   /**
-    * @notice Token balances.
+    * @notice Token look up table for front-end access.
   */
-  mapping(address => uint) public balances;
+  address[] public tokenLUT;
+
+  /**
+    * @notice Maps token address to token struct.
+  */
+  mapping(address => Token) public tokens;
 
   /*** EVENTS ***/
 
@@ -92,13 +104,21 @@ contract TrustlessFund is Ownable {
   function deposit(uint _amount, address _token) public payable {
     if(_token == address(0)) {
       require(msg.value == _amount, 'incorrect amount');
-      balances[_token] += _amount;
+      tokens[_token].balance += _amount;
+      if(tokens[_token].exists == false) {
+        tokens[_token].exists = true;
+        tokenLUT.push(_token);
+      }
       emit Deposit(msg.sender, _amount, _token);
     }
     else {
       IERC20 token = IERC20(_token);
       require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
-      balances[_token] += _amount;
+      tokens[_token].balance += _amount;
+      if(tokens[_token].exists == false) {
+        tokens[_token].exists = true;
+        tokenLUT.push(_token);
+      }
       emit Deposit(msg.sender, _amount, _token);
     }
   }
@@ -112,15 +132,15 @@ contract TrustlessFund is Ownable {
   */
   function withdraw(uint _amount, address _token) public isExpired() onlyBeneficiary() {
     if(_token == address(0)) {
-      require(address(this).balance >= _amount, 'not enough balance');
-      balances[_token] -= _amount;
+      require(tokens[_token].balance >= _amount, 'not enough balance');
+      tokens[_token].balance -= _amount;
       (bool success, ) = msg.sender.call.value(_amount)("");
       require(success, "Transfer failed.");
       emit Withdraw(msg.sender, _amount, _token);
     } else {
       IERC20 token = IERC20(_token);
-      require(token.balanceOf(address(this)) >= _amount, 'not enough balance');
-      balances[_token] -= _amount;
+      require(tokens[_token].balance >= _amount, 'not enough balance');
+      tokens[_token].balance -= _amount;
       require(token.transfer(msg.sender, _amount), 'transfer failed');
       emit Withdraw(msg.sender, _amount, _token);
     }
