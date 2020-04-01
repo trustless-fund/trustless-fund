@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
-import InvalidFund from '../components/InvalidFund';
-import DepositForm from '../components/DepositForm';
-import WithdrawForm from '../components/WithdrawForm';
-import Assets from '../components/Assets';
+import InvalidFund from '../components/Fund/InvalidFund';
+import DepositForm from '../components/Fund/DepositForm';
+import WithdrawForm from '../components/Fund/WithdrawForm';
+import Assets from '../components/Fund/Assets';
 
 import TrustlessFund from '../contracts/TrustlessFund.json';
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';

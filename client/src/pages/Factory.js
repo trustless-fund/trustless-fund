@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CreateFundForm from '../components/CreateFundForm';
+import CreateFundForm from '../components/Factory/CreateFundForm';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 

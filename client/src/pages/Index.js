@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserFunds from '../components/UserFunds';
+import UserFunds from '../components/Index/UserFunds';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 
