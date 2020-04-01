@@ -17,14 +17,6 @@ class WithdrawForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    let amount;
-
-    if(this.state.token === '0x0000000000000000000000000000000000000000') {
-      amount = this.state.amount;
-    } else {
-      amount = 0;
-    }
-
     await this.props.drizzle.contracts.TrustlessFund.methods.withdraw(
       this.state.amount,
       this.state.token
