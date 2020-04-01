@@ -5,7 +5,8 @@ class UserFunds extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userFunds: []
+      userFunds: [],
+      render: false
     }
 
     this.getUserFunds();
@@ -17,10 +18,14 @@ class UserFunds extends Component {
     ).call();
 
     this.setState({userFunds});
+
+    if(userFunds.length > 0) {
+      this.setState({render: true});
+    }
   }
 
   render() {
-    if(this.state.userFunds > 0) {
+    if(this.state.render) {
       return (
         <section className="user-funds">
           <h2 className="user-funds__header">
