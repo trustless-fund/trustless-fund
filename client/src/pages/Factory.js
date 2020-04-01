@@ -31,8 +31,7 @@ class Index extends Component {
             }
 
             return(
-              <div className="index">
-                <h1>Deploy a Trustless Fund</h1>
+              <div>
                 <CreateFundForm drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );

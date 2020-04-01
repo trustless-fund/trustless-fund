@@ -31,7 +31,7 @@ class CreateFundForm extends Component {
     return(
       <section className="form">
         <h1 className="form__header">
-          Create a TrustFund
+          Deploy a Trustless Fund
         </h1>
         <form 
           className="form__form" 
