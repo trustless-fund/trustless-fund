@@ -8,7 +8,7 @@ import Index from './pages/Index';
 import Fund from './pages/Fund';
 import Factory from './pages/Factory';
 
-// import './layout/config/_base.sass';
+import './layout/config/_base.sass';
 
 class App extends Component {
   render() {
