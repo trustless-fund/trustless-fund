@@ -6,6 +6,7 @@ import {
 
 import Index from './pages/Index';
 import Fund from './pages/Fund';
+import Factory from './pages/Factory';
 
 // import './layout/config/_base.sass';
 
@@ -16,6 +17,10 @@ class App extends Component {
         <Route 
           exact path="/" 
           component={Index}
+        />
+        <Route 
+          path="/factory" 
+          component={Factory}
         />
         <Route 
           path="/fund/:fundId" 
