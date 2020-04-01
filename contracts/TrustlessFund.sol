@@ -91,7 +91,12 @@ contract TrustlessFund is Ownable {
 
   /*** VIEW/PURE FUNCTIONS ***/
 
-
+  /**
+    * @dev Returns the length of the tokenLUT array.
+  */
+  function getTokenSize() public view returns(uint) {
+    return tokenLUT.length;
+  }
 
   /*** OTHER FUNCTIONS ***/
 
