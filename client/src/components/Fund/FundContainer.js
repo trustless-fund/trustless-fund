@@ -4,6 +4,7 @@ import DepositForm from './DepositForm';
 import WithdrawForm from './WithdrawForm';
 import Assets from './Assets';
 import Nav from '../Shared/Nav';
+import Footer from '../Shared/Footer';
 
 class FundContainer extends Component {
   constructor(props) {
@@ -41,6 +42,7 @@ class FundContainer extends Component {
         <DepositForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <WithdrawForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
+        <Footer drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
       </div>
     );
   }

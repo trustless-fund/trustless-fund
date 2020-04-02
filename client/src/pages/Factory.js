@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CreateFundForm from '../components/Factory/CreateFundForm';
 import Nav from '../components/Shared/Nav';
+import Footer from '../components/Shared/Footer';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 
@@ -35,6 +36,7 @@ class Index extends Component {
               <div>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
                 <CreateFundForm drizzle={drizzle} drizzleState={drizzleState} />
+                <Footer drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );
           }}

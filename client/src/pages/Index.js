@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserFunds from '../components/Index/UserFunds';
 import Hero from '../components/Index/Hero';
 import Nav from '../components/Shared/Nav';
+import Footer from '../components/Shared/Footer';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 
@@ -37,6 +38,7 @@ class Index extends Component {
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
                 <Hero drizzle={drizzle} drizzleState={drizzleState} />
                 <UserFunds drizzle={drizzle} drizzleState={drizzleState} />
+                <Footer drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );
           }}
