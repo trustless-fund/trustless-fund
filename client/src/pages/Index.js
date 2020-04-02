@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UserFunds from '../components/Index/UserFunds';
-import NewUser from '../components/Index/NewUser';
+import Hero from '../components/Index/Hero';
 import Nav from '../components/Shared/Nav';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
@@ -35,7 +35,7 @@ class Index extends Component {
             return(
               <div>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
-                <NewUser drizzle={drizzle} drizzleState={drizzleState} />
+                <Hero drizzle={drizzle} drizzleState={drizzleState} />
                 <UserFunds drizzle={drizzle} drizzleState={drizzleState} />
               </div>
             );

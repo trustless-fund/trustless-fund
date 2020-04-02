@@ -1,0 +1,51 @@
+@import '../config/_colors'
+@import '../config/_variables'
+  
+.hero
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  height: 100vh
+  width: 100%
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+
+.hero__header
+  color: $color-black
+  font-size: 48px
+  font-weight: 500
+  margin-bottom: 0
+
+.hero__subheader
+  color: $color-black
+  font-size: 24px
+  font-weight: 300
+
+.hero__buttons
+  display: flex
+  align-items: center
+  margin-top: 32px
+
+.hero__button
+  font-size: 32px
+  height: 60px
+  width: 320px
+  margin: 0 8px
+  text-decoration: none
+  text-align: center
+  border-radius: 3px
+  display: flex
+  align-items: center
+  justify-content: center
+
+.hero__button--outline
+  border: 1px solid $color-gold
+  background: $color-white
+  color: $color-gold
+
+.hero__button--solid
+  background: $color-gold
+  color: $color-white
