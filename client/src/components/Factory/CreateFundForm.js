@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Button from '../Shared/Button';
 
 import '../../layout/components/createfund.sass';
 
@@ -61,9 +62,7 @@ class CreateFundForm extends Component {
               value={this.state.beneficiary}
             />
           </label>
-          <button className="create-fund__button">
-            Create Fund
-          </button>
+          <Button text="Create Fund" class="solid create-fund__button" link={null} button={true} onClick={this.handleSubmit} />
         </form>
         {this.state.fundId &&
           <a href={`/fund/${this.state.fundId}`} className="create-fund__link">

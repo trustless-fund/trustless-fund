@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Button from '../Shared/Button';
 
 import '../../layout/components/hero.sass';
 
@@ -36,12 +37,8 @@ class Hero extends Component {
             Lock in the Time-Value of Your Money
           </h4>
           <div className="hero__buttons">
-            <a href="/" className="hero__button hero__button--outline">
-              Learn More
-            </a>
-            <a href="/factory" className="hero__button hero__button--solid">
-              Create Fund
-            </a>
+            <Button text="Learn More" class="outline" link="/" button={false} />
+            <Button text="Create Fund" class="solid" link="/factory" button={false} />
           </div>
         </section>
       );
