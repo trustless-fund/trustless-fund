@@ -34,12 +34,12 @@ class Index extends Component {
             }
 
             return(
-              <div>
+              <>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
                 <Hero drizzle={drizzle} drizzleState={drizzleState} />
                 <UserFunds drizzle={drizzle} drizzleState={drizzleState} />
                 <Footer drizzle={drizzle} drizzleState={drizzleState} />
-              </div>
+              </>
             );
           }}
         </DrizzleContext.Consumer>

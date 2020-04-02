@@ -3,8 +3,6 @@ import InvalidFund from './InvalidFund';
 import DepositForm from './DepositForm';
 import WithdrawForm from './WithdrawForm';
 import Assets from './Assets';
-import Nav from '../Shared/Nav';
-import Footer from '../Shared/Footer';
 
 class FundContainer extends Component {
   constructor(props) {
@@ -37,12 +35,10 @@ class FundContainer extends Component {
 
     return (
       <div className="fund">
-        <Nav drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <h1>Trustless Fund</h1>
         <DepositForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <WithdrawForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        <Footer drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
       </div>
     );
   }

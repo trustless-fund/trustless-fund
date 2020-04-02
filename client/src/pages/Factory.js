@@ -33,11 +33,11 @@ class Index extends Component {
             }
 
             return(
-              <div>
+              <>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
                 <CreateFundForm drizzle={drizzle} drizzleState={drizzleState} />
                 <Footer drizzle={drizzle} drizzleState={drizzleState} />
-              </div>
+              </>
             );
           }}
         </DrizzleContext.Consumer>

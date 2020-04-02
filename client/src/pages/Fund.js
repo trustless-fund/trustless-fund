@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
-import InvalidFund from '../components/Fund/InvalidFund';
 import FundContainer from '../components/Fund/FundContainer';
+import Nav from '../components/Shared/Nav';
+import Footer from '../components/Shared/Footer';
 
 import TrustlessFund from '../contracts/TrustlessFund.json';
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
@@ -46,10 +47,14 @@ class Fund extends Component {
             }
 
             return(
-              <FundContainer 
-                drizzle={drizzle} 
-                drizzleState={drizzleState} 
-                fundId={this.props.match.params.fundId} />
+              <>
+                <Nav drizzle={drizzle} drizzleState={drizzleState} />
+                <FundContainer 
+                  drizzle={drizzle} 
+                  drizzleState={drizzleState} 
+                  fundId={this.props.match.params.fundId} />
+                <Footer drizzle={drizzle} drizzleState={drizzleState} />
+              </>
             );
           }}
         </DrizzleContext.Consumer>
