@@ -5,6 +5,8 @@ import twitter from '../../assets/twitter.svg';
 import discord from '../../assets/discord.png';
 import medium from '../../assets/medium.png';
 
+import '../../layout/components/footer.sass';
+
 class Footer extends Component {
   render() {
     return (
