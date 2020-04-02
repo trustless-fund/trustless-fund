@@ -26,7 +26,9 @@ class CreateFundForm extends Component {
     ).send({from: this.props.drizzleState.accounts[0]});
 
     const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
-    this.setState({fundId: nextId - 1});
+    console.log(nextId);
+    console.log((nextId - 1).toString());
+    this.setState({fundId: (nextId - 1).toString()});
   }
 
   render() {
