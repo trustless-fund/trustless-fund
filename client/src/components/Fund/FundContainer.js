@@ -39,7 +39,6 @@ class FundContainer extends Component {
 
     return (
       <div className="fund">
-        <h1>Trustless Fund</h1>
         <Expiration drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <DepositForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />

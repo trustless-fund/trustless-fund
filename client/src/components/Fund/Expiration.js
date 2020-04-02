@@ -19,7 +19,10 @@ class Expiration extends Component {
     return (
       <p className="fund__expiration">
         {/* TODO: Convert expiration to date */}
-        Lock Active Until: {this.state.expiration}
+        <span className="fund__expiration--until">
+          Lock Active Until:
+        </span>
+        {this.state.expiration}
       </p>
     );
   }
