@@ -62,6 +62,11 @@ class FundContainer extends Component {
     this.setState({depositModal: true});
   }
 
+  renderWithdrawalModal = () => {
+    console.log('renderWithdrawalModal')
+    this.setState({withdrawalModal: true});
+  }
+
   render() {
     if(this.state.invalidFund) {
       return (<InvalidFund />);
@@ -72,15 +77,18 @@ class FundContainer extends Component {
         <Expiration drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <div className="fund__buttons">
-          {/* TODO: Add on click and additional class */}
-          <Button 
-            text="Deposit" 
-            class="solid fund__button" 
-            link={null} 
-            button={true} 
-          />
+          <div onClick={this.renderDepositModal}>
+            <Button 
+              text="Deposit" 
+              class="solid fund__button" 
+              link={null} 
+              button={true}
+            />
+          </div>
           {this.state.renderWithdrawal &&
-            <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
+            <div onClick={this.renderWithdrawalModal}>
+              <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
+            </div>
           }
         </div>
         {this.state.depositModal &&
