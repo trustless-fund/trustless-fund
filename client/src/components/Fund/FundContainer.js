@@ -3,6 +3,10 @@ import InvalidFund from './InvalidFund';
 import DepositForm from './DepositForm';
 import WithdrawForm from './WithdrawForm';
 import Assets from './Assets';
+import Expiration from './Expiration';
+import Details from './Details';
+
+import '../../layout/components/fund.sass';
 
 class FundContainer extends Component {
   constructor(props) {
@@ -36,9 +40,11 @@ class FundContainer extends Component {
     return (
       <div className="fund">
         <h1>Trustless Fund</h1>
+        <Expiration drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
+        <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <DepositForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
         <WithdrawForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
+        <Details drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
       </div>
     );
   }
