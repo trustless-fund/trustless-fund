@@ -66,7 +66,7 @@ class CreateFundForm extends Component {
           </button>
         </form>
         {this.state.fundId &&
-          <a href={`/fund/${this.state.fundId}`}>
+          <a href={`/fund/${this.state.fundId}`} className="create-fund__link">
             Go to fund
           </a>
         }
