@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import UserFund from './UserFund';
 
+import '../../layout/components/userfunds.sass';
+
 class UserFunds extends Component {
   constructor(props) {
     super(props);
