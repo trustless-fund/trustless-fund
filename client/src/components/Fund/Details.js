@@ -26,10 +26,12 @@ class Details extends Component {
     return (
       <div className="fund__details">
         <p className="fund__detail">
-          Owner: {this.state.owner}
+          <span className="fund__detail--bold">Owner:</span> 
+          {this.state.owner}
         </p>
         <p className="fund__detail">
-          Beneficiary: {this.state.beneficiary}
+        <span className="fund__detail--bold">Beneficiary:</span> 
+        {this.state.beneficiary}
         </p>
       </div>
     );
