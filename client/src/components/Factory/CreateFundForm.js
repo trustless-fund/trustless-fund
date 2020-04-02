@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import '../../layout/components/createfund.sass';
+
 class CreateFundForm extends Component {
   state = {
     expiration: '',
@@ -29,30 +31,36 @@ class CreateFundForm extends Component {
 
   render() {
     return(
-      <section className="form">
-        <h1 className="form__header">
+      <section className="create-fund">
+        <h1 className="create-fund__header">
           Deploy a Trustless Fund
         </h1>
         <form 
-          className="form__form" 
+          className="create-fund__form" 
           onSubmit={this.handleSubmit}
         >
-          <input 
-            type="number"
-            className="form__input"
-            placeholder="Expiration"
-            onChange={this.handleExpirationChange}
-            value={this.state.expiration}
-          />
-          <input 
-            type="text"
-            className="form__input"
-            placeholder="Beneficiary"
-            onChange={this.handleBeneficiaryChange}
-            value={this.state.beneficiary}
-          />
-          <button className="form__button">
-            Submit
+          <label className="create-fund__label">
+            Set an expiration date
+            <input 
+              type="number"
+              className="create-fund__input"
+              placeholder="Expiration"
+              onChange={this.handleExpirationChange}
+              value={this.state.expiration}
+            />
+          </label>
+          <label className="create-fund__label">
+            Choose a beneficiary address
+            <input 
+              type="text"
+              className="create-fund__input"
+              placeholder="Beneficiary"
+              onChange={this.handleBeneficiaryChange}
+              value={this.state.beneficiary}
+            />
+          </label>
+          <button className="create-fund__button">
+            Create Fund
           </button>
         </form>
         {this.state.fundId &&
