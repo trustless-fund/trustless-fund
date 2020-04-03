@@ -61,8 +61,16 @@ class FundContainer extends Component {
     this.setState({depositModal: true});
   }
 
+  closeDepositModal = () => {
+    this.setState({depositModal: false});
+  }
+
   renderWithdrawalModal = () => {
     this.setState({withdrawalModal: true});
+  }
+
+  closeWithdrawalModal = () => {
+    this.setState({withdrawalModal: false});
   }
 
   render() {
@@ -89,14 +97,20 @@ class FundContainer extends Component {
             </div>
           }
         </div>
-        <DepositForm 
-          drizzle={this.props.drizzle} 
-          drizzleState={this.props.drizzleState} 
-          renderDeposit={this.state.depositModal} />
-        <WithdrawForm 
-          drizzle={this.props.drizzle} 
-          drizzleState={this.props.drizzleState} 
-          renderWithdrawal={this.state.withdrawalModal} />
+        {this.state.depositModal && 
+          <div className="deposit__background" onClick={this.closeDepositModal}>
+            <DepositForm 
+              drizzle={this.props.drizzle} 
+              drizzleState={this.props.drizzleState} />
+          </div>
+        }
+        {this.state.withdrawalModal &&
+          <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
+            <WithdrawForm 
+              drizzle={this.props.drizzle} 
+              drizzleState={this.props.drizzleState} />
+          </div>
+        }
         <Details drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
       </div>
     );

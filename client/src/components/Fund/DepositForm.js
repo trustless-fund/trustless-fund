@@ -101,60 +101,50 @@ class DepositForm extends Component {
   }
 
   render() {
-    // Temporarily set to true for testing
-    if(true) {
-      return (
-        <div className="deposit" onClick={this.closeModal}>
-          <div className="deposit__modal">
-            <img 
-              src={x} 
-              alt="X" 
-              onClick={this.closeModal} 
-              className="deposit__x" />
-            <h2 className="deposit__header">Deposit Token</h2>
-            <form onSubmit={this.handleSubmit} className="deposit__form">
-              <label className="deposit__label">
-                Token
-                <input 
-                  type="text"
-                  className="deposit__input"
-                  placeholder="Token"
-                  onChange={this.handleTokenChange}
-                  value={this.state.token}
-                />
-              </label>
-              <label className="deposit__label">
-                Amount
-                <input 
-                  type="number"
-                  className="deposit__input"
-                  placeholder="Amount"
-                  onChange={this.handleAmountChange}
-                  value={this.state.amount}
-                />
-              </label>
-              {this.state.approve && 
-                <div>
-                  <button type="button" onClick={this.approveToken}>
-                    Unlock {this.state.amount}
-                  </button>
-                  <button type="button" onClick={this.infiniteApproveToken}>
-                    Infinite Unlock
-                  </button>
-                </div>
-              }
-              <Button 
-                text="Deposit" 
-                class="solid deposit__button" 
-                link={null} 
-                button={true}
-              />
-            </form>
-          </div>
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div className="deposit">
+        <h2 className="deposit__header">Deposit Token</h2>
+        <form onSubmit={this.handleSubmit} className="deposit__form">
+          <label className="deposit__label">
+            Token
+            <input 
+              type="text"
+              className="deposit__input"
+              placeholder="Token"
+              onChange={this.handleTokenChange}
+              value={this.state.token}
+            />
+          </label>
+          <label className="deposit__label">
+            Amount
+            <input 
+              type="number"
+              className="deposit__input"
+              placeholder="Amount"
+              onChange={this.handleAmountChange}
+              value={this.state.amount}
+            />
+          </label>
+          {this.state.approve && 
+            <div>
+              <button type="button" onClick={this.approveToken}>
+                Unlock {this.state.amount}
+              </button>
+              <button type="button" onClick={this.infiniteApproveToken}>
+                Infinite Unlock
+              </button>
+            </div>
+          }
+          {/* TODO: Disable if not unlocked */}
+          <Button 
+            text="Deposit" 
+            class="solid deposit__button" 
+            link={null} 
+            button={true}
+          />
+        </form>
+      </div>
+    );
   }
 }
 

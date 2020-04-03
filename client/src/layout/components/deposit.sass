@@ -2,6 +2,18 @@
 @import '../config/_variables'
 
 .deposit
+  position: relative
+  background: $color-white
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  padding: 40px
+  border-radius: 3px
+  border: 1px solid $color-grey
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25)
+
+.deposit__background
   position: absolute
   top: 0
   left: 0
@@ -14,18 +26,6 @@
   justify-content: center
   background: rgba($color-black, 0.25)
   z-index: 2
-
-.deposit__modal
-  position: relative
-  background: $color-white
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  padding: 40px
-  border-radius: 3px
-  border: 1px solid $color-grey
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25)
 
 .deposit__x
   position: absolute
