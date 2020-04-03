@@ -15,10 +15,10 @@ class Nav extends Component {
   render() {
     return (
       <nav className="nav">
-        <h1 className="nav__header">
+        <a href="/" className="nav__header">
           <img src={logo} alt="Trustless Fund" className="nav__logo" />
           Trustless Fund
-        </h1>
+        </a>
         <button className="nav__button">
           {this.state.address ? 
             `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
