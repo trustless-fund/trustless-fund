@@ -5,30 +5,17 @@ import FundContainer from '../components/Fund/FundContainer';
 import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 
-import TrustlessFund from '../contracts/TrustlessFund.json';
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
 // import ERC20 from '../contracts/ERC20.json';
 
 const drizzleOptions = {
   contracts: [
-    TrustlessFund,
-    TrustlessFundFactory,
-    // ERC20
+    TrustlessFundFactory
   ], 
   events: {
-    TrustlessFund: [
-      'Deposit',
-      'Withdraw', 
-      'IncreaseTime', 
-      'UpdateBeneficiary'
-    ],
     TrustlessFundFactory: [
       'CreateFund'
-    ],
-    // ERC20: [
-    //   'Transfer',
-    //   'Approval'
-    // ]
+    ]
   }
 }
 

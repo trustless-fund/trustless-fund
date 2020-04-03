@@ -10541,8 +10541,7 @@
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-04-03T19:15:37.094Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-04-03T22:38:40.178Z",
   "devdoc": {
     "methods": {
       "constructor": {

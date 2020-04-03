@@ -38,8 +38,10 @@ class DepositForm extends Component {
       amount = 0;
     }
 
-    await this.props.drizzle.contracts.TrustlessFund.methods.deposit(
-      this.state.amount,
+    console.log(this.props.drizzle.web3.utils.toWei(this.state.amount));
+
+    await this.props.fund.methods.deposit(
+      this.props.drizzle.web3.utils.toWei(this.state.amount),
       this.state.token
     ).send({
       from: this.props.drizzleState.accounts[0],
@@ -59,7 +61,7 @@ class DepositForm extends Component {
 
     const allowance = await token.methods.allowance(
       this.props.drizzleState.accounts[0], 
-      this.props.drizzle.contracts.TrustlessFund._address
+      this.props.fund._address
     ).call()
     
     if(allowance < this.state.amount) {
@@ -76,7 +78,7 @@ class DepositForm extends Component {
     );
 
     token.methods.approve(
-      this.props.drizzle.contracts.TrustlessFund._address,
+      this.props.fund._address,
       this.state.amount
     ).send({from: this.props.drizzleState.accounts[0]});
   }
@@ -88,7 +90,7 @@ class DepositForm extends Component {
     );
 
     token.methods.approve(
-      this.props.drizzle.contracts.TrustlessFund._address,
+      this.props.fund._address,
       Number.MAX_SAFE_INTEGER
     ).send({from: this.props.drizzleState.accounts[0]});
   }

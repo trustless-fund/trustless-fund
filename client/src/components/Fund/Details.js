@@ -13,12 +13,12 @@ class Details extends Component {
   }
 
   getOwner = async () => {
-    const owner = await this.props.drizzle.contracts.TrustlessFund.methods.owner().call();
+    const owner = await this.props.fund.methods.owner().call();
     this.setState({owner});
   }
 
   getBeneficiary = async () => {
-    const beneficiary = await this.props.drizzle.contracts.TrustlessFund.methods.beneficiary().call();
+    const beneficiary = await this.props.fund.methods.beneficiary().call();
     this.setState({beneficiary});
   }
 

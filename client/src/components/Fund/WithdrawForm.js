@@ -27,7 +27,7 @@ class WithdrawForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    await this.props.drizzle.contracts.TrustlessFund.methods.withdraw(
+    await this.props.fund.methods.withdraw(
       this.state.amount,
       this.state.token
     ).send({

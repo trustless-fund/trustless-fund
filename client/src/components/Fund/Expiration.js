@@ -26,7 +26,7 @@ class Expiration extends Component {
   ];
 
   getExpiration = async () => {
-    const expiration = await this.props.drizzle.contracts.TrustlessFund.methods.expiration().call();
+    const expiration = await this.props.fund.methods.expiration().call();
     const dateObject = new Date(expiration * 1000);
     const monthNum = dateObject.getUTCMonth();
     const month = this.months[monthNum];

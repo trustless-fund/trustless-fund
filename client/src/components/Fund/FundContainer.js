@@ -6,6 +6,7 @@ import Assets from './Assets';
 import Expiration from './Expiration';
 import Details from './Details';
 import Button from '../Shared/Button';
+import TrustlessFund from '../../contracts/TrustlessFund.json';
 
 import '../../layout/components/fund.sass';
 
@@ -16,17 +17,27 @@ class FundContainer extends Component {
       invalidFund: false,
       renderWithdrawal: false,
       depositModal: false,
-      withdrawalModal: false
+      withdrawalModal: false,
+      fund: null
     }
 
-    this.setFundAddress();
+    this.getFund();
+  }
+
+  componentDidUpdate = () => {
     this.renderWithdrawal();
   }
 
-  setFundAddress = async () => {
+  getFund = async () => {
     const fundAddress = 
       await this.props.drizzle.contracts.TrustlessFundFactory.methods.getFund(this.props.fundId).call();
-    this.props.drizzle.contracts.TrustlessFund.address = fundAddress;
+
+    const fund = await new this.props.drizzle.web3.eth.Contract(
+      TrustlessFund.abi,
+      fundAddress
+    );
+
+    this.setState({fund});
 
     this.isInvalidFund(fundAddress);
   }
@@ -38,12 +49,12 @@ class FundContainer extends Component {
   }
 
   getExpiration = async () => {
-    const expiration = await this.props.drizzle.contracts.TrustlessFund.methods.expiration().call();
+    const expiration = await this.state.fund.methods.expiration().call();
     return expiration;
   }
 
   getBeneficiary = async () => {
-    const beneficiary = await this.props.drizzle.contracts.TrustlessFund.methods.beneficiary().call();
+    const beneficiary = await this.state.fund.methods.beneficiary().call();
     return beneficiary;
   }
 
@@ -98,42 +109,57 @@ class FundContainer extends Component {
       return (<InvalidFund />);
     }
 
-    return (
-      <div className="fund">
-        <Expiration drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        <Assets drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        <div className="fund__buttons">
-          <div onClick={this.renderDepositModal}>
-            <Button 
-              text="Deposit" 
-              class="solid fund__button" 
-              link={null} 
-              button={true}
-            />
+    if(this.state.fund) {
+      return (
+        <div className="fund">
+          <Expiration 
+            drizzle={this.props.drizzle} 
+            drizzleState={this.props.drizzleState}
+            fund={this.state.fund} />
+          <Assets 
+            drizzle={this.props.drizzle} 
+            drizzleState={this.props.drizzleState}
+            fund={this.state.fund} />
+          <div className="fund__buttons">
+            <div onClick={this.renderDepositModal}>
+              <Button 
+                text="Deposit" 
+                class="solid fund__button" 
+                link={null} 
+                button={true}
+              />
+            </div>
+            {this.state.renderWithdrawal &&
+              <div onClick={this.renderWithdrawalModal}>
+                <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
+              </div>
+            }
           </div>
-          {this.state.renderWithdrawal &&
-            <div onClick={this.renderWithdrawalModal}>
-              <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
+          {this.state.depositModal && 
+            <div className="deposit__background" onClick={this.closeDepositModal}>
+              <DepositForm 
+                drizzle={this.props.drizzle} 
+                drizzleState={this.props.drizzleState}
+                fund={this.state.fund} />
             </div>
           }
+          {this.state.withdrawalModal &&
+            <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
+              <WithdrawForm 
+                drizzle={this.props.drizzle} 
+                drizzleState={this.props.drizzleState}
+                fund={this.state.fund} />
+            </div>
+          }
+          <Details 
+            drizzle={this.props.drizzle} 
+            drizzleState={this.props.drizzleState}
+            fund={this.state.fund} />
         </div>
-        {this.state.depositModal && 
-          <div className="deposit__background" onClick={this.closeDepositModal}>
-            <DepositForm 
-              drizzle={this.props.drizzle} 
-              drizzleState={this.props.drizzleState} />
-          </div>
-        }
-        {this.state.withdrawalModal &&
-          <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
-            <WithdrawForm 
-              drizzle={this.props.drizzle} 
-              drizzleState={this.props.drizzleState} />
-          </div>
-        }
-        <Details drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-      </div>
-    );
+      );
+    }
+
+    return null;
   }
 }
 

@@ -14,13 +14,15 @@ class Assets extends Component {
   }
 
   getAssets = async () => {
-    const tokenLUTSize = await this.props.drizzle.contracts.TrustlessFund.methods.getTokenSize().call();
+    const tokenLUTSize = await this.props.fund.methods.getTokenSize().call();
     let tokenList = [];
+
+    console.log(this.props.fund);
 
     if(tokenLUTSize > 0) {
       for(let i = 0; i < tokenLUTSize; i++) {
-        const tokenAddress = await this.props.drizzle.contracts.TrustlessFund.methods.tokenLUT(i).call();
-        const token = await this.props.drizzle.contracts.TrustlessFund.methods.tokens(tokenAddress).call();
+        const tokenAddress = await this.props.fund.methods.tokenLUT(i).call();
+        const token = await this.props.fund.methods.tokens(tokenAddress).call();
         tokenList.push({address: tokenAddress, balance: token.balance});
       }
     }
