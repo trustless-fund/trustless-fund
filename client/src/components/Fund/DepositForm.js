@@ -9,11 +9,11 @@ class DepositForm extends Component {
   state = {
     token: '',
     amount: '',
-    render: this.props.render
+    renderDeposit: this.props.render
   }
 
   componentWillReceiveProps = (nextProps) => {
-    this.setState({render: nextProps.render});
+    this.setState({renderDeposit: nextProps.renderDeposit});
   }
 
   handleTokenChange = (e) => {
@@ -24,6 +24,7 @@ class DepositForm extends Component {
     this.setState({amount: e.target.value});
   }
 
+  // TODO: Close modals on submit
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -45,11 +46,11 @@ class DepositForm extends Component {
   }
 
   closeModal = () => {
-    this.setState({render: false});
+    this.setState({renderDeposit: false});
   }
 
   render() {
-    if(this.state.render) {
+    if(this.state.renderDeposit) {
       return (
         <div className="deposit" onClick={this.closeModal}>
           <div className="deposit__modal">
