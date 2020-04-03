@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
 
-import x from '../../assets/x.svg';
-
 import '../../layout/components/withdraw.sass';
 
 class WithdrawForm extends Component {

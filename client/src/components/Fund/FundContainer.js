@@ -63,8 +63,15 @@ class FundContainer extends Component {
 
   closeDepositModal = (e) => {
     const depositBackground = document.querySelector('.deposit__background');
+    const depositButton = document.querySelector('.deposit__button');
     if(e.target === depositBackground) {
       this.setState({depositModal: false});
+    }
+    if(e.target === depositButton) {
+      // TODO: Find better solution than setTimeout
+      setTimeout(() => {
+        this.setState({depositModal: false});
+      }, 200);
     }
   }
 
@@ -74,8 +81,15 @@ class FundContainer extends Component {
 
   closeWithdrawalModal = (e) => {
     const withdrawBackground = document.querySelector('.withdraw__background');
+    const withdrawButton = document.querySelector('.withdraw__button');
     if(e.target === withdrawBackground) {
       this.setState({withdrawalModal: false});
+    }
+    if(e.target === withdrawButton) {
+      // TODO: Find better solution than setTimeout
+      setTimeout(() => {
+        this.setState({withdrawalModal: false});
+      }, 200);
     }
   }
 

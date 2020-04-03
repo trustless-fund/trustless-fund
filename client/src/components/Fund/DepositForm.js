@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Button from '../Shared/Button';
 import ERC20 from '../../contracts/ERC20.json';
 
-import x from '../../assets/x.svg';
-
 import '../../layout/components/deposit.sass';
 
 class DepositForm extends Component {
@@ -28,7 +26,6 @@ class DepositForm extends Component {
     this.getTokenAllowance();
   }
 
-  // TODO: Close modals on submit
   // TODO: Get value in full units and convert to wei
   handleSubmit = async (e) => {
     e.preventDefault();

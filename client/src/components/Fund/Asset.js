@@ -45,6 +45,7 @@ class Asset extends Component {
           {this.state.token}
         </p>
         <p className="assets__asset-info assets__asset-info--amount">
+          {/* TODO: If balance < 0.0001, return <0.0001 */}
           {this.state.balance}
           {/* TODO: Get USD value from etherscan api */}
         </p>
