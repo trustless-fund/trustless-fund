@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import ERC20 from '../../contracts/ERC20.json';
 
 import x from '../../assets/x.svg';
 
@@ -9,19 +10,22 @@ class DepositForm extends Component {
   state = {
     token: '',
     amount: '',
-    renderDeposit: this.props.render
+    renderDeposit: this.props.render,
+    approve: false
   }
 
   componentWillReceiveProps = (nextProps) => {
     this.setState({renderDeposit: nextProps.renderDeposit});
   }
 
-  handleTokenChange = (e) => {
-    this.setState({token: e.target.value});
+  handleTokenChange = async (e) => {
+    await this.setState({token: e.target.value});
+    this.getTokenAllowance();
   }
 
-  handleAmountChange = (e) => {
-    this.setState({amount: e.target.value});
+  handleAmountChange = async (e) => {
+    await this.setState({amount: e.target.value});
+    this.getTokenAllowance();
   }
 
   // TODO: Close modals on submit
@@ -45,12 +49,32 @@ class DepositForm extends Component {
     });
   }
 
+  getTokenAllowance = async () => {
+    if(this.state.token === '0x0000000000000000000000000000000000000000') {
+      return;
+    }
+    
+    const token = await new this.props.drizzle.web3.eth.Contract(
+      ERC20, this.state.token
+    );
+
+    const allowance = await token.methods.allowance(
+      this.props.drizzleState.accounts[0], 
+      this.props.drizzle.contracts.TrustlessFund._address
+    ).call()
+    
+    if(allowance < this.state.amount) {
+      this.setState({approve: true});
+    }
+  }
+
   closeModal = () => {
     this.setState({renderDeposit: false});
   }
 
   render() {
-    if(this.state.renderDeposit) {
+    // Temporarily set to true for testing
+    if(true) {
       return (
         <div className="deposit" onClick={this.closeModal}>
           <div className="deposit__modal">
@@ -81,6 +105,9 @@ class DepositForm extends Component {
                   value={this.state.amount}
                 />
               </label>
+              {this.state.approve && 
+                <button>Approve</button>
+              }
               <Button 
                 text="Deposit" 
                 class="solid deposit__button" 
