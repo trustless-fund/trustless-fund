@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ERC20 from '../../contracts/ERC20.json';
 
 class Asset extends Component {
   constructor(props) {
@@ -14,11 +15,20 @@ class Asset extends Component {
     this.getBalance();
   }
 
-  getToken = () => {
+  // getLogo = () => {
+  //   const logo = 
+  // }
+
+  getToken = async () => {
     if(this.props.token.address === '0x0000000000000000000000000000000000000000') {
       this.setState({token: 'ETH'});
+    } else {
+      const token = await new this.props.drizzle.web3.eth.Contract(
+        ERC20, this.props.token.address
+      );
+      const symbol = await token.methods.symbol().call();
+      this.setState({token: symbol});
     }
-    // TODO: Else get token from etherscan api
   }
 
   getBalance = () => {

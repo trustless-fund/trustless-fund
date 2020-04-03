@@ -10326,10 +10326,111 @@
   },
   "networks": {
     "3": {
-      "events": {},
+      "events": {
+        "0xe31c7b8d08ee7db0afa68782e1028ef92305caeea8626633ad44d413e30f6b2f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_value",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_token",
+              "type": "address"
+            }
+          ],
+          "name": "Deposit",
+          "type": "event",
+          "signature": "0xe31c7b8d08ee7db0afa68782e1028ef92305caeea8626633ad44d413e30f6b2f"
+        },
+        "0x58ae8539310b13b3c818e29f630eec0786d040ebcdddb7ed8566ba460a463d1e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_newExpiration",
+              "type": "uint256"
+            }
+          ],
+          "name": "IncreaseTime",
+          "type": "event",
+          "signature": "0x58ae8539310b13b3c818e29f630eec0786d040ebcdddb7ed8566ba460a463d1e"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event",
+          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        },
+        "0xe6131a64e93e9aa4ff38892c34d563c06dcc1e03b3d6897cc65f0903e2ad6848": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_newBeneficiary",
+              "type": "address"
+            }
+          ],
+          "name": "UpdateBeneficiary",
+          "type": "event",
+          "signature": "0xe6131a64e93e9aa4ff38892c34d563c06dcc1e03b3d6897cc65f0903e2ad6848"
+        },
+        "0x56c54ba9bd38d8fd62012e42c7ee564519b09763c426d331b3661b537ead19b2": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_value",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_token",
+              "type": "address"
+            }
+          ],
+          "name": "Withdraw",
+          "type": "event",
+          "signature": "0x56c54ba9bd38d8fd62012e42c7ee564519b09763c426d331b3661b537ead19b2"
+        }
+      },
       "links": {},
-      "address": "0x6Fe6F2f15275BEA07602c013deaF7A8C0c8A8b98",
-      "transactionHash": "0x85beeed3ea8df3c0bafa2b16a3876067ec9d633a3ca18502d49084d2135cff61"
+      "address": "0xe9249ac44A46c95bB5afe3192bd3c945D7A89C63",
+      "transactionHash": "0x669881f5d371f34582377e024562bada23949ffa96b5c86b36480886331ca72b"
     },
     "5777": {
       "events": {
@@ -10440,7 +10541,7 @@
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-04-02T18:49:09.695Z",
+  "updatedAt": "2020-04-03T19:15:37.094Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {
