@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import Button from '../Shared/Button';
+
+import '../../layout/components/deposit.sass';
 
 class DepositForm extends Component {
   state = {
@@ -36,27 +39,38 @@ class DepositForm extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Deposit Form</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            type="text"
-            className="form__input"
-            placeholder="Token"
-            onChange={this.handleTokenChange}
-            value={this.state.token}
-          />
-          <input 
-            type="number"
-            className="form__input"
-            placeholder="Amount"
-            onChange={this.handleAmountChange}
-            value={this.state.amount}
-          />
-          <button className="form__button">
-            Submit
-          </button>
-        </form>
+      <div className="deposit">
+        <div className="deposit__modal">
+          <h2 className="deposit__header">Deposit Token</h2>
+          <form onSubmit={this.handleSubmit} className="deposit__form">
+            <label className="deposit__label">
+              Token
+              <input 
+                type="text"
+                className="deposit__input"
+                placeholder="Token"
+                onChange={this.handleTokenChange}
+                value={this.state.token}
+              />
+            </label>
+            <label className="deposit__label">
+              Amount
+              <input 
+                type="number"
+                className="deposit__input"
+                placeholder="Amount"
+                onChange={this.handleAmountChange}
+                value={this.state.amount}
+              />
+            </label>
+            <Button 
+              text="Deposit" 
+              class="solid deposit__button" 
+              link={null} 
+              button={true}
+            />
+          </form>
+        </div>
       </div>
     );
   }

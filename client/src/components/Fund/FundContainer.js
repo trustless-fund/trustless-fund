@@ -58,12 +58,10 @@ class FundContainer extends Component {
   }
 
   renderDepositModal = () => {
-    console.log('renderDepositModal')
     this.setState({depositModal: true});
   }
 
   renderWithdrawalModal = () => {
-    console.log('renderWithdrawalModal')
     this.setState({withdrawalModal: true});
   }
 
