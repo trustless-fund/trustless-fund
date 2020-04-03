@@ -61,16 +61,22 @@ class FundContainer extends Component {
     this.setState({depositModal: true});
   }
 
-  closeDepositModal = () => {
-    this.setState({depositModal: false});
+  closeDepositModal = (e) => {
+    const depositBackground = document.querySelector('.deposit__background');
+    if(e.target === depositBackground) {
+      this.setState({depositModal: false});
+    }
   }
 
   renderWithdrawalModal = () => {
     this.setState({withdrawalModal: true});
   }
 
-  closeWithdrawalModal = () => {
-    this.setState({withdrawalModal: false});
+  closeWithdrawalModal = (e) => {
+    const withdrawBackground = document.querySelector('.withdraw__background');
+    if(e.target === withdrawBackground) {
+      this.setState({withdrawalModal: false});
+    }
   }
 
   render() {
