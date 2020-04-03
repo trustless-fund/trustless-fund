@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
 
+import x from '../../assets/x.svg';
+
 import '../../layout/components/deposit.sass';
 
 class DepositForm extends Component {
   state = {
     token: '',
-    amount: ''
+    amount: '',
+    render: this.props.render
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({render: nextProps.render});
   }
 
   handleTokenChange = (e) => {
@@ -37,42 +44,54 @@ class DepositForm extends Component {
     });
   }
 
+  closeModal = () => {
+    this.setState({render: false});
+  }
+
   render() {
-    return (
-      <div className="deposit">
-        <div className="deposit__modal">
-          <h2 className="deposit__header">Deposit Token</h2>
-          <form onSubmit={this.handleSubmit} className="deposit__form">
-            <label className="deposit__label">
-              Token
-              <input 
-                type="text"
-                className="deposit__input"
-                placeholder="Token"
-                onChange={this.handleTokenChange}
-                value={this.state.token}
+    if(this.state.render) {
+      return (
+        <div className="deposit" onClick={this.closeModal}>
+          <div className="deposit__modal">
+            <img 
+              src={x} 
+              alt="X" 
+              onClick={this.closeModal} 
+              className="deposit__x" />
+            <h2 className="deposit__header">Deposit Token</h2>
+            <form onSubmit={this.handleSubmit} className="deposit__form">
+              <label className="deposit__label">
+                Token
+                <input 
+                  type="text"
+                  className="deposit__input"
+                  placeholder="Token"
+                  onChange={this.handleTokenChange}
+                  value={this.state.token}
+                />
+              </label>
+              <label className="deposit__label">
+                Amount
+                <input 
+                  type="number"
+                  className="deposit__input"
+                  placeholder="Amount"
+                  onChange={this.handleAmountChange}
+                  value={this.state.amount}
+                />
+              </label>
+              <Button 
+                text="Deposit" 
+                class="solid deposit__button" 
+                link={null} 
+                button={true}
               />
-            </label>
-            <label className="deposit__label">
-              Amount
-              <input 
-                type="number"
-                className="deposit__input"
-                placeholder="Amount"
-                onChange={this.handleAmountChange}
-                value={this.state.amount}
-              />
-            </label>
-            <Button 
-              text="Deposit" 
-              class="solid deposit__button" 
-              link={null} 
-              button={true}
-            />
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
 

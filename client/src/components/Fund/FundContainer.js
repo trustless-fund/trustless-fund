@@ -89,12 +89,14 @@ class FundContainer extends Component {
             </div>
           }
         </div>
-        {this.state.depositModal &&
-          <DepositForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        }
-        {this.state.withdrawalModal &&
-          <WithdrawForm drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
-        }
+        <DepositForm 
+          drizzle={this.props.drizzle} 
+          drizzleState={this.props.drizzleState} 
+          render={this.state.depositModal} />
+        <WithdrawForm 
+          drizzle={this.props.drizzle} 
+          drizzleState={this.props.drizzleState} 
+          render={this.state.withdrawalModal} />
         <Details drizzle={this.props.drizzle} drizzleState={this.props.drizzleState} />
       </div>
     );
