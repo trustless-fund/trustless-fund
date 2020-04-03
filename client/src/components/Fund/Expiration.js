@@ -39,7 +39,7 @@ class Expiration extends Component {
   render() {
     return (
       <p className="fund__expiration">
-        {/* TODO: Convert expiration to date */}
+        {/* TODO: If lock already expired, display 'Unlocked' */}
         <span className="fund__expiration--until">
           Lock Active Until:
         </span>
