@@ -29,6 +29,7 @@ class DepositForm extends Component {
   }
 
   // TODO: Close modals on submit
+  // TODO: Get value in full units and convert to wei
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,6 +55,7 @@ class DepositForm extends Component {
       return;
     }
     
+    // TODO: Only run if is address
     const token = await new this.props.drizzle.web3.eth.Contract(
       ERC20, this.state.token
     );
@@ -65,7 +67,33 @@ class DepositForm extends Component {
     
     if(allowance < this.state.amount) {
       this.setState({approve: true});
+    } else {
+      this.setState({approve: false});
     }
+  }
+
+  approveToken = async () => {
+    // TODO: Only run if is address
+    const token = await new this.props.drizzle.web3.eth.Contract(
+      ERC20, this.state.token
+    );
+
+    token.methods.approve(
+      this.props.drizzle.contracts.TrustlessFund._address,
+      this.state.amount
+    ).send({from: this.props.drizzleState.accounts[0]});
+  }
+
+  infiniteApproveToken = async () => {
+    // TODO: Only run if is address
+    const token = await new this.props.drizzle.web3.eth.Contract(
+      ERC20, this.state.token
+    );
+
+    token.methods.approve(
+      this.props.drizzle.contracts.TrustlessFund._address,
+      Number.MAX_SAFE_INTEGER
+    ).send({from: this.props.drizzleState.accounts[0]});
   }
 
   closeModal = () => {
@@ -106,7 +134,14 @@ class DepositForm extends Component {
                 />
               </label>
               {this.state.approve && 
-                <button>Approve</button>
+                <div>
+                  <button type="button" onClick={this.approveToken}>
+                    Unlock {this.state.amount}
+                  </button>
+                  <button type="button" onClick={this.infiniteApproveToken}>
+                    Infinite Unlock
+                  </button>
+                </div>
               }
               <Button 
                 text="Deposit" 
