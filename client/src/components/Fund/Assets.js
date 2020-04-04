@@ -41,6 +41,11 @@ class Assets extends Component {
             Amount/USD
           </p>
         </div>
+        {this.state.tokenList.length === 0 &&
+          <p className="asset__empty">
+            No assets yet... Click deposit to get started.
+          </p>
+        }
         <ul className="assets__list">
           {this.state.tokenList.map((token, i) => {
             return (<Asset 
