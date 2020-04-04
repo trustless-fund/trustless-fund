@@ -33,15 +33,13 @@ class DepositForm extends Component {
     let amount;
 
     if(this.state.token === '0x0000000000000000000000000000000000000000') {
-      amount = this.state.amount;
+      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
     } else {
       amount = 0;
     }
 
-    console.log(this.props.drizzle.web3.utils.toWei(this.state.amount));
-
     await this.props.fund.methods.deposit(
-      this.props.drizzle.web3.utils.toWei(this.state.amount),
+      amount,
       this.state.token
     ).send({
       from: this.props.drizzleState.accounts[0],
@@ -79,7 +77,7 @@ class DepositForm extends Component {
 
     token.methods.approve(
       this.props.fund._address,
-      this.state.amount
+      this.props.drizzle.web3.utils.toWei(this.state.amount)
     ).send({from: this.props.drizzleState.accounts[0]});
   }
 
@@ -91,7 +89,7 @@ class DepositForm extends Component {
 
     token.methods.approve(
       this.props.fund._address,
-      Number.MAX_SAFE_INTEGER
+      this.props.drizzle.web3.utils.toWei(Number.MAX_SAFE_INTEGER)
     ).send({from: this.props.drizzleState.accounts[0]});
   }
 

@@ -27,8 +27,10 @@ class WithdrawForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    const amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+
     await this.props.fund.methods.withdraw(
-      this.state.amount,
+      amount,
       this.state.token
     ).send({
       from: this.props.drizzleState.accounts[0]
