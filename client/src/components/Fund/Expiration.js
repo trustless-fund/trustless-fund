@@ -4,10 +4,12 @@ class Expiration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expiration: null
+      expiration: null,
+      isExpired: false
     }
 
     this.getExpiration();
+    this.isExpired();
   }
 
   months = [
@@ -36,10 +38,27 @@ class Expiration extends Component {
     this.setState({expiration: fullDate});
   }
 
+  isExpired = async () => {
+    const expiration = await this.props.fund.methods.expiration().call();
+    // Source: https://electrictoolbox.com/unix-timestamp-javascript/
+    const ts = Math.round((new Date()).getTime() / 1000);
+
+    if(expiration < ts) {
+      this.setState({isExpired: true});
+    }
+  }
+
   render() {
+    if(this.state.isExpired) {
+      return (
+        <p className="fund__expiration fund__expiration--unlocked">
+          Fund Unlocked
+        </p>
+      );
+    }
+
     return (
       <p className="fund__expiration">
-        {/* TODO: If lock already expired, display 'Unlocked' */}
         <span className="fund__expiration--until">
           Lock Active Until:
         </span>
