@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import UserFund from './UserFund';
+import Button from '../Shared/Button';
 
 import '../../layout/components/userfunds.sass';
 
@@ -36,6 +37,11 @@ class UserFunds extends Component {
           {this.state.userFunds.map((id, i) => {
             return (<UserFund key={i} id={id} />);
           })}
+          <Button 
+            text="Create Fund" 
+            class="solid user-funds__button" 
+            link="/factory" 
+            button={false} />
         </section>
       );
     }
