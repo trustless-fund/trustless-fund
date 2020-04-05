@@ -29,11 +29,27 @@ class WithdrawForm extends Component {
 
     const amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
 
+    console.log(amount);
+
     await this.props.fund.methods.withdraw(
       amount,
       this.state.token
     ).send({
       from: this.props.drizzleState.accounts[0]
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
     });
   }
 

@@ -29,12 +29,13 @@ class DepositForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    let amount;
+    let sendAmount;
+    const amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
 
     if(this.state.token === '0x0000000000000000000000000000000000000000') {
-      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+      sendAmount = amount;
     } else {
-      amount = 0;
+      sendAmount = 0;
     }
 
     await this.props.fund.methods.deposit(
@@ -42,7 +43,7 @@ class DepositForm extends Component {
       this.state.token
     ).send({
       from: this.props.drizzleState.accounts[0],
-      value: amount
+      value: sendAmount
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', (number, receipt) => {
@@ -54,6 +55,9 @@ class DepositForm extends Component {
       }
     }).on('error', (err, receipt) => {
       this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
     });
   }
 
