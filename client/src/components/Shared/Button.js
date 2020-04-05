@@ -11,8 +11,23 @@ class Button extends Component {
         </button>
       );
     }
+    if(this.props.target) {
+      return (
+        <a 
+          href={`${this.props.link}`} 
+          className={`hero__button hero__button--${this.props.class}`}
+          target="_blank"
+          rel="noopener"
+          >
+          {this.props.text}
+        </a>
+      );
+    }
     return (
-      <a href={`${this.props.link}`} className={`hero__button hero__button--${this.props.class}`}>
+      <a 
+        href={`${this.props.link}`} 
+        className={`hero__button hero__button--${this.props.class}`}
+        >
         {this.props.text}
       </a>
     );

@@ -37,8 +37,17 @@ class Hero extends Component {
             Lock in the Time-Value of Your Money
           </h4>
           <div className="hero__buttons">
-            <Button text="Learn More" class="outline" link="/" button={false} />
-            <Button text="Create Fund" class="solid" link="/factory" button={false} />
+            <Button 
+              text="Learn More" 
+              class="outline" 
+              link="https://docs.trustless.fund/" 
+              button={false}
+              target={true} />
+            <Button 
+              text="Create Fund" 
+              class="solid" 
+              link="/factory" 
+              button={false} />
           </div>
         </section>
       );
