@@ -17,8 +17,6 @@ class Assets extends Component {
     const tokenLUTSize = await this.props.fund.methods.getTokenSize().call();
     let tokenList = [];
 
-    console.log(this.props.fund);
-
     if(tokenLUTSize > 0) {
       for(let i = 0; i < tokenLUTSize; i++) {
         const tokenAddress = await this.props.fund.methods.tokenLUT(i).call();

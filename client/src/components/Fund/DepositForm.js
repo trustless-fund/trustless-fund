@@ -26,7 +26,6 @@ class DepositForm extends Component {
     this.getTokenAllowance();
   }
 
-  // TODO: Get value in full units and convert to wei
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,6 +43,17 @@ class DepositForm extends Component {
     ).send({
       from: this.props.drizzleState.accounts[0],
       value: amount
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
     });
   }
 

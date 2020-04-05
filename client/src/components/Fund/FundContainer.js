@@ -6,6 +6,7 @@ import Assets from './Assets';
 import Expiration from './Expiration';
 import Details from './Details';
 import Button from '../Shared/Button';
+import Message from '../Shared/Message';
 import TrustlessFund from '../../contracts/TrustlessFund.json';
 
 import '../../layout/components/fund.sass';
@@ -18,7 +19,9 @@ class FundContainer extends Component {
       renderWithdrawal: false,
       depositModal: false,
       withdrawalModal: false,
-      fund: null
+      fund: null,
+      message: null,
+      txHash: null
     }
 
     this.getFund();
@@ -104,6 +107,22 @@ class FundContainer extends Component {
     }
   }
 
+  setMessage = (newMessage, txHash) => {
+    this.setState({
+      message: newMessage,
+      txHash
+    });
+    console.log(this.state.message);
+    console.log(this.state.txHash);
+  }
+
+  clearMessage = () => {
+    this.setState({
+      message: null,
+      txHash: null
+    });
+  }
+
   render() {
     if(this.state.invalidFund) {
       return (<InvalidFund />);
@@ -140,7 +159,9 @@ class FundContainer extends Component {
               <DepositForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
-                fund={this.state.fund} />
+                fund={this.state.fund}
+                setMessage={this.setMessage}
+                clearMessage={this.clearMessage} />
             </div>
           }
           {this.state.withdrawalModal &&
@@ -148,13 +169,16 @@ class FundContainer extends Component {
               <WithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
-                fund={this.state.fund} />
+                fund={this.state.fund}
+                setMessage={this.setMessage}
+                clearMessage={this.clearMessage} />
             </div>
           }
           <Details 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
             fund={this.state.fund} />
+          <Message message={this.state.message} txHash={this.state.txHash} />
         </div>
       );
     }

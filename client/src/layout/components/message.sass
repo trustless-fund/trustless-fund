@@ -1,0 +1,18 @@
+@import '../config/_colors'
+@import '../config/_variables'
+@import '../config/_animations'
+  
+.message
+  position: absolute
+  bottom: $footer-height
+  left: 60px
+  font-size: 18px
+  background: $color-gold
+  color: $color-white
+  padding: 8px 16px
+  border-radius: 3px
+  text-decoration: none
+  cursor: pointer
+  opacity: 0
+  transform: translateX(-20px)
+  animation: 0.3s fadeRight forwards
