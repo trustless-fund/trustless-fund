@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import Message from '../Shared/Message';
 
 import '../../layout/components/createfund.sass';
 
@@ -7,7 +8,9 @@ class CreateFundForm extends Component {
   state = {
     expiration: '',
     beneficiary: '',
-    fundId: null
+    fundId: null,
+    messsage: null,
+    txHash: null
   }
 
   handleExpirationChange = (e) => {
@@ -24,12 +27,40 @@ class CreateFundForm extends Component {
     await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
       this.state.expiration,
       this.state.beneficiary
-    ).send({from: this.props.drizzleState.accounts[0]});
+    ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+      this.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.clearMessage();
+      }, 10000);
+    });
 
     const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
-    console.log(nextId);
-    console.log((nextId - 1).toString());
     this.setState({fundId: (nextId - 1).toString()});
+  }
+
+  setMessage = (newMessage, txHash) => {
+    this.setState({
+      message: newMessage,
+      txHash
+    });
+    console.log(this.state.message);
+    console.log(this.state.txHash);
+  }
+
+  clearMessage = () => {
+    this.setState({
+      message: null,
+      txHash: null
+    });
   }
 
   render() {
@@ -69,6 +100,7 @@ class CreateFundForm extends Component {
             Go to fund
           </a>
         }
+        <Message message={this.state.message} txHash={this.state.txHash} />
       </section>
     );
   }
