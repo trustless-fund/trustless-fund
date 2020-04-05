@@ -17,7 +17,7 @@ class Button extends Component {
           href={`${this.props.link}`} 
           className={`hero__button hero__button--${this.props.class}`}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           >
           {this.props.text}
         </a>
