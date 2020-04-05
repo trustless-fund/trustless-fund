@@ -92,7 +92,22 @@ class DepositForm extends Component {
     token.methods.approve(
       this.props.fund._address,
       this.props.drizzle.web3.utils.toWei(this.state.amount)
-    ).send({from: this.props.drizzleState.accounts[0]});
+    ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+      this.setState({approve: false});
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
+    });
   }
 
   infiniteApproveToken = async () => {
