@@ -167,12 +167,18 @@ class DepositForm extends Component {
             />
           </label>
           {this.state.approve && 
-            <div>
-              <button type="button" onClick={this.approveToken}>
-                Unlock {this.state.amount}
+            <div className="deposit__unlocks">
+              <button 
+                type="button" 
+                onClick={this.approveToken}
+                className="deposit__unlock">
+                  Unlock {this.state.amount}
               </button>
-              <button type="button" onClick={this.infiniteApproveToken}>
-                Infinite Unlock
+              <button 
+                type="button" 
+                onClick={this.infiniteApproveToken}
+                className="deposit__unlock">
+                  Infinite Unlock
               </button>
             </div>
           }

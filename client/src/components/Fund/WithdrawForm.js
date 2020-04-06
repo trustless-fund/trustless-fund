@@ -93,9 +93,14 @@ class WithdrawForm extends Component {
             />
           </label>
           {/* TODO: Should only appear if valid token is entered */}
-          <button type="button" onClick={this.setMaxAmount}>
-            Max
-          </button>
+          {this.state.token &&
+            <button 
+              type="button" 
+              onClick={this.setMaxAmount}
+              className="withdraw__max">
+              Max
+            </button>
+          }
           <Button 
             text="Withdraw" 
             class="solid withdraw__button" 
