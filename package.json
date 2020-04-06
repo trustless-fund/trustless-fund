@@ -10,6 +10,7 @@
     "@openzeppelin/contracts": "^2.5.0",
     "@truffle/hdwallet-provider": "^1.0.33",
     "openzeppelin-solidity": "^2.5.0",
+    "react-datepicker": "^2.14.1",
     "redux-devtools-extension": "^2.13.8",
     "solc": "^0.6.0",
     "solc-js": "^1.0.1",

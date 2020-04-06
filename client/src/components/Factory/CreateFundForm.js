@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import DatePicker from 'react-datepicker';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import '../../layout/components/createfund.sass';
 
 class CreateFundForm extends Component {
+  
+
   render() {
     return(
       <div className="create-fund">
@@ -16,13 +20,9 @@ class CreateFundForm extends Component {
         >
           <label className="create-fund__label">
             Set an expiration date
-            <input 
-              type="number"
-              className="create-fund__input"
-              placeholder="Expiration"
-              onChange={this.props.handleExpirationChange}
-              value={this.props.expiration}
-            />
+            <DatePicker 
+              selected={this.props.expiration}
+              onChange={(date) => this.props.handleExpirationChange(date)} />
           </label>
           <label className="create-fund__label">
             Choose a beneficiary address

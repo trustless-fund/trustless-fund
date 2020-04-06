@@ -7,15 +7,24 @@ import '../../layout/components/fundcreated.sass';
 
 class FactoryContainer extends Component {
   state = {
-    expiration: '',
+    expiration: null,
     beneficiary: '',
     fundId: null,
     messsage: null,
     txHash: null
   }
 
-  handleExpirationChange = (e) => {
-    this.setState({expiration: e.target.value});
+  componentDidMount = () => {
+    this.getDate();
+  }
+
+  getDate = () => {
+    const date = Date.now();
+    this.setState({expiration: date});
+  }
+
+  handleExpirationChange = (date) => {
+    this.setState({expiration: date});
   }
 
   handleBeneficiaryChange = (e) => {
@@ -25,8 +34,10 @@ class FactoryContainer extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    const expiration = this.state.expiration.getTime() / 1000;
+
     await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
-      this.state.expiration,
+      expiration,
       this.state.beneficiary
     ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
       this.setMessage('Transaction Pending...', txHash);
@@ -90,7 +101,8 @@ class FactoryContainer extends Component {
           handleBeneficiaryChange={this.handleBeneficiaryChange}
           handleSubmit={this.handleSubmit}
           expiration={this.state.expiration}
-          beneficiary={this.state.beneficiary} />
+          beneficiary={this.state.beneficiary}
+          date={this.state.date} />
         <Message message={this.state.message} txHash={this.state.txHash} />
       </section>
     );
