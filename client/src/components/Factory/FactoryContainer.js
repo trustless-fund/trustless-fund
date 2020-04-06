@@ -34,7 +34,12 @@ class FactoryContainer extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const expiration = this.state.expiration.getTime() / 1000;
+    let expiration;
+    if(this.state.expiration instanceof Date) {
+      expiration = this.state.expiration.getTime() / 1000;
+    } else {
+      expiration = this.state.expiration;
+    }
 
     await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
       expiration,
