@@ -21,10 +21,12 @@ class Assets extends Component {
         }
         <ul className="assets__list">
           {this.props.tokenList.map((token, i) => {
-            return (<Asset 
-                      key={i} 
-                      token={token} 
-                      drizzle={this.props.drizzle} />);
+            if(token.balance > 0) {
+              return (<Asset 
+                key={i} 
+                token={token} 
+                drizzle={this.props.drizzle} />);
+            }
           })}
         </ul>
       </div>
