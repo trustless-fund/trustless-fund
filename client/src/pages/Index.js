@@ -19,7 +19,7 @@ const drizzleOptions = {
   }
 }
 
-const drizzle = new Drizzle(drizzleOptions);
+let drizzle = new Drizzle(drizzleOptions);
 
 class Index extends Component {
   render() {

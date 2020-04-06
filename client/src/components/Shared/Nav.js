@@ -10,6 +10,10 @@ class Nav extends Component {
     this.state = {
       address: this.props.drizzleState.accounts[0]
     }
+
+    window.ethereum.on('accountsChanged', (accounts) => {
+      this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+    });
   }
 
   render() {
@@ -20,8 +24,8 @@ class Nav extends Component {
           Trustless Fund
         </a>
         <button className="nav__button">
-          {this.state.address ? 
-            `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+          {this.props.drizzleState.accounts[0] ? 
+            `${this.props.drizzleState.accounts[0].slice(0, 4)}...${this.props.drizzleState.accounts[0].slice(this.props.drizzleState.accounts[0].length - 4, this.props.drizzleState.accounts[0].length)}` : 
             'Connect Wallet'}
         </button>
       </nav>

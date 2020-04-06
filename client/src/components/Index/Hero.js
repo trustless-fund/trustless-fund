@@ -11,6 +11,11 @@ class Hero extends Component {
       render: false
     }
 
+    window.ethereum.on('accountsChanged', (accounts) => {
+      this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+      this.getUserFunds();
+    });
+
     this.getUserFunds();
   }
 
@@ -23,6 +28,8 @@ class Hero extends Component {
 
     if(userFunds.length === 0) {
       this.setState({render: true});
+    } else {
+      this.setState({render: false});
     }
   }
 

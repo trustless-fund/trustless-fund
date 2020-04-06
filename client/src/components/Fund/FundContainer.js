@@ -30,6 +30,12 @@ class FundContainer extends Component {
     await this.getFund();
     this.renderWithdrawal();
     this.getAssets();
+
+    window.ethereum.on('accountsChanged', async (accounts) => {
+      console.log(accounts);
+      await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+      this.renderWithdrawal();
+    });
   }
 
   getFund = async () => {
@@ -69,8 +75,10 @@ class FundContainer extends Component {
     const expiration = await this.getExpiration();
     const ts = Math.round((new Date()).getTime() / 1000);
 
-    if(beneficiary === this.props.drizzleState.accounts[0] && expiration < ts) {
+    if(beneficiary.toLowerCase() === this.props.drizzleState.accounts[0].toLowerCase() && expiration < ts) {
       this.setState({renderWithdrawal: true});
+    } else {
+      this.setState({renderWithdrawal: false});
     }
   }
 
