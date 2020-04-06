@@ -26,6 +26,8 @@ class Assets extends Component {
                 key={i} 
                 token={token} 
                 drizzle={this.props.drizzle} />);
+            } else {
+              return null;
             }
           })}
         </ul>
