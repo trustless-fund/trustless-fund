@@ -94,7 +94,10 @@ class FactoryContainer extends Component {
               class="solid" 
               link={`/fund/${this.state.fundId}`} button={false} />
           </div>
-          <Message message={this.state.message} txHash={this.state.txHash} />
+          <Message 
+            message={this.state.message} 
+            txHash={this.state.txHash} 
+            drizzleState={this.props.drizzleState} />
         </section>
       );
     }
@@ -108,7 +111,10 @@ class FactoryContainer extends Component {
           expiration={this.state.expiration}
           beneficiary={this.state.beneficiary}
           date={this.state.date} />
-        <Message message={this.state.message} txHash={this.state.txHash} />
+        <Message 
+          message={this.state.message} 
+          txHash={this.state.txHash} 
+          drizzleState={this.props.drizzleState} />
       </section>
     );
   }
