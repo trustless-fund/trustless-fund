@@ -26,11 +26,34 @@ class DepositForm extends Component {
     this.getTokenAllowance();
   }
 
+  getDecimals = async () => {
+    if(this.state.token !== '0x0000000000000000000000000000000000000000') {
+      const token = await new this.props.drizzle.web3.eth.Contract(
+        ERC20, this.state.token
+      );
+      const decimals = await token.methods.decimals().call();
+      return decimals;
+    }
+  }
+
+  toWeiDecimals = (amount, decimals) => {
+    const finalAmount = amount*10**decimals;
+    return finalAmount;
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    const decimals = await this.getDecimals();
+    let amount;
+
+    if(decimals && decimals !== '18') {
+      amount = this.props.drizzle.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
+    } else {
+      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+    }
+
     let sendAmount;
-    const amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
 
     if(this.state.token === '0x0000000000000000000000000000000000000000') {
       sendAmount = amount;
