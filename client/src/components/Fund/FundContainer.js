@@ -24,11 +24,10 @@ class FundContainer extends Component {
       txHash: null,
       tokenList: []
     }
-
-    this.getFund();
   }
 
-  componentDidUpdate = () => {
+  componentDidMount = async () => {
+    await this.getFund();
     this.renderWithdrawal();
     this.getAssets();
   }
