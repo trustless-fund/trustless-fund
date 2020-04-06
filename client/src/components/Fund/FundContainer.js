@@ -38,7 +38,7 @@ class FundContainer extends Component {
 
     await this.isInvalidFund(fundAddress);
 
-    if(this.state.invalidFund) {
+    if(!this.state.invalidFund) {
       const fund = await new this.props.drizzle.web3.eth.Contract(
         TrustlessFund.abi,
         fundAddress
