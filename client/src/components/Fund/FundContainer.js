@@ -21,7 +21,8 @@ class FundContainer extends Component {
       withdrawalModal: false,
       fund: null,
       message: null,
-      txHash: null
+      txHash: null,
+      tokenList: []
     }
 
     this.getFund();
@@ -29,6 +30,7 @@ class FundContainer extends Component {
 
   componentDidUpdate = () => {
     this.renderWithdrawal();
+    this.getAssets();
   }
 
   getFund = async () => {
@@ -123,6 +125,21 @@ class FundContainer extends Component {
     });
   }
 
+  getAssets = async () => {
+    const tokenLUTSize = await this.state.fund.methods.getTokenSize().call();
+    let tokenList = [];
+
+    if(tokenLUTSize > 0) {
+      for(let i = 0; i < tokenLUTSize; i++) {
+        const tokenAddress = await this.state.fund.methods.tokenLUT(i).call();
+        const token = await this.state.fund.methods.tokens(tokenAddress).call();
+        tokenList.push({address: tokenAddress, balance: token.balance});
+      }
+    }
+
+    this.setState({tokenList});
+  }
+
   render() {
     if(this.state.invalidFund) {
       return (<InvalidFund />);
@@ -138,7 +155,7 @@ class FundContainer extends Component {
           <Assets 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
-            fund={this.state.fund} />
+            tokenList={this.state.tokenList} />
           <div className="fund__buttons">
             <div onClick={this.renderDepositModal}>
               <Button 
@@ -171,7 +188,8 @@ class FundContainer extends Component {
                 drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
                 setMessage={this.setMessage}
-                clearMessage={this.clearMessage} />
+                clearMessage={this.clearMessage}
+                tokenList={this.state.tokenList} />
             </div>
           }
           <Details 

@@ -10,6 +10,8 @@ class WithdrawForm extends Component {
       token: '',
       amount: ''
     }
+
+    console.log(this.props.tokenList);
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -53,6 +55,18 @@ class WithdrawForm extends Component {
     });
   }
 
+  setMaxAmount = () => {
+    let maxAmount;
+    this.props.tokenList.forEach((token) => {
+      if(token.address === this.state.token) {
+        maxAmount = token.balance;
+      }
+    });
+    maxAmount = this.props.drizzle.web3.utils.fromWei(maxAmount);
+
+    this.setState({amount: maxAmount});
+  }
+
   render() {
     return (
       <div className="withdraw">
@@ -78,6 +92,10 @@ class WithdrawForm extends Component {
               value={this.state.amount}
             />
           </label>
+          {/* TODO: Should only appear if valid token is entered */}
+          <button type="button" onClick={this.setMaxAmount}>
+            Max
+          </button>
           <Button 
             text="Withdraw" 
             class="solid withdraw__button" 

@@ -3,31 +3,6 @@ import Asset from './Asset';
 import '../../layout/components/assets.sass';
 
 class Assets extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tokenList: []
-    }
-
-    this.getAssets();
-  }
-
-  getAssets = async () => {
-    const tokenLUTSize = await this.props.fund.methods.getTokenSize().call();
-    let tokenList = [];
-
-    if(tokenLUTSize > 0) {
-      for(let i = 0; i < tokenLUTSize; i++) {
-        const tokenAddress = await this.props.fund.methods.tokenLUT(i).call();
-        const token = await this.props.fund.methods.tokens(tokenAddress).call();
-        tokenList.push({address: tokenAddress, balance: token.balance});
-      }
-    }
-
-    this.setState({tokenList});
-  }
-
   render() {
     return (
       <div className="assets">
@@ -39,13 +14,13 @@ class Assets extends Component {
             Amount/USD
           </p>
         </div>
-        {this.state.tokenList.length === 0 &&
+        {this.props.tokenList.length === 0 &&
           <p className="asset__empty">
             No assets yet... Click deposit to get started.
           </p>
         }
         <ul className="assets__list">
-          {this.state.tokenList.map((token, i) => {
+          {this.props.tokenList.map((token, i) => {
             return (<Asset 
                       key={i} 
                       token={token} 
