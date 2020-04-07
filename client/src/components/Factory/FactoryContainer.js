@@ -69,8 +69,6 @@ class FactoryContainer extends Component {
       message: newMessage,
       txHash
     });
-    console.log(this.state.message);
-    console.log(this.state.txHash);
   }
 
   clearMessage = () => {

@@ -102,8 +102,6 @@ class Asset extends Component {
       fixedBalance = Math.round((parseFloat(balance) + Number.EPSILON) * 1000) / 1000;
     }
 
-    console.log(fixedBalance);
-
     this.setState({balance: fixedBalance});
   }
 

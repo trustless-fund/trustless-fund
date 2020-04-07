@@ -32,7 +32,6 @@ class FundContainer extends Component {
     this.getAssets();
 
     window.ethereum.on('accountsChanged', async (accounts) => {
-      console.log(accounts);
       await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
       this.renderWithdrawal();
     });
@@ -123,8 +122,6 @@ class FundContainer extends Component {
       message: newMessage,
       txHash
     });
-    console.log(this.state.message);
-    console.log(this.state.txHash);
   }
 
   clearMessage = () => {
