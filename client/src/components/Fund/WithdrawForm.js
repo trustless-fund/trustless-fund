@@ -11,12 +11,6 @@ class WithdrawForm extends Component {
       token: '',
       amount: ''
     }
-
-    console.log(this.props.tokenList);
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    this.setState({renderWithdrawal: nextProps.renderWithdrawal});
   }
 
   handleTokenChange = (e) => {
@@ -45,7 +39,7 @@ class WithdrawForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const decimals = this.getDecimals();
+    const decimals = await this.getDecimals();
     let amount;
 
     if(decimals && decimals !== '18') {
@@ -53,8 +47,6 @@ class WithdrawForm extends Component {
     } else {
       amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
     }
-
-    console.log(amount);
 
     await this.props.fund.methods.withdraw(
       amount,
