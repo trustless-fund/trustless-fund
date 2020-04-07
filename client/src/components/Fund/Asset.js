@@ -71,8 +71,9 @@ class Asset extends Component {
     if(balance < 0.001) {
       fixedBalance = '<0.001';
     } else {
-      fixedBalance = parseInt(balance).toFixed(3);
+      fixedBalance = Math.round((parseFloat(balance) + Number.EPSILON) * 100) / 100;
     }
+
     this.setState({balance: fixedBalance});
   }
 
