@@ -34,7 +34,7 @@ class Asset extends Component {
         .then((res) => {
           return res.json();
         }).then((res) => {
-          const usdValue = res.ethereum.usd;
+          const usdValue = (res.ethereum.usd * this.state.balance).toFixed(2);
           this.setState({usdValue});
         });
     } else {
@@ -45,7 +45,7 @@ class Asset extends Component {
           if(this.isEmpty(res)) {
             return;
           }
-          const usdValue = res[this.props.token.address].usd;
+          const usdValue = (res[this.props.token.address].usd * this.state.balance).toFixed();
           this.setState({usdValue});
         });
     }
@@ -66,7 +66,14 @@ class Asset extends Component {
   getBalance = () => {
     const balance = this.props.drizzle.web3.utils.fromWei(
       this.props.token.balance);
-    this.setState({balance});
+
+    let fixedBalance;  
+    if(balance < 0.001) {
+      fixedBalance = '<0.001';
+    } else {
+      fixedBalance = parseInt(balance).toFixed(3);
+    }
+    this.setState({balance: fixedBalance});
   }
 
   render() {
