@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import TokenInputDropdown from './TokenInputDropdown';
 import ERC20 from '../../contracts/ERC20.json';
 
 import '../../layout/components/deposit.sass';
 
 class DepositForm extends Component {
   state = {
-    token: '',
+    token: null,
+    searchToken: '',
     amount: '',
     renderDeposit: this.props.render,
     approve: false
@@ -16,7 +18,7 @@ class DepositForm extends Component {
     this.setState({renderDeposit: nextProps.renderDeposit});
   }
 
-  handleTokenChange = async (e) => {
+  handleSearchTokenChange = async (e) => {
     await this.setState({token: e.target.value});
     this.getTokenAllowance();
   }
@@ -176,10 +178,14 @@ class DepositForm extends Component {
               type="text"
               className="deposit__input"
               placeholder="Token"
-              onChange={this.handleTokenChange}
-              value={this.state.token}
+              onChange={this.handleSearchTokenChange}
+              value={this.state.searchToken}
             />
           </label>
+          <TokenInputDropdown 
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+            assetList={this.props.tokenList} />
           <label className="deposit__label">
             Amount
             <input 

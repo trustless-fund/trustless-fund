@@ -185,7 +185,8 @@ class FundContainer extends Component {
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
-                getAssets={this.getAssets} />
+                getAssets={this.getAssets}
+                tokenList={this.state.tokenList} />
             </div>
           }
           {this.state.withdrawalModal &&
