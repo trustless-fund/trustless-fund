@@ -48,8 +48,6 @@ class TokenInputDropdown extends Component {
         }, {});
     }
 
-    console.log(filteredTokens);
-
     // Source: https://github.com/Uniswap/uniswap-frontend
     const tokenList = Object.keys(filteredTokens)
       .sort((a, b) => {
@@ -90,7 +88,6 @@ class TokenInputDropdown extends Component {
   }
 
   render() {
-    console.log(this.state.tokenList);
     return (
       <ul>
         {this.state.tokenList && this.state.tokenList.map((token, i) => {

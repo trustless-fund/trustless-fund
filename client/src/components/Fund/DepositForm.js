@@ -27,8 +27,9 @@ class DepositForm extends Component {
     this.getTokenAllowance();
   }
 
-  setToken = async (token) => {
+  setToken = async (token, symbol) => {
     await this.setState({token});
+    this.setState({searchToken: symbol});
     this.getTokenAllowance();
   }
 
