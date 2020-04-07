@@ -66,6 +66,7 @@ class WithdrawForm extends Component {
     }).on('confirmation', (number, receipt) => {
       if(number === 0) {
         this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        this.props.getAssets();
         setTimeout(() => {
           this.props.clearMessage();
         }, 10000);

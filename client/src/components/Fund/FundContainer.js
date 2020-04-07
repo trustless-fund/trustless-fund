@@ -187,7 +187,8 @@ class FundContainer extends Component {
                 drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
                 setMessage={this.setMessage}
-                clearMessage={this.clearMessage} />
+                clearMessage={this.clearMessage}
+                getAssets={this.getAssets} />
             </div>
           }
           {this.state.withdrawalModal &&
@@ -198,7 +199,8 @@ class FundContainer extends Component {
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
-                tokenList={this.state.tokenList} />
+                tokenList={this.state.tokenList}
+                getAssets={this.getAssets} />
             </div>
           }
           <Details 

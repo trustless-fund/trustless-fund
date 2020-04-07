@@ -5,15 +5,22 @@ class Asset extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: null,
+      token: this.props.token,
       balance: null,
-      usdValue: 0
+      usdValue: 0,
+      symbol: null
     }
   }
 
   componentDidMount = () => {
-    this.getToken();
+    this.getSymbol();
     this.getBalance();
+    this.getUsdValue();
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    await this.setState({token: nextProps.token});
+    await this.getBalance();
     this.getUsdValue();
   }
 
@@ -29,7 +36,7 @@ class Asset extends Component {
   }
 
   getUsdValue = async () => {
-    if(this.props.token.address === '0x0000000000000000000000000000000000000000') {
+    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
       fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
         .then((res) => {
           return res.json();
@@ -38,38 +45,37 @@ class Asset extends Component {
           this.setState({usdValue});
         });
     } else {
-      fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${this.props.token.address}&vs_currencies=usd`)
+      fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${this.state.token.address}&vs_currencies=usd`)
         .then((res) => {
           return res.json();
         }).then((res) => {
           if(this.isEmpty(res)) {
             return;
           }
-          const usdValue = (res[this.props.token.address].usd * this.state.balance).toFixed();
+          const usdValue = (res[this.state.token.address].usd * this.state.balance).toFixed();
           this.setState({usdValue});
         });
     }
   }
 
-  getToken = async () => {
-    if(this.props.token.address === '0x0000000000000000000000000000000000000000') {
-      this.setState({token: 'ETH'});
+  getSymbol = async () => {
+    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
+      this.setState({symbol: 'ETH'});
     } else {
       const token = await new this.props.drizzle.web3.eth.Contract(
-        ERC20, this.props.token.address
+        ERC20, this.state.token.address
       );
       const symbol = await token.methods.symbol().call();
-      this.setState({token: symbol});
+      this.setState({symbol});
     }
   }
 
   getDecimals = async () => {
-    if(this.props.token.address !== '0x0000000000000000000000000000000000000000') {
+    if(this.state.token.address !== '0x0000000000000000000000000000000000000000') {
       const token = await new this.props.drizzle.web3.eth.Contract(
-        ERC20, this.props.token.address
+        ERC20, this.state.token.address
       );
       const decimals = await token.methods.decimals().call();
-      console.log(decimals);
       return decimals;
     }
   }
@@ -84,12 +90,10 @@ class Asset extends Component {
     let balance;
 
     if(decimals && decimals !== '18') {
-      balance = this.fromWeiDecimals(this.props.token.balance, decimals);
+      balance = this.fromWeiDecimals(this.state.token.balance, decimals);
     } else {
-      balance = this.props.drizzle.web3.utils.fromWei(this.props.token.balance);
+      balance = this.props.drizzle.web3.utils.fromWei(this.state.token.balance);
     }
-
-    console.log(balance)
 
     let fixedBalance;  
     if(balance < 0.001) {
@@ -97,6 +101,8 @@ class Asset extends Component {
     } else {
       fixedBalance = Math.round((parseFloat(balance) + Number.EPSILON) * 1000) / 1000;
     }
+
+    console.log(fixedBalance);
 
     this.setState({balance: fixedBalance});
   }
@@ -106,7 +112,7 @@ class Asset extends Component {
       <li className="assets__asset">
         <p className="assets__asset-info">
           {/* TODO: Get logo from etherscan api */}
-          {this.state.token}
+          {this.state.symbol}
         </p>
         <p className="assets__asset-info assets__asset-info--amount">
           {/* TODO: If balance < 0.0001, return <0.0001 */}
