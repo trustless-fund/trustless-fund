@@ -63,9 +63,33 @@ class Asset extends Component {
     }
   }
 
-  getBalance = () => {
-    const balance = this.props.drizzle.web3.utils.fromWei(
-      this.props.token.balance);
+  getDecimals = async () => {
+    if(this.props.token.address !== '0x0000000000000000000000000000000000000000') {
+      const token = await new this.props.drizzle.web3.eth.Contract(
+        ERC20, this.props.token.address
+      );
+      const decimals = await token.methods.decimals().call();
+      console.log(decimals);
+      return decimals;
+    }
+  }
+
+  fromWeiDecimals = (amount, decimals) => {
+    const finalAmount = amount/10**decimals;
+    return finalAmount;
+  }
+
+  getBalance = async () => {
+    const decimals = await this.getDecimals();
+    let balance;
+
+    if(decimals && decimals !== '18') {
+      balance = this.fromWeiDecimals(this.props.token.balance, decimals);
+    } else {
+      balance = this.props.drizzle.web3.utils.fromWei(this.props.token.balance);
+    }
+
+    console.log(balance)
 
     let fixedBalance;  
     if(balance < 0.001) {

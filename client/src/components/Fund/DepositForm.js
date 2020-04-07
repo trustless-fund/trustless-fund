@@ -48,7 +48,6 @@ class DepositForm extends Component {
     let amount;
 
     if(decimals && decimals !== '18') {
-      console.log('wut')
       amount = this.props.drizzle.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
     } else {
       amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
