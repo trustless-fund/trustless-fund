@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 class TokenInput extends Component {
   render() {
     return(
-      <li>{this.props.allTokens[this.props.token].symbol}</li>
+      <li onClick={() => this.props.setToken(this.props.token)}>
+        {this.props.allTokens[this.props.token].symbol}
+      </li>
     );
   }
 }

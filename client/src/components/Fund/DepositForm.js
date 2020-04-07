@@ -20,11 +20,15 @@ class DepositForm extends Component {
 
   handleSearchTokenChange = async (e) => {
     await this.setState({searchToken: e.target.value});
-    // this.getTokenAllowance();
   }
 
   handleAmountChange = async (e) => {
     await this.setState({amount: e.target.value});
+    this.getTokenAllowance();
+  }
+
+  setToken = async (token) => {
+    await this.setState({token});
     this.getTokenAllowance();
   }
 
@@ -186,7 +190,8 @@ class DepositForm extends Component {
             drizzle={this.props.drizzle}
             drizzleState={this.props.drizzleState}
             assetList={this.props.tokenList}
-            searchToken={this.state.searchToken} />
+            searchToken={this.state.searchToken}
+            setToken={this.setToken} />
           <label className="deposit__label">
             Amount
             <input 

@@ -98,7 +98,8 @@ class TokenInputDropdown extends Component {
             key={i} 
             token={token} 
             allTokens={this.state.allTokens}
-            drizzle={this.props.drizzle} />);
+            drizzle={this.props.drizzle}
+            setToken={this.props.setToken} />);
         })}
       </ul>
     );
