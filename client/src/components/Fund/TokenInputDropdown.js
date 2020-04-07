@@ -8,12 +8,18 @@ class TokenInputDropdown extends Component {
     this.state = {
       tokenList: null,
       usdAmounts: null,
-      allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId]
+      allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
+      searchToken: this.props.searchToken
     }
   }
 
   componentDidMount = async () => {
     await this.getUsdAmounts();
+    this.getTokenList();
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    await this.setState({searchToken: nextProps.searchToken});
     this.getTokenList();
   }
 
@@ -30,13 +36,29 @@ class TokenInputDropdown extends Component {
 
   getTokenList = () => {
     const {allTokens} = this.state;
+    let filteredTokens = allTokens;
+
+    console.log(this.state.searchToken.toLowerCase());
+
+    if(this.state.searchToken) {
+      filteredTokens = Object.keys(allTokens)
+        .filter(key => {
+          console.log(allTokens[key].symbol.toLowerCase());
+          return allTokens[key].symbol.toLowerCase().includes(this.state.searchToken.toLowerCase());
+        });
+      filteredTokens = Object.assign({}, filteredTokens);
+    }
+
+    console.log(filteredTokens);
 
     // Source: https://github.com/Uniswap/uniswap-frontend
-    const tokenList = Object.keys(allTokens)
+    const tokenList = Object.keys(filteredTokens)
       .sort((a, b) => {
-        if (allTokens[a].symbol && allTokens[b].symbol) {
-          const aSymbol = allTokens[a].symbol.toLowerCase()
-          const bSymbol = allTokens[b].symbol.toLowerCase()
+        if (filteredTokens[a].symbol && filteredTokens[b].symbol) {
+          const aSymbol = filteredTokens[a].symbol.toLowerCase()
+          const bSymbol = filteredTokens[b].symbol.toLowerCase()
+
+
 
           // Pin ETH to the top
           if (aSymbol === 'ETH'.toLowerCase() || bSymbol === 'ETH'.toLowerCase()) {
@@ -69,7 +91,6 @@ class TokenInputDropdown extends Component {
   }
 
   render() {
-    console.log(this.state.tokenList);
     return (
       <ul>
         {this.state.tokenList && this.state.tokenList.map((token, i) => {
