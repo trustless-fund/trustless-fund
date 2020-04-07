@@ -205,7 +205,10 @@ class FundContainer extends Component {
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
             fund={this.state.fund} />
-          <Message message={this.state.message} txHash={this.state.txHash} />
+          <Message 
+            message={this.state.message} 
+            txHash={this.state.txHash}
+            drizzleState={this.props.drizzleState} />
         </div>
       );
     }
