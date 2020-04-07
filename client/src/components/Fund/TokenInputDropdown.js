@@ -38,15 +38,14 @@ class TokenInputDropdown extends Component {
     const {allTokens} = this.state;
     let filteredTokens = allTokens;
 
-    console.log(this.state.searchToken.toLowerCase());
-
     if(this.state.searchToken) {
       filteredTokens = Object.keys(allTokens)
         .filter(key => {
-          console.log(allTokens[key].symbol.toLowerCase());
           return allTokens[key].symbol.toLowerCase().includes(this.state.searchToken.toLowerCase());
-        });
-      filteredTokens = Object.assign({}, filteredTokens);
+        }).reduce((obj, key) => {
+          obj[key] = allTokens[key];
+          return obj;
+        }, {});
     }
 
     console.log(filteredTokens);
@@ -91,6 +90,7 @@ class TokenInputDropdown extends Component {
   }
 
   render() {
+    console.log(this.state.tokenList);
     return (
       <ul>
         {this.state.tokenList && this.state.tokenList.map((token, i) => {
