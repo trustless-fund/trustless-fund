@@ -8,7 +8,8 @@ class Asset extends Component {
       token: this.props.token,
       balance: null,
       usdValue: 0,
-      symbol: null
+      symbol: null,
+      logo: null
     }
   }
 
@@ -16,6 +17,7 @@ class Asset extends Component {
     this.getSymbol();
     this.getBalance();
     this.getUsdValue();
+    this.getLogo();
   }
 
   componentWillReceiveProps = async (nextProps) => {
@@ -105,17 +107,35 @@ class Asset extends Component {
     this.setState({balance: fixedBalance});
   }
 
+  getLogo = () => {
+    let logo;
+    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
+      logo = 'https://cdn.iconscout.com/icon/free/png-256/ethereum-3-569581.png';
+    } else {
+      logo = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${this.state.token.address}/logo.png`
+    }
+    this.setState({logo});
+  }
+
+  handleLogoError = () => {
+    this.setState({logo: 'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png'});
+  }
+
   render() {
     return (
       <li className="assets__asset">
+        <img 
+          // TODO: Replace address with this.state.token.address
+          // TODO: Get eth logo if zero address
+          src={this.state.logo} 
+          alt="Logo"
+          className="assets__asset-logo"
+          onError={this.handleLogoError} />
         <p className="assets__asset-info">
-          {/* TODO: Get logo from etherscan api */}
           {this.state.symbol}
         </p>
         <p className="assets__asset-info assets__asset-info--amount">
-          {/* TODO: If balance < 0.0001, return <0.0001 */}
           {this.state.balance}/{`$${this.state.usdValue}`}
-          {/* TODO: Get USD value from etherscan api */}
         </p>
       </li>
     );
