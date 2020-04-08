@@ -508,6 +508,87 @@ export const TOKEN_LIST = {
       [NAME]: 'Xeenus 💪',
       [SYMBOL]: 'XEENUS',
       [DECIMALS]: '18'
+    },
+    // TODO: Remove the following tokens
+    '0x09fE5f0236F0Ea5D930197DCE254d77B04128075': {
+      [NAME]: 'Wrapped CryptoKitties',
+      [SYMBOL]: 'WCK',
+      [DECIMALS]: 18,
+    },
+    '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2': {
+      [NAME]: 'Wrapped Ether',
+      [SYMBOL]: 'WETH',
+      [DECIMALS]: 18,
+    },
+    '0xB4272071eCAdd69d933AdcD19cA99fe80664fc08': {
+      [NAME]: 'CryptoFranc',
+      [SYMBOL]: 'XCHF',
+      [DECIMALS]: 18,
+    },
+    '0x0f7F961648aE6Db43C75663aC7E5414Eb79b5704': {
+      [NAME]: 'XIO Network',
+      [SYMBOL]: 'XIO',
+      [DECIMALS]: 18,
+    },
+    '0xE41d2489571d322189246DaFA5ebDe1F4699F498': {
+      [NAME]: '0x Protocol Token',
+      [SYMBOL]: 'ZRX',
+      [DECIMALS]: 18,
+    },
+    '0x00000000441378008EA67F4284A57932B1c000a5': {
+      [NAME]: 'TrueGBP',
+      [SYMBOL]: 'TGBP',
+      [DECIMALS]: 18,
+    },
+    '0x0000852600CEB001E08e00bC008be620d60031F2': {
+      [NAME]: 'TrueHKD',
+      [SYMBOL]: 'THKD',
+      [DECIMALS]: 18,
+    },
+    '0xaAAf91D9b90dF800Df4F55c205fd6989c977E73a': {
+      [NAME]: 'Monolith TKN',
+      [SYMBOL]: 'TKN',
+      [DECIMALS]: 8,
+    },
+    '0xCb94be6f13A1182E4A4B6140cb7bf2025d28e41B': {
+      [NAME]: 'Trustcoin',
+      [SYMBOL]: 'TRST',
+      [DECIMALS]: 6,
+    },
+    '0x2C537E5624e4af88A7ae4060C022609376C8D0EB': {
+      [NAME]: 'BiLira',
+      [SYMBOL]: 'TRYB',
+      [DECIMALS]: 6,
+    },
+    '0x0000000000085d4780B73119b644AE5ecd22b376': {
+      [NAME]: 'TrueUSD',
+      [SYMBOL]: 'TUSD',
+      [DECIMALS]: 18,
+    },
+    '0x09cabEC1eAd1c0Ba254B09efb3EE13841712bE14': {
+      [NAME]: 'Uniswap V1',
+      [SYMBOL]: 'UNI-V1:SAI',
+      [DECIMALS]: 18,
+    },
+    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': {
+      [NAME]: 'USD//C',
+      [SYMBOL]: 'USDC',
+      [DECIMALS]: 6,
+    },
+    '0xA4Bdb11dc0a2bEC88d24A3aa1E6Bb17201112eBe': {
+      [NAME]: 'StableUSD',
+      [SYMBOL]: 'USDS',
+      [DECIMALS]: 6,
+    },
+    '0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374': {
+      [NAME]: 'Veritaseum',
+      [SYMBOL]: 'VERI',
+      [DECIMALS]: 18,
+    },
+    '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': {
+      [NAME]: 'Wrapped BTC',
+      [SYMBOL]: 'WBTC',
+      [DECIMALS]: 8,
     }
   }
 }

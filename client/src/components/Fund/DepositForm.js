@@ -206,7 +206,8 @@ class DepositForm extends Component {
                 drizzleState={this.props.drizzleState}
                 assetList={this.props.tokenList}
                 searchToken={this.state.searchToken}
-                setToken={this.setToken} />
+                setToken={this.setToken}
+                assetList={this.props.tokenList} />
             }
           </label>
           <label className="deposit__label">

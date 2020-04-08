@@ -11,14 +11,34 @@
   z-index: 2
   border-right: 1px solid rgba($color-grey, 0.5)
   border-left: 1px solid rgba($color-grey, 0.5)
-  max-height: 100px
+  max-height: 160px
   overflow-y: scroll
   border-bottom-left-radius: $border-radius 
   border-bottom-right-radius: $border-radius
 
+.token-input__logo
+  width: 36px
+  margin: 0 8px
+
 .token-input__item
-  font-size: 18px
-  padding: 4px 0
+  padding: 8px 0
   background: white
-  border-bottom: 1px solid rgba($color-grey, 0.5)
   cursor: pointer
+  display: flex
+  align-items: center
+
+.token-input__item:hover
+  background: $color-light-grey
+
+.token-input__symbol
+  font-size: 18px
+  font-weight: 400
+  color: $color-black
+  text-align: left
+  margin: 0
+
+.token-input__name
+  font-size: 14px
+  font-weight: 300
+  color: $color-black
+  margin: 0
