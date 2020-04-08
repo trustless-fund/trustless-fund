@@ -35,6 +35,9 @@ class DepositForm extends Component {
   }
 
   toggleDropdown = () => {
+    const input = document.querySelector('.deposit__input--token');
+    input.classList.toggle('open');
+
     if(this.state.renderDropdown) {
       this.setState({renderDropdown: false});
     } else {
@@ -195,7 +198,8 @@ class DepositForm extends Component {
               onChange={this.handleSearchTokenChange}
               value={this.state.searchToken}
               onClick={this.toggleDropdown}
-            />
+            >
+            </input>
             {this.state.renderDropdown &&
               <TokenInputDropdown 
                 drizzle={this.props.drizzle}
