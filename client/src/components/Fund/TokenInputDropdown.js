@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import TokenInput from './TokenInput';
 import {TOKEN_LIST} from '../../utils/tokenList';
 
+import '../../layout/components/tokeninput.sass';
+
 class TokenInputDropdown extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +91,7 @@ class TokenInputDropdown extends Component {
 
   render() {
     return (
-      <ul>
+      <ul className="token-input__dropdown">
         {this.state.tokenList && this.state.tokenList.map((token, i) => {
           return (<TokenInput 
             key={i} 

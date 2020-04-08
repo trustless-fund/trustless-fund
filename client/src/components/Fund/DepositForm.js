@@ -11,7 +11,8 @@ class DepositForm extends Component {
     searchToken: '',
     amount: '',
     renderDeposit: this.props.render,
-    approve: false
+    approve: false,
+    renderDropdown: false
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -31,6 +32,14 @@ class DepositForm extends Component {
     await this.setState({token});
     this.setState({searchToken: symbol});
     this.getTokenAllowance();
+  }
+
+  toggleDropdown = () => {
+    if(this.state.renderDropdown) {
+      this.setState({renderDropdown: false});
+    } else {
+      this.setState({renderDropdown: true});
+    }
   }
 
   getDecimals = async () => {
@@ -181,18 +190,21 @@ class DepositForm extends Component {
             Token
             <input 
               type="text"
-              className="deposit__input"
+              className="deposit__input deposit__input--token"
               placeholder="Token"
               onChange={this.handleSearchTokenChange}
               value={this.state.searchToken}
+              onClick={this.toggleDropdown}
             />
+            {this.state.renderDropdown &&
+              <TokenInputDropdown 
+                drizzle={this.props.drizzle}
+                drizzleState={this.props.drizzleState}
+                assetList={this.props.tokenList}
+                searchToken={this.state.searchToken}
+                setToken={this.setToken} />
+            }
           </label>
-          <TokenInputDropdown 
-            drizzle={this.props.drizzle}
-            drizzleState={this.props.drizzleState}
-            assetList={this.props.tokenList}
-            searchToken={this.state.searchToken}
-            setToken={this.setToken} />
           <label className="deposit__label">
             Amount
             <input 

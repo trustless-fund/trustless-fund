@@ -1,0 +1,24 @@
+@import '../config/_colors'
+@import '../config/_variables'
+  
+.token-input__dropdown
+  position: absolute
+  top: $label-height
+  list-style: none
+  padding: 0
+  margin: 0
+  width: 100%
+  z-index: 2
+  border-right: 1px solid rgba($color-grey, 0.5)
+  border-left: 1px solid rgba($color-grey, 0.5)
+  max-height: 100px
+  overflow-y: scroll
+  border-bottom-left-radius: $border-radius 
+  border-bottom-right-radius: $border-radius
+
+.token-input__item
+  font-size: 18px
+  padding: 4px 0
+  background: white
+  border-bottom: 1px solid rgba($color-grey, 0.5)
+  cursor: pointer
