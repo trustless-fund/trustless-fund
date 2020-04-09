@@ -18,6 +18,10 @@ class DepositWithdrawForm extends Component {
     balance: null
   }
 
+  componentDidMount = () => {
+    this.getBalance();
+  }
+
   componentWillReceiveProps = (nextProps) => {
     this.setState({renderDeposit: nextProps.renderDeposit});
     this.setState({searchToken: nextProps.searchToken});
@@ -32,6 +36,7 @@ class DepositWithdrawForm extends Component {
     await this.setState({token});
     this.props.handleSearchTokenChange(null, '');
     this.getTokenAllowance();
+    this.getBalance();
   }
 
   toggleDropdown = async () => {
@@ -220,24 +225,23 @@ class DepositWithdrawForm extends Component {
   }
 
   getBalance = () => {
-    this.props.assetList.forEach(asset => {
+    this.props.assetList.forEach(async (asset) => {
       if(asset.address === this.state.token) {
-        this.setState({balance: asset.balance});
+        const decimals = await this.getDecimals();
+        let balance;
+        if(decimals && decimals !== '18') {
+          balance = this.fromWeiDecimals(asset.balance, decimals);
+        } else {
+          balance = this.props.drizzle.web3.utils.fromWei(asset.balance);
+        }
+        this.setState({balance});
       }
     });
   }
 
   setMaxAmount = async () => {
-    const decimals = await this.getDecimals();
     await this.getBalance();
-    let balance;
-    if(decimals && decimals !== '18') {
-      balance = this.fromWeiDecimals(this.state.balance, decimals);
-    } else {
-      balance = this.props.drizzle.web3.utils.fromWei(this.state.balance);
-    }
-
-    this.setState({amount: balance});
+    this.setState({amount: this.state.balance});
   }
 
   render() {
@@ -307,7 +311,7 @@ class DepositWithdrawForm extends Component {
               type="button" 
               onClick={this.setMaxAmount}
               className="deposit__unlock">
-              Max
+              Max: {this.state.balance}
             </button>
           }
           {/* TODO: Disable if not unlocked */}
