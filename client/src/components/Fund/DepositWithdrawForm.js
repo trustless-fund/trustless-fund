@@ -20,6 +20,7 @@ class DepositWithdrawForm extends Component {
 
   componentDidMount = () => {
     this.getBalance();
+    this.disableButton();
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -29,14 +30,16 @@ class DepositWithdrawForm extends Component {
 
   handleAmountChange = async (e) => {
     await this.setState({amount: e.target.value});
-    this.getTokenAllowance();
+    await this.getTokenAllowance();
+    this.disableButton();
   }
 
   setToken = async (token, symbol) => {
     await this.setState({token});
+    await this.getTokenAllowance();
     this.props.handleSearchTokenChange(null, '');
-    this.getTokenAllowance();
     this.getBalance();
+    this.disableButton();
   }
 
   toggleDropdown = async () => {
@@ -62,6 +65,42 @@ class DepositWithdrawForm extends Component {
   toWeiDecimals = (amount, decimals) => {
     const finalAmount = amount*10**decimals;
     return finalAmount;
+  }
+
+  disableButton = () => {
+    if(this.props.deposit) {
+      const depositButtons = Array.from(document.querySelectorAll('.deposit__button'));
+      if(this.state.approve) {
+        depositButtons.forEach(button => {
+          if(!button.classList.contains('disabled')) {
+            button.disabled = true;
+            button.classList.add('disabled');
+          }
+        });
+      } else {
+        depositButtons.forEach(button => {
+          if(button.classList.contains('disabled')) {
+            button.disabled = false;
+            button.classList.remove('disabled');
+          }
+        });
+      }
+    } else {
+      const withdrawButtons = Array.from(document.querySelectorAll('.deposit__button'));
+      if(this.state.amount > this.state.balance) {
+        withdrawButtons.forEach(button => {
+          if(!button.classList.contains('disabled')) {
+            button.classList.add('disabled');
+          }
+        });
+      } else {
+        withdrawButtons.forEach(button => {
+          if(button.classList.contains('disabled')) {
+            button.classList.remove('disabled');
+          }
+        });
+      }
+    }
   }
 
   handleDepositSubmit = async (e) => {
@@ -145,7 +184,7 @@ class DepositWithdrawForm extends Component {
 
   getTokenAllowance = async () => {
     if(this.state.token === '0x0000000000000000000000000000000000000000') {
-      return;
+      return this.setState({approve: false});
     }
     
     // TODO: Only run if is address
