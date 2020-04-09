@@ -11,7 +11,8 @@ class FactoryContainer extends Component {
     beneficiary: '',
     fundId: null,
     messsage: null,
-    txHash: null
+    txHash: null,
+    invalidAddress: false
   }
 
   componentDidMount = () => {
@@ -27,8 +28,17 @@ class FactoryContainer extends Component {
     this.setState({expiration: date});
   }
 
-  handleBeneficiaryChange = (e) => {
-    this.setState({beneficiary: e.target.value});
+  handleBeneficiaryChange = async (e) => {
+    await this.setState({beneficiary: e.target.value});
+    this.isAddress();
+  }
+
+  isAddress = () => {
+    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiary) || this.state.beneficiary === '') {
+      this.setState({invalidAddress: false});
+    } else {
+      this.setState({invalidAddress: true});
+    }
   }
 
   handleSubmit = async (e) => {
@@ -108,7 +118,8 @@ class FactoryContainer extends Component {
           handleSubmit={this.handleSubmit}
           expiration={this.state.expiration}
           beneficiary={this.state.beneficiary}
-          date={this.state.date} />
+          date={this.state.date}
+          invalidAddress={this.state.invalidAddress} />
         <Message 
           message={this.state.message} 
           txHash={this.state.txHash} 

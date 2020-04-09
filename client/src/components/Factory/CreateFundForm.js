@@ -6,7 +6,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../layout/components/createfund.sass';
 
 class CreateFundForm extends Component {
-  
+  state = {
+    invalidAddress: this.props.invalidAddress
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({invalidAddress: nextProps.invalidAddress});
+  }
 
   render() {
     return(
@@ -36,6 +42,11 @@ class CreateFundForm extends Component {
               value={this.props.beneficiary}
             />
           </label>
+          {this.state.invalidAddress &&
+            <p className="create-fund__invalid">
+              Invalid Address
+            </p>
+          }
           <Button 
             text="Create Fund" 
             class="solid create-fund__button" 
