@@ -215,14 +215,15 @@ class DepositWithdrawForm extends Component {
       this.props.drizzle.web3.utils.toWei(this.state.amount)
     ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
-    }).on('confirmation', (number, receipt) => {
+    }).on('confirmation', async (number, receipt) => {
       if(number === 0) {
         this.props.setMessage('Transaction Confirmed!', receipt.txHash);
         setTimeout(() => {
           this.props.clearMessage();
         }, 10000);
       }
-      this.setState({approve: false});
+      await this.setState({approve: false});
+      this.disableButton();
     }).on('error', (err, receipt) => {
       this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
       setTimeout(() => {
@@ -242,14 +243,15 @@ class DepositWithdrawForm extends Component {
       this.props.drizzle.web3.utils.toWei(Number.MAX_SAFE_INTEGER)
     ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
-    }).on('confirmation', (number, receipt) => {
+    }).on('confirmation', async (number, receipt) => {
       if(number === 0) {
         this.props.setMessage('Transaction Confirmed!', receipt.txHash);
         setTimeout(() => {
           this.props.clearMessage();
         }, 10000);
       }
-      this.setState({approve: false});
+      await this.setState({approve: false});
+      this.disableButton();
     }).on('error', (err, receipt) => {
       this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
       setTimeout(() => {
