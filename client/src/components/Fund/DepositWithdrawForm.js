@@ -14,7 +14,8 @@ class DepositWithdrawForm extends Component {
     approve: false,
     renderDropdown: false,
     className: this.props.deposit ? 'deposit' : 'withdraw',
-    deposit: this.props.deposit
+    deposit: this.props.deposit,
+    balance: null
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -213,16 +214,30 @@ class DepositWithdrawForm extends Component {
     });
   }
 
-  setMaxAmount = () => {
-    let maxAmount;
-    this.props.tokenList.forEach((token) => {
-      if(token.address === this.state.token) {
-        maxAmount = token.balance;
+  fromWeiDecimals = (amount, decimals) => {
+    const finalAmount = amount/10**decimals;
+    return finalAmount;
+  }
+
+  getBalance = () => {
+    this.props.assetList.forEach(asset => {
+      if(asset.address === this.state.token) {
+        this.setState({balance: asset.balance});
       }
     });
-    maxAmount = this.props.drizzle.web3.utils.fromWei(maxAmount);
+  }
 
-    this.setState({amount: maxAmount});
+  setMaxAmount = async () => {
+    const decimals = await this.getDecimals();
+    await this.getBalance();
+    let balance;
+    if(decimals && decimals !== '18') {
+      balance = this.fromWeiDecimals(this.state.balance, decimals);
+    } else {
+      balance = this.props.drizzle.web3.utils.fromWei(this.state.balance);
+    }
+
+    this.setState({amount: balance});
   }
 
   render() {
