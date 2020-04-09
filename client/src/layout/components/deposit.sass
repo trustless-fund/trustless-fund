@@ -56,6 +56,31 @@
   margin-top: 16px
   height: 70px
   position: relative
+  width: 360px
+
+.deposit__token-button
+  width: 100%
+  border-radius: $border-radius
+  border: 1px solid $color-grey
+  text-align: center
+  font-size: 18px
+  font-weight: 400
+  color: $color-black
+  font-family: Roboto
+  margin-top: 8px
+  background: white
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 8px 0
+  cursor: pointer
+
+.deposit__token-button-logo
+  width: 24px
+  margin-right: 8px
+
+.deposit__token-button-carat
+  margin-left: 8px
 
 // TODO: Make placeholder text faded, but not actual input text
 .deposit__input
@@ -69,18 +94,6 @@
   color: $color-grey
   font-family: Roboto
   margin-top: 8px
-
-.deposit__input--token
-  background-image: url('../../assets/down-arrow.svg')
-  background-repeat: no-repeat
-  background-position: 95% 50%
-  padding: 0 8px
-
-.deposit__input--token.open
-  background-image: url('../../assets/up-arrow.svg')
-  background-repeat: no-repeat
-  background-position: 95% 50%
-  padding: 0 8px
 
 .deposit__unlocks
   display: flex

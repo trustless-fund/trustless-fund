@@ -2,25 +2,23 @@ import React, {Component} from 'react';
 import Button from '../Shared/Button';
 import TokenInputDropdown from './TokenInputDropdown';
 import ERC20 from '../../contracts/ERC20.json';
+import down from '../../assets/down-arrow.svg';
 
 import '../../layout/components/deposit.sass';
 
 class DepositForm extends Component {
   state = {
-    token: null,
-    searchToken: '',
+    token: '0x0000000000000000000000000000000000000000',
+    searchToken: this.props.searchToken,
     amount: '',
     renderDeposit: this.props.render,
     approve: false,
-    renderDropdown: false
+    renderDropdown: false,
   }
 
   componentWillReceiveProps = (nextProps) => {
     this.setState({renderDeposit: nextProps.renderDeposit});
-  }
-
-  handleSearchTokenChange = async (e) => {
-    await this.setState({searchToken: e.target.value});
+    this.setState({searchToken: nextProps.searchToken});
   }
 
   handleAmountChange = async (e) => {
@@ -30,18 +28,17 @@ class DepositForm extends Component {
 
   setToken = async (token, symbol) => {
     await this.setState({token});
-    this.setState({searchToken: symbol});
+    this.props.handleSearchTokenChange(null, '');
     this.getTokenAllowance();
   }
 
-  toggleDropdown = () => {
-    const input = document.querySelector('.deposit__input--token');
-    input.classList.toggle('open');
-
+  toggleDropdown = async () => {
     if(this.state.renderDropdown) {
       this.setState({renderDropdown: false});
     } else {
-      this.setState({renderDropdown: true});
+      await this.setState({renderDropdown: true});
+      const tokenInput = document.querySelector('.token-input__search');
+      tokenInput.focus();
     }
   }
 
@@ -188,18 +185,26 @@ class DepositForm extends Component {
     return (
       <div className="deposit">
         <h2 className="deposit__header">Deposit Token</h2>
-        <form onSubmit={this.handleSubmit} className="deposit__form">
+        <form 
+          onSubmit={this.handleSubmit} 
+          className="deposit__form">
           <label className="deposit__label">
             Token
-            <input 
-              type="text"
-              className="deposit__input deposit__input--token"
-              placeholder="Token"
-              onChange={this.handleSearchTokenChange}
-              value={this.state.searchToken}
+            <button
+              type="button"
+              className="deposit__token-button"
               onClick={this.toggleDropdown}
             >
-            </input>
+              <img 
+                src={this.props.allTokens[this.state.token].logo}
+                alt="Logo"
+                className="deposit__token-button-logo" />
+              {this.props.allTokens[this.state.token].symbol}
+              <img
+                src={down}
+                alt="Carat"
+                className="deposit__token-button-carat" />
+            </button>
             {this.state.renderDropdown &&
               <TokenInputDropdown 
                 drizzle={this.props.drizzle}
@@ -207,7 +212,9 @@ class DepositForm extends Component {
                 assetList={this.props.tokenList}
                 searchToken={this.state.searchToken}
                 setToken={this.setToken}
-                assetList={this.props.tokenList} />
+                allTokens={this.props.allTokens}
+                tokenList={this.props.tokenList}
+                handleSearchTokenChange={this.props.handleSearchTokenChange} />
             }
           </label>
           <label className="deposit__label">

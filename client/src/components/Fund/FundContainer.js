@@ -26,7 +26,8 @@ class FundContainer extends Component {
       assetList: [],
       tokenList: null,
       allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
-      usdAmounts: null
+      usdAmounts: null,
+      searchToken: ''
     }
   }
 
@@ -152,8 +153,8 @@ class FundContainer extends Component {
     this.setState({assetList});
   }
 
-  handleSearchTokenChange = async (e) => {
-    await this.setState({searchToken: e.target.value});
+  handleSearchTokenChange = async (e, search) => {
+    await this.setState({searchToken: e ? e.target.value : search});
     this.getTokenList();
   }
 
@@ -264,7 +265,9 @@ class FundContainer extends Component {
                 clearMessage={this.clearMessage}
                 getAssets={this.getAssets}
                 assetList={this.state.assetList}
-                handleSearchTokenChange={this.handleSearchTokenChange} />
+                handleSearchTokenChange={this.handleSearchTokenChange}
+                allTokens={this.state.allTokens}
+                tokenList={this.state.tokenList} />
             </div>
           }
           {this.state.withdrawalModal &&

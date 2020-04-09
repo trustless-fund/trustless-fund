@@ -1,7 +1,7 @@
 @import '../config/_colors'
 @import '../config/_variables'
   
-.token-input__dropdown
+.token-input
   position: absolute
   top: $label-height
   list-style: none
@@ -11,10 +11,26 @@
   z-index: 2
   border-right: 1px solid rgba($color-grey, 0.5)
   border-left: 1px solid rgba($color-grey, 0.5)
-  max-height: 160px
-  overflow-y: scroll
   border-bottom-left-radius: $border-radius 
   border-bottom-right-radius: $border-radius
+
+.token-input__dropdown
+  width: 100%
+  max-height: 278px
+  overflow-y: scroll
+  margin: 0
+  padding: 0
+
+.token-input__search
+  height: 32px
+  width: 100%
+  border-radius: $border-radius
+  border: 1px solid $color-grey
+  text-align: center
+  font-size: 18px
+  font-weight: 400
+  color: $color-grey
+  font-family: Roboto
 
 .token-input__logo
   width: 36px
