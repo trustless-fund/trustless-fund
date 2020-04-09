@@ -10,8 +10,24 @@ class CreateFundForm extends Component {
     invalidAddress: this.props.invalidAddress
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    this.setState({invalidAddress: nextProps.invalidAddress});
+  componentWillReceiveProps = async (nextProps) => {
+    await this.setState({invalidAddress: nextProps.invalidAddress});
+    this.disableButton();
+  }
+
+  disableButton = () => {
+    const fundButton = document.querySelector('.create-fund__button');
+    if(this.state.invalidAddress) {
+      if(!fundButton.classList.contains('disabled')) {
+        fundButton.disabled = true;
+        fundButton.classList.add('disabled');
+      }
+    } else {
+      if(fundButton.classList.contains('disabled')) {
+        fundButton.disabled = false;
+        fundButton.classList.remove('disabled');
+      }
+    }
   }
 
   render() {
