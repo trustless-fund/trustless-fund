@@ -10,6 +10,7 @@ import TrustlessFund from '../../contracts/TrustlessFund.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
 
 import '../../layout/components/fund.sass';
+import '../../layout/components/withdraw.sass';
 
 class FundContainer extends Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class FundContainer extends Component {
 
   closeWithdrawalModal = (e) => {
     const withdrawBackground = document.querySelector('.withdraw__background');
-    const withdrawButton = document.querySelector('.withdraw__button');
+    const withdrawButton = document.querySelector('.deposit__button');
     if(e.target === withdrawBackground) {
       this.setState({withdrawalModal: false});
     }
@@ -271,7 +272,7 @@ class FundContainer extends Component {
             </div>
           }
           {this.state.withdrawalModal &&
-            <div className="deposit__background" onClick={this.closeWithdrawalModal}>
+            <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
               <DepositWithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
