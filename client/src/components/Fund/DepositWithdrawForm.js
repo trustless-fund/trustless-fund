@@ -6,14 +6,15 @@ import down from '../../assets/down-arrow.svg';
 
 import '../../layout/components/deposit.sass';
 
-class DepositForm extends Component {
+class DepositWithdrawForm extends Component {
   state = {
     token: '0x0000000000000000000000000000000000000000',
     searchToken: this.props.searchToken,
     amount: '',
-    renderDeposit: this.props.render,
     approve: false,
     renderDropdown: false,
+    className: this.props.deposit ? 'deposit' : 'withdraw',
+    deposit: this.props.deposit
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -57,7 +58,7 @@ class DepositForm extends Component {
     return finalAmount;
   }
 
-  handleSubmit = async (e) => {
+  handleDepositSubmit = async (e) => {
     e.preventDefault();
 
     const decimals = await this.getDecimals();
@@ -83,6 +84,41 @@ class DepositForm extends Component {
     ).send({
       from: this.props.drizzleState.accounts[0],
       value: sendAmount
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        this.props.getAssets();
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
+    });
+  }
+
+  handleWithdrawSubmit = async (e) => {
+    e.preventDefault();
+
+    const decimals = await this.getDecimals();
+    let amount;
+
+    if(decimals && decimals !== '18') {
+      amount = this.props.drizzle.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
+    } else {
+      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+    }
+
+    await this.props.fund.methods.withdraw(
+      amount,
+      this.state.token
+    ).send({
+      from: this.props.drizzleState.accounts[0]
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', (number, receipt) => {
@@ -177,33 +213,41 @@ class DepositForm extends Component {
     });
   }
 
-  closeModal = () => {
-    this.setState({renderDeposit: false});
+  setMaxAmount = () => {
+    let maxAmount;
+    this.props.tokenList.forEach((token) => {
+      if(token.address === this.state.token) {
+        maxAmount = token.balance;
+      }
+    });
+    maxAmount = this.props.drizzle.web3.utils.fromWei(maxAmount);
+
+    this.setState({amount: maxAmount});
   }
 
   render() {
     return (
-      <div className="deposit">
-        <h2 className="deposit__header">Deposit Token</h2>
+      <div className={`deposit`}>
+        <h2 className={`deposit__header`}>{this.state.deposit ? 'Deposit' : 'Withdraw'} Token</h2>
         <form 
-          onSubmit={this.handleSubmit} 
-          className="deposit__form">
-          <label className="deposit__label">
+          onSubmit={this.state.deposit ? this.handleDepositSubmit : this.handleWithdrawSubmit} 
+          className={`deposit__form`}>
+          <label className={`deposit__label`}>
             Token
             <button
               type="button"
-              className="deposit__token-button"
+              className={`deposit__token-button`}
               onClick={this.toggleDropdown}
             >
               <img 
                 src={this.props.allTokens[this.state.token].logo}
                 alt="Logo"
-                className="deposit__token-button-logo" />
+                className={`deposit__token-button-logo`} />
               {this.props.allTokens[this.state.token].symbol}
               <img
                 src={down}
                 alt="Carat"
-                className="deposit__token-button-carat" />
+                className={`deposit__token-button-carat`} />
             </button>
             {this.state.renderDropdown &&
               <TokenInputDropdown 
@@ -217,36 +261,44 @@ class DepositForm extends Component {
                 handleSearchTokenChange={this.props.handleSearchTokenChange} />
             }
           </label>
-          <label className="deposit__label">
+          <label className={`deposit__label`}>
             Amount
             <input 
               type="number"
-              className="deposit__input"
+              className={`deposit__input`}
               placeholder="Amount"
               onChange={this.handleAmountChange}
               value={this.state.amount}
             />
           </label>
-          {this.state.approve && 
-            <div className="deposit__unlocks">
+          {this.state.approve && this.state.deposit &&
+            <div className={`deposit__unlocks`}>
               <button 
                 type="button" 
                 onClick={this.approveToken}
-                className="deposit__unlock">
+                className={`deposit__unlock`}>
                   Unlock {this.state.amount}
               </button>
               <button 
                 type="button" 
                 onClick={this.infiniteApproveToken}
-                className="deposit__unlock">
+                className={`deposit__unlock`}>
                   Infinite Unlock
               </button>
             </div>
           }
+          {!this.state.deposit && this.state.token &&
+            <button 
+              type="button" 
+              onClick={this.setMaxAmount}
+              className="deposit__unlock">
+              Max
+            </button>
+          }
           {/* TODO: Disable if not unlocked */}
           <Button 
-            text="Deposit" 
-            class="solid deposit__button" 
+            text={this.state.deposit ? 'Deposit' : 'Withdraw'}
+            class={`solid deposit__button`}
             link={null} 
             button={true}
           />
@@ -256,4 +308,4 @@ class DepositForm extends Component {
   }
 }
 
-export default DepositForm;
+export default DepositWithdrawForm;

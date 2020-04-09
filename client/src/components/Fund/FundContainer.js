@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import InvalidFund from './InvalidFund';
-import DepositForm from './DepositForm';
-import WithdrawForm from './WithdrawForm';
+import DepositWithdrawForm from './DepositWithdrawForm';
 import Assets from './Assets';
 import Expiration from './Expiration';
 import Details from './Details';
@@ -257,7 +256,7 @@ class FundContainer extends Component {
           </div>
           {this.state.depositModal && 
             <div className="deposit__background" onClick={this.closeDepositModal}>
-              <DepositForm 
+              <DepositWithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
@@ -267,19 +266,24 @@ class FundContainer extends Component {
                 assetList={this.state.assetList}
                 handleSearchTokenChange={this.handleSearchTokenChange}
                 allTokens={this.state.allTokens}
-                tokenList={this.state.tokenList} />
+                tokenList={this.state.tokenList}
+                deposit={true} />
             </div>
           }
           {this.state.withdrawalModal &&
-            <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
-              <WithdrawForm 
+            <div className="deposit__background" onClick={this.closeWithdrawalModal}>
+              <DepositWithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
+                getAssets={this.getAssets}
                 assetList={this.state.assetList}
-                getAssets={this.getAssets} />
+                handleSearchTokenChange={this.handleSearchTokenChange}
+                allTokens={this.state.allTokens}
+                tokenList={this.state.tokenList}
+                deposit={false} />
             </div>
           }
           <Details 
