@@ -8,6 +8,7 @@ import Details from './Details';
 import Button from '../Shared/Button';
 import Message from '../Shared/Message';
 import TrustlessFund from '../../contracts/TrustlessFund.json';
+import {TOKEN_LIST} from '../../utils/tokenList';
 
 import '../../layout/components/fund.sass';
 
@@ -22,14 +23,19 @@ class FundContainer extends Component {
       fund: null,
       message: null,
       txHash: null,
-      tokenList: []
+      assetList: [],
+      tokenList: null,
+      allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
+      usdAmounts: null
     }
   }
 
   componentDidMount = async () => {
     await this.getFund();
+    await this.getAssets();
+    await this.getUsdAmounts();
+    this.getTokenList();
     this.renderWithdrawal();
-    this.getAssets();
 
     window.ethereum.on('accountsChanged', async (accounts) => {
       await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
@@ -133,15 +139,84 @@ class FundContainer extends Component {
 
   getAssets = async () => {
     const tokenLUTSize = await this.state.fund.methods.getTokenSize().call();
-    let tokenList = [];
+    let assetList = [];
 
     if(tokenLUTSize > 0) {
       for(let i = 0; i < tokenLUTSize; i++) {
         const tokenAddress = await this.state.fund.methods.tokenLUT(i).call();
         const token = await this.state.fund.methods.tokens(tokenAddress).call();
-        tokenList.push({address: tokenAddress, balance: token.balance});
+        assetList.push({address: tokenAddress, balance: token.balance});
       }
     }
+
+    this.setState({assetList});
+  }
+
+  handleSearchTokenChange = async (e) => {
+    await this.setState({searchToken: e.target.value});
+    this.getTokenList();
+  }
+
+  getUsdAmounts = () => {
+    let usdAmounts = {}
+    this.state.assetList.forEach(asset => {
+      if(asset.balance > 0) {
+        usdAmounts[asset.address] = asset.balance;
+      }
+    });
+
+    this.setState({usdAmounts});
+  }
+
+  getTokenList = () => {
+    const {allTokens} = this.state;
+    let filteredTokens = allTokens;
+
+    if(this.state.searchToken) {
+      filteredTokens = Object.keys(allTokens)
+        .filter(key => {
+          return allTokens[key].symbol.toLowerCase().includes(this.state.searchToken.toLowerCase());
+        }).reduce((obj, key) => {
+          obj[key] = allTokens[key];
+          return obj;
+        }, {});
+    }
+
+    // Source: https://github.com/Uniswap/uniswap-frontend
+    const tokenList = Object.keys(filteredTokens)
+      .sort((a, b) => {
+        if (filteredTokens[a].symbol && filteredTokens[b].symbol) {
+          const aSymbol = filteredTokens[a].symbol.toLowerCase()
+          const bSymbol = filteredTokens[b].symbol.toLowerCase()
+
+
+
+          // Pin ETH to the top
+          if (aSymbol === 'ETH'.toLowerCase() || bSymbol === 'ETH'.toLowerCase()) {
+            return aSymbol === bSymbol ? 0 : aSymbol === 'ETH'.toLowerCase() ? -1 : 1;
+          }
+
+          // Tokens with a balance
+          if(this.state.usdAmounts[a] && !this.state.usdAmounts[b]) {
+            return -1;
+          } else if(this.state.usdAmounts[b] && !this.state.usdAmounts[a]) {
+            return 1;
+          }
+
+          // Sort by balance
+          if (this.state.usdAmounts[a] && this.state.usdAmounts[b]) {
+            const aUSD = this.state.usdAmounts[a]
+            const bUSD = this.state.usdAmounts[b]
+
+            return aUSD > bUSD ? -1 : aUSD < bUSD ? 1 : 0
+          }
+
+          // Sort remaining tokens alphabetically
+          return aSymbol < bSymbol ? -1 : aSymbol > bSymbol ? 1 : 0
+        } else {
+          return 0
+        }
+      });
 
     this.setState({tokenList});
   }
@@ -161,7 +236,9 @@ class FundContainer extends Component {
           <Assets 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
-            tokenList={this.state.tokenList} />
+            assetList={this.state.assetList}
+            tokenList={this.state.tokenList}
+            allTokens={this.state.allTokens} />
           <div className="fund__buttons">
             <div onClick={this.renderDepositModal}>
               <Button 
@@ -186,7 +263,8 @@ class FundContainer extends Component {
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
                 getAssets={this.getAssets}
-                tokenList={this.state.tokenList} />
+                assetList={this.state.assetList}
+                handleSearchTokenChange={this.handleSearchTokenChange} />
             </div>
           }
           {this.state.withdrawalModal &&
@@ -197,7 +275,7 @@ class FundContainer extends Component {
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
-                tokenList={this.state.tokenList}
+                assetList={this.state.assetList}
                 getAssets={this.getAssets} />
             </div>
           }

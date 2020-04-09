@@ -6,12 +6,12 @@ class Assets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tokenList: this.props.tokenList
+      assetList: this.props.assetList
     }
   }
 
   componentWillReceiveProps = (nextProps) => {
-    this.setState({tokenList: nextProps.tokenList});
+    this.setState({assetList: nextProps.assetList});
   }
 
   render() {
@@ -25,17 +25,18 @@ class Assets extends Component {
             Amount/USD
           </p>
         </div>
-        {this.state.tokenList.length === 0 &&
+        {this.state.assetList.length === 0 &&
           <p className="asset__empty">
             No assets yet... Click deposit to get started.
           </p>
         }
         <ul className="assets__list">
-          {this.state.tokenList.map((token, i) => {
+          {this.state.assetList.map((token, i) => {
             if(token.balance > 0) {
               return (<Asset 
                 key={i} 
                 token={token} 
+                allTokens={this.props.allTokens}
                 drizzle={this.props.drizzle} />);
             } else {
               return null;

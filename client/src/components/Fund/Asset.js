@@ -7,17 +7,13 @@ class Asset extends Component {
     this.state = {
       token: this.props.token,
       balance: null,
-      usdValue: 0,
-      symbol: null,
-      logo: null
+      usdValue: 0
     }
   }
 
   componentDidMount = () => {
-    this.getSymbol();
     this.getBalance();
     this.getUsdValue();
-    this.getLogo();
   }
 
   componentWillReceiveProps = async (nextProps) => {
@@ -60,18 +56,6 @@ class Asset extends Component {
     }
   }
 
-  getSymbol = async () => {
-    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
-      this.setState({symbol: 'ETH'});
-    } else {
-      const token = await new this.props.drizzle.web3.eth.Contract(
-        ERC20, this.state.token.address
-      );
-      const symbol = await token.methods.symbol().call();
-      this.setState({symbol});
-    }
-  }
-
   getDecimals = async () => {
     if(this.state.token.address !== '0x0000000000000000000000000000000000000000') {
       const token = await new this.props.drizzle.web3.eth.Contract(
@@ -107,32 +91,17 @@ class Asset extends Component {
     this.setState({balance: fixedBalance});
   }
 
-  getLogo = () => {
-    let logo;
-    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
-      logo = 'https://cdn.iconscout.com/icon/free/png-256/ethereum-3-569581.png';
-    } else {
-      logo = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${this.state.token.address}/logo.png`
-    }
-    this.setState({logo});
-  }
-
-  handleLogoError = () => {
-    this.setState({logo: 'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png'});
-  }
-
   render() {
     return (
       <li className="assets__asset">
         <img 
           // TODO: Replace address with this.state.token.address
           // TODO: Get eth logo if zero address
-          src={this.state.logo} 
+          src={this.props.allTokens[this.state.token.address].logo} 
           alt="Logo"
-          className="assets__asset-logo"
-          onError={this.handleLogoError} />
+          className="assets__asset-logo" />
         <p className="assets__asset-info">
-          {this.state.symbol}
+          {this.props.allTokens[this.state.token.address].symbol}
         </p>
         <p className="assets__asset-info assets__asset-info--amount">
           {this.state.balance}/{`$${this.state.usdValue}`}
