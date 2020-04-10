@@ -11,7 +11,6 @@
   top: 0
   left: 0
   right: 0
-  z-index: -1
 
 .nav__logo
   width: 32px
@@ -32,15 +31,37 @@
   color: $color-brand
   padding: 6px 12px
 
-.nav__error
+// Error if no web3
+
+.nav-error
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: space-between
+  height: $nav-height
+  padding: 0 $outer-padding
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+
+.nav-error__error
   width: 100%
   height: 30px
   display: flex
   align-items: center
   justify-content: center
 
-.nav__error-link
+.nav-error__link
   margin-left: 4px
   cursor: pointer
   text-decoration: none
   color: $color-brand
+
+.nav-error__content
+  display: flex
+  align-items: center
+  justify-content: space-between
+  width: 100%
+  height: $nav-height
+  padding: 0 $outer-padding
