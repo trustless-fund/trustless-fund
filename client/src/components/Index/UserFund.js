@@ -14,20 +14,22 @@ class UserFund extends Component {
 
   render() {
     return (
-      <a href={`/fund/${this.props.fund.id}`} className="user-funds__link">
-        <li className="user-funds__fund">
-          <p className="user-funds__value">
-            {`${this.props.fund.beneficiary.slice(0, 4)}...${this.props.fund.beneficiary.slice(this.props.fund.beneficiary.length - 4, this.props.fund.beneficiary.length)}`}
-          </p> 
-          <p className="user-funds__value">
-            {this.toDate(this.props.fund.expiration)}
-          </p>
-          <p className="user-funds__value">
-            {this.props.fund.id}
-          </p>
-          <img src={link} alt="Link icon" className="user-funds__icon" />
-        </li>
-      </a>
+      <tr className="user-funds__table-row">
+        <td className="user-funds__table-data">
+          {`${this.props.fund.beneficiary.slice(0, 4)}...${this.props.fund.beneficiary.slice(this.props.fund.beneficiary.length - 4, this.props.fund.beneficiary.length)}`}
+        </td> 
+        <td className="user-funds__table-data">
+          {this.toDate(this.props.fund.expiration)}
+        </td>
+        <td className="user-funds__table-data">
+          {this.props.fund.id}
+        </td>
+        <td className="user-funds__table-data user-funds__table-data--link">
+          <a href={`/fund/${this.props.fund.id}`} className="user-funds__link">
+            <img src={link} alt="Link icon" className="user-funds__icon" />
+          </a>
+        </td>
+      </tr>
     );
   }
 }

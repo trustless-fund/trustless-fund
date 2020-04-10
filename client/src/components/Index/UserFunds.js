@@ -18,7 +18,23 @@ class UserFunds extends Component {
       this.getUserFunds();
     });
 
+    this.getUserFundsLength();
+  }
+
+  componentDidMount = () => {
     this.getUserFunds();
+  }
+
+  getUserFundsLength = async () => {
+    const userFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+      this.props.drizzleState.accounts[0]
+    ).call();
+
+    if(userFunds.length > 0) {
+      this.setState({render: true});
+    } else {
+      this.setState({render: false});
+    }
   }
 
   getUserFunds = async () => {
@@ -27,29 +43,24 @@ class UserFunds extends Component {
     ).call();
 
     let fundList = [];
-    userFunds.forEach(async (fundId) => {
+
+    for(let i = 0; i < userFunds.length; i++) {
       const address = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getFund(
-        fundId
+        i
       ).call();
       
       const fund = await new this.props.drizzle.web3.eth.Contract(TrustlessFund.abi, address);
       const beneficiary = await fund.methods.beneficiary().call();
       const expiration = await fund.methods.expiration().call();
 
-      const fundObj = await {
+      const fundObj = {
         beneficiary,
         expiration,
-        id: fundId
+        id: i
       }
 
       fundList.push(fundObj);
       this.setState({userFunds: fundList});
-    });
-
-    if(userFunds.length > 0) {
-      this.setState({render: true});
-    } else {
-      this.setState({render: false});
     }
   }
 
@@ -60,9 +71,16 @@ class UserFunds extends Component {
           <h2 className="user-funds__header">
             Your Funds
           </h2>
-          {this.state.userFunds.map((fund, i) => {
-            return (<UserFund key={i} fund={fund} />);
-          })}
+          <table className="user-funds__table">
+            <tr className="user-funds__table-row">
+              <th className="user-funds__table-header">Beneficiary</th>
+              <th className="user-funds__table-header">Expiration</th>
+              <th className="user-funds__table-header">ID</th>
+            </tr>
+            {this.state.userFunds.map((fund, i) => {
+              return (<UserFund key={i} fund={fund} />);
+            })}
+          </table>
           <Button 
             text="Create Fund" 
             class="solid user-funds__button" 
