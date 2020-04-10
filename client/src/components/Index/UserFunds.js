@@ -36,11 +36,12 @@ class UserFunds extends Component {
       const beneficiary = await fund.methods.beneficiary().call();
       const expiration = await fund.methods.expiration().call();
 
-      const fundObj = {
+      const fundObj = await {
         beneficiary,
         expiration,
         id: fundId
       }
+
       fundList.push(fundObj);
       this.setState({userFunds: fundList});
     });
