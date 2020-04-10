@@ -20,6 +20,18 @@ module.exports = {
       },
       network_id: 4
     },
+    kovan: {
+      provider: () => {
+        return new HDWalletProvider(keys.privKey, `https://kovan.infura.io/v3/${keys.infura}`);
+      },
+      network_id: 42
+    },
+    goerli: {
+      provider: () => {
+        return new HDWalletProvider(keys.privKey, `https://goerli.infura.io/v3/${keys.infura}`);
+      },
+      network_id: 5
+    },
     mainnet: {
       provider: () => {
         return new HDWalletProvider(keys.privKey, `https://mainnet.infura.io/v3/${keys.infura}`);
