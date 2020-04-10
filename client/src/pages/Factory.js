@@ -4,8 +4,10 @@ import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
+import logo from '../assets/logo.png';
 
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
+import '../layout/components/loading.sass';
 
 const drizzleOptions = {
   contracts: [
@@ -29,7 +31,11 @@ class Index extends Component {
             const {drizzle, drizzleState, initialized} = drizzleContext;
 
             if(!initialized) {
-              return "Loading..."
+              return (
+                <div className="loading">
+                  <img src={logo} alt="Trustless Fund" className="loading__image" />
+                </div>
+              );
             }
 
             return(

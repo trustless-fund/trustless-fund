@@ -4,9 +4,10 @@ import { Drizzle } from "@drizzle/store";
 import FundContainer from '../components/Fund/FundContainer';
 import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
+import logo from '../assets/logo.png';
 
 import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
-// import ERC20 from '../contracts/ERC20.json';
+import '../layout/components/loading.sass';
 
 const drizzleOptions = {
   contracts: [
@@ -30,17 +31,28 @@ class Fund extends Component {
             const {drizzle, drizzleState, initialized} = drizzleContext;
 
             if(!initialized) {
-              return "Loading..."
+              return (
+                <div className="loading">
+                  <img src={logo} alt="Trustless Fund" className="loading__image" />
+                </div>
+              );
             }
 
             return(
               <>
-                <Nav drizzle={drizzle} drizzleState={drizzleState} />
+                <Nav 
+                  drizzle={drizzle} 
+                  drizzleState={drizzleState}
+                  setLoaded={this.setLoaded} />
                 <FundContainer 
                   drizzle={drizzle} 
                   drizzleState={drizzleState} 
-                  fundId={this.props.match.params.fundId} />
-                <Footer drizzle={drizzle} drizzleState={drizzleState} />
+                  fundId={this.props.match.params.fundId}
+                  setLoaded={this.setLoaded} />
+                <Footer 
+                  drizzle={drizzle} 
+                  drizzleState={drizzleState}
+                  setLoaded={this.setLoaded} />
               </>
             );
           }}
