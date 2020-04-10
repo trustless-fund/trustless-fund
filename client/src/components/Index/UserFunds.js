@@ -13,16 +13,22 @@ class UserFunds extends Component {
       render: false
     }
 
-    window.ethereum.on('accountsChanged', (accounts) => {
-      this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
-      this.getUserFunds();
-    });
+    if(window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => {
+        this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+        this.getUserFunds();
+      });
+    }
 
-    this.getUserFundsLength();
+    if(this.props.drizzle.web3.givenProvider) {
+      this.getUserFundsLength();
+    }
   }
 
   componentDidMount = async () => {
-    this.getUserFunds();
+    if(this.props.drizzle.web3.givenProvider) {
+      this.getUserFunds();
+    }
   }
 
   getUserFundsLength = async () => {

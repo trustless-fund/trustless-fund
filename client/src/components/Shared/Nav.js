@@ -11,9 +11,11 @@ class Nav extends Component {
       address: this.props.drizzleState.accounts[0]
     }
 
-    window.ethereum.on('accountsChanged', (accounts) => {
-      this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
-    });
+    if(window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => {
+        this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+      });
+    }
   }
 
   render() {

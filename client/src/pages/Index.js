@@ -33,6 +33,8 @@ class Index extends Component {
               return "Loading..."
             }
 
+            console.log(drizzle, drizzleState)
+
             return(
               <>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
