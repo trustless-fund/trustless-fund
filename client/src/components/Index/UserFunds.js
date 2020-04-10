@@ -71,14 +71,18 @@ class UserFunds extends Component {
             Your Funds
           </h2>
           <table className="user-funds__table">
-            <tr className="user-funds__table-row">
-              <th className="user-funds__table-header">Beneficiary</th>
-              <th className="user-funds__table-header">Expiration</th>
-              <th className="user-funds__table-header">ID</th>
-            </tr>
-            {this.state.userFunds && this.state.userFunds.map((fund, i) => {
-              return (<UserFund key={i} fund={fund} />);
-            })}
+            <thead>
+              <tr className="user-funds__table-row">
+                <th className="user-funds__table-header">Beneficiary</th>
+                <th className="user-funds__table-header">Expiration</th>
+                <th className="user-funds__table-header">ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.userFunds && this.state.userFunds.map((fund, i) => {
+                return (<UserFund key={i} fund={fund} />);
+              })}
+            </tbody>
           </table>
           <Button 
             text="Create Fund" 
