@@ -9,7 +9,7 @@ class UserFunds extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userFunds: [],
+      userFunds: null,
       render: false
     }
 
@@ -21,16 +21,16 @@ class UserFunds extends Component {
     this.getUserFundsLength();
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.getUserFunds();
   }
 
   getUserFundsLength = async () => {
-    const userFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+    const fundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
 
-    if(userFunds.length > 0) {
+    if(fundIdArray.length > 0) {
       this.setState({render: true});
     } else {
       this.setState({render: false});
@@ -38,15 +38,14 @@ class UserFunds extends Component {
   }
 
   getUserFunds = async () => {
-    const userFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+    const fundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
 
     let fundList = [];
-
-    for(let i = 0; i < userFunds.length; i++) {
+    for(const id of fundIdArray) {
       const address = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getFund(
-        i
+        id
       ).call();
       
       const fund = await new this.props.drizzle.web3.eth.Contract(TrustlessFund.abi, address);
@@ -56,7 +55,7 @@ class UserFunds extends Component {
       const fundObj = {
         beneficiary,
         expiration,
-        id: i
+        id
       }
 
       fundList.push(fundObj);
@@ -77,7 +76,7 @@ class UserFunds extends Component {
               <th className="user-funds__table-header">Expiration</th>
               <th className="user-funds__table-header">ID</th>
             </tr>
-            {this.state.userFunds.map((fund, i) => {
+            {this.state.userFunds && this.state.userFunds.map((fund, i) => {
               return (<UserFund key={i} fund={fund} />);
             })}
           </table>
