@@ -27,21 +27,28 @@ class FundContainer extends Component {
       tokenList: null,
       allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
       usdAmounts: null,
-      searchToken: ''
+      searchToken: '',
+      noProvider: false
     }
   }
 
   componentDidMount = async () => {
-    await this.getFund();
-    await this.getAssets();
-    await this.getUsdAmounts();
-    this.getTokenList();
-    this.renderWithdrawal();
-
-    window.ethereum.on('accountsChanged', async (accounts) => {
-      await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+    if(this.props.drizzle.web3.givenProvider) {
+      await this.getFund();
+      await this.getAssets();
+      await this.getUsdAmounts();
+      this.getTokenList();
       this.renderWithdrawal();
-    });
+    } else {
+      this.setState({noProvider: true});
+    }
+
+    if(window.ethereum) {
+      window.ethereum.on('accountsChanged', async (accounts) => {
+        await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+        this.renderWithdrawal();
+      });
+    }
   }
 
   getFund = async () => {
@@ -225,6 +232,26 @@ class FundContainer extends Component {
   render() {
     if(this.state.invalidFund) {
       return (<InvalidFund />);
+    }
+
+    if(this.state.noProvider) {
+      return(
+        <div className="fund-error">
+          <h2 className="fund-error__header">
+            Error
+          </h2>
+          <p className="fund-error__info">
+            You must be connected to web3 to view this page.
+            <a 
+              href="https://metamask.io/" 
+              className="fund-error__link"
+              target="_blank"
+              rel="noopener noreferrer">
+              Download Metamask.
+            </a>
+          </p>
+        </div>
+      );
     }
 
     if(this.state.fund) {
