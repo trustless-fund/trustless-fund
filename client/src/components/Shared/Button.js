@@ -6,7 +6,7 @@ class Button extends Component {
   render() {
     if(this.props.button) {
       return (
-        <button className={`hero__button hero__button--${this.props.class}`}>
+        <button className={`button button--${this.props.class}`}>
           {this.props.text}
         </button>
       );
@@ -15,7 +15,7 @@ class Button extends Component {
       return (
         <a 
           href={`${this.props.link}`} 
-          className={`hero__button hero__button--${this.props.class}`}
+          className={`button button--${this.props.class}`}
           target="_blank"
           rel="noopener noreferrer"
           >
@@ -26,7 +26,7 @@ class Button extends Component {
     return (
       <a 
         href={`${this.props.link}`} 
-        className={`hero__button hero__button--${this.props.class}`}
+        className={`button button--${this.props.class}`}
         >
         {this.props.text}
       </a>
