@@ -52,7 +52,7 @@ class Hero extends Component {
           <div className="hero__buttons">
             <Button 
               text="Create Fund" 
-              class="solid" 
+              class="solid hero__button" 
               link="/factory" 
               button={false} />
             <a 
