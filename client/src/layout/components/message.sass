@@ -1,6 +1,7 @@
 @import '../config/_colors'
 @import '../config/_variables'
 @import '../config/_animations'
+@import '../config/_breakpoints'
   
 .message
   position: absolute
@@ -16,3 +17,7 @@
   opacity: 0
   transform: translateX(-20px)
   animation: 0.3s fadeRight forwards
+  z-index: 2
+
+  +media($breakpoint-sm) 
+    left: 16px
