@@ -16,6 +16,7 @@ class UserFunds extends Component {
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts) => {
         this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+        this.getUserFundsLength();
         this.getUserFunds();
       });
     }
