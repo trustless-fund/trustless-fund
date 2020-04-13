@@ -10,7 +10,8 @@ class UserFunds extends Component {
     super(props);
     this.state = {
       userFunds: null,
-      render: false
+      render: false,
+      userFundsLength: null
     }
 
     if(window.ethereum) {
@@ -36,6 +37,8 @@ class UserFunds extends Component {
     const fundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
+
+    this.setState({userFundsLength: fundIdArray.length});
 
     if(fundIdArray.length > 0) {
       this.setState({render: true});
@@ -73,7 +76,7 @@ class UserFunds extends Component {
   render() {
     if(this.state.render) {
       return (
-        <section className="user-funds">
+        <section className={`user-funds${this.state.userFundsLength < 10 ? ' center' : ''}`}>
           <h2 className="user-funds__header">
             Your Funds
           </h2>
