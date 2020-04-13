@@ -29,7 +29,8 @@ class FundContainer extends Component {
       allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
       usdAmounts: null,
       searchToken: '',
-      noProvider: false
+      noProvider: false,
+      expiration: null
     }
   }
 
@@ -230,6 +231,10 @@ class FundContainer extends Component {
     this.setState({tokenList});
   }
 
+  setExpiration = (expiration) => {
+    this.setState({expiration});
+  }
+
   render() {
     if(this.state.invalidFund) {
       return (<InvalidFund />);
@@ -261,7 +266,9 @@ class FundContainer extends Component {
           <Expiration 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
-            fund={this.state.fund} />
+            fund={this.state.fund}
+            expiration={this.state.expiration}
+            setExpiration={this.setExpiration} />
           <Assets 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
@@ -296,7 +303,8 @@ class FundContainer extends Component {
                 handleSearchTokenChange={this.handleSearchTokenChange}
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}
-                deposit={true} />
+                deposit={true}
+                expiration={this.state.expiration} />
             </div>
           }
           {this.state.withdrawalModal &&

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import Warning from '../Shared/Warning';
 import TokenInputDropdown from './TokenInputDropdown';
 import ERC20 from '../../contracts/ERC20.json';
 import down from '../../assets/down-arrow.svg';
@@ -363,6 +364,12 @@ class DepositWithdrawForm extends Component {
             link={null} 
             button={true}
           />
+          <Warning 
+            className="deposit__warning"
+            message={
+              `Locking ${this.state.amount} 
+              ${this.props.allTokens[this.state.token].symbol} 
+              until ${this.props.expiration}.`}/>
         </form>
       </div>
     );

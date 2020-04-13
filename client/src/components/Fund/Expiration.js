@@ -4,12 +4,16 @@ class Expiration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expiration: null,
+      expiration: this.props.expiration,
       isExpired: false
     }
 
     this.getExpiration();
     this.isExpired();
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({expiration: nextProps.expiration});
   }
 
   months = [
@@ -35,7 +39,7 @@ class Expiration extends Component {
     const date = dateObject.getUTCDate();
     const year = dateObject.getUTCFullYear();
     const fullDate = `${month} ${date}, ${year}`;
-    this.setState({expiration: fullDate});
+    this.props.setExpiration(fullDate);
   }
 
   isExpired = async () => {
