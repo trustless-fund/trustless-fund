@@ -1,5 +1,6 @@
 @import '../config/_colors'
 @import '../config/_variables'
+@import '../config/_breakpoints'
 
 .footer
   display: flex
@@ -7,6 +8,9 @@
   justify-content: space-between
   height: $footer-height
   padding: 0 $outer-padding
+
+  +media($breakpoint-sm)
+    padding: 0 $outer-padding-sm
 
 .footer__disclaimer
   color: $color-black
