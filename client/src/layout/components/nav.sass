@@ -1,5 +1,6 @@
 @import '../config/_colors'
 @import '../config/_variables'
+@import '../config/_breakpoints'
   
 .nav
   display: flex
@@ -11,6 +12,9 @@
   top: 0
   left: 0
   right: 0
+
+  +media($breakpoint-sm)
+    padding: 0 $outer-padding-sm
 
 .nav__logo
   width: 32px
@@ -24,6 +28,12 @@
   align-items: center
   text-decoration: none
 
+  +media($breakpoint-sm)
+    font-size: 20px
+  +media($breakpoint-xs)
+    font-size: 18px
+  
+
 .nav__button
   background: $color-white
   border: 1px solid $color-brand
@@ -32,6 +42,11 @@
   padding: 6px 12px
   font-size: 16px
   font-weight: 300
+
+  +media($breakpoint-sm)
+    font-size: 14px
+  +media($breakpoint-xs)
+    font-size: 12px
 
 // Error if no web3
 
@@ -47,6 +62,9 @@
   left: 0
   right: 0
 
+  +media($breakpoint-sm)
+    padding: 0 $outer-padding-sm
+
 .nav-error__error
   width: 100%
   height: 30px
@@ -54,6 +72,10 @@
   align-items: center
   justify-content: center
   margin-bottom: 0
+  text-align: center
+
+  +media($breakpoint-sm)
+    font-size: 14px
 
 .nav-error__link
   margin-left: 4px
