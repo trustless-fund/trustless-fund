@@ -364,12 +364,14 @@ class DepositWithdrawForm extends Component {
             link={null} 
             button={true}
           />
-          <Warning 
-            className="deposit__warning"
-            message={
-              `Locking ${this.state.amount} 
-              ${this.props.allTokens[this.state.token].symbol} 
-              until ${this.props.expiration}.`}/>
+          {this.props.deposit &&
+            <Warning 
+              className="deposit__warning"
+              message={
+                `Locking ${this.state.amount} 
+                ${this.props.allTokens[this.state.token].symbol} 
+                until ${this.props.expiration}.`}/>
+          }
         </form>
       </div>
     );
