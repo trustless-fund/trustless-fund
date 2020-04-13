@@ -240,7 +240,8 @@ class DepositWithdrawForm extends Component {
 
     token.methods.approve(
       this.props.fund._address,
-      this.props.drizzle.web3.utils.toWei(Number.MAX_SAFE_INTEGER)
+      // 2147483647 = Javascript max safe integer
+      this.props.drizzle.web3.utils.toWei('2147483647')
     ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', async (number, receipt) => {
