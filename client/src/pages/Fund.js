@@ -42,17 +42,14 @@ class Fund extends Component {
               <>
                 <Nav 
                   drizzle={drizzle} 
-                  drizzleState={drizzleState}
-                  setLoaded={this.setLoaded} />
+                  drizzleState={drizzleState} />
                 <FundContainer 
                   drizzle={drizzle} 
                   drizzleState={drizzleState} 
-                  fundId={this.props.match.params.fundId}
-                  setLoaded={this.setLoaded} />
+                  fundId={this.props.match.params.fundId} />
                 <Footer 
                   drizzle={drizzle} 
-                  drizzleState={drizzleState}
-                  setLoaded={this.setLoaded} />
+                  drizzleState={drizzleState} />
               </>
             );
           }}
