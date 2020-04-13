@@ -1,5 +1,6 @@
 @import '../config/_colors'
 @import '../config/_variables'
+@import '../config/_breakpoints'
 
 .create-fund
   display: flex
@@ -7,12 +8,17 @@
   align-items: center
   justify-content: center
   min-height: calc(100vh - #{$footer-height})
+  padding-top: $nav-height / 2
 
 .create-fund__header
   font-size: 36px
   font-weight: 400
   color: $color-black
   margin-bottom: 16px
+  text-align: center
+
+  +media($breakpoint-sm)
+    font-size: 32px
 
 .create-fund__form
   display: flex
@@ -20,6 +26,7 @@
   align-items: center
   justify-content: center
   width: 380px
+  max-width: 90vw
 
 .create-fund__label
   display: flex
@@ -31,6 +38,9 @@
   font-weight: 300
   color: $color-black
   margin-top: 8px
+
+  +media($breakpoint-sm)
+    font-size: 20px
 
 .create-fund__input
   width: 100%
@@ -52,6 +62,9 @@
 .create-fund__button
   width: 100%
   margin-top: 8px
+  
+  +media($breakpoint-sm)
+    font-size: 24px
 
 .create-fund__button.disabled
   background: $color-grey
