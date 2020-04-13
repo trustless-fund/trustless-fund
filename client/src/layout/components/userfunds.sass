@@ -1,5 +1,6 @@
 @import '../config/_colors'
 @import '../config/_variables'
+@import '../config/_breakpoints'
 
 .user-funds
   display: flex
@@ -18,9 +19,14 @@
   font-size: 40px
   font-weight: 400
   color: $color-black
+  text-align: center
+
+  +media($breakpoint-sm)
+    font-size: 32px
 
 .user-funds__table
   width: 320px
+  max-width: 90vw
 
 .user-funds__table-header
   font-size: 18px 
@@ -54,3 +60,4 @@
 
 .user-funds__button
   margin-top: 12px
+  max-width: 90vw
