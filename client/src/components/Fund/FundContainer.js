@@ -6,6 +6,7 @@ import Expiration from './Expiration';
 import Details from './Details';
 import Button from '../Shared/Button';
 import Message from '../Shared/Message';
+import Warning from '../Shared/Warning';
 import TrustlessFund from '../../contracts/TrustlessFund.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
 
@@ -314,6 +315,9 @@ class FundContainer extends Component {
                 deposit={false} />
             </div>
           }
+          <Warning 
+            message="This application is in beta. Use at your own risk."
+            className="fund__warning"/>
           <Details 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}

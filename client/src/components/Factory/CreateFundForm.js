@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
+import Warning from '../Shared/Warning';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -68,6 +69,8 @@ class CreateFundForm extends Component {
             class="solid create-fund__button" 
             link={null} button={true} 
             onClick={this.props.handleSubmit} />
+          <Warning 
+            message="This application is in beta. Use at your own risk." />
         </form>
       </div>
     );
