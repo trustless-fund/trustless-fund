@@ -8,7 +8,8 @@ import '../../layout/components/fundcreated.sass';
 class FactoryContainer extends Component {
   state = {
     expiration: null,
-    beneficiary: '',
+    beneficiaryValue: '',
+    beneficiary: null,
     fundId: null,
     messsage: null,
     txHash: null,
@@ -29,49 +30,67 @@ class FactoryContainer extends Component {
   }
 
   handleBeneficiaryChange = async (e) => {
-    await this.setState({beneficiary: e.target.value});
-    this.isAddress();
+    await this.setState({beneficiaryValue: e.target.value});
   }
 
-  isAddress = () => {
-    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiary) || this.state.beneficiary === '') {
+  resolveENSAddress = async () => {
+    try {
+      const address = 
+        await this.props.drizzle.web3.eth.ens.getAddress(this.state.beneficiaryValue);
+
+      if(this.props.drizzle.web3.utils.isAddress(address)) {
+        this.setState({invalidAddress: false});
+        this.setState({beneficiary: address});
+      }
+    } catch {
+      this.setState({invalidAddress: true});
+    }
+  }
+
+  isAddress = async () => {
+    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
+      this.setState({beneficiary: this.state.beneficiaryValue});
       this.setState({invalidAddress: false});
     } else {
-      this.setState({invalidAddress: true});
+      await this.resolveENSAddress();
     }
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    let expiration;
-    if(this.state.expiration instanceof Date) {
-      expiration = this.state.expiration.getTime() / 1000;
-    } else {
-      expiration = this.state.expiration;
-    }
+    await this.isAddress();
 
-    await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
-      expiration,
-      this.state.beneficiary
-    ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
-      this.setMessage('Transaction Pending...', txHash);
-    }).on('confirmation', (number, receipt) => {
-      if(number === 0) {
-        this.setMessage('Transaction Confirmed!', receipt.txHash);
+    if(!this.state.invalidAddress) {
+      let expiration;
+      if(this.state.expiration instanceof Date) {
+        expiration = this.state.expiration.getTime() / 1000;
+      } else {
+        expiration = this.state.expiration;
+      }
+
+      await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
+        expiration,
+        this.state.beneficiary
+      ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+        this.setMessage('Transaction Pending...', txHash);
+      }).on('confirmation', (number, receipt) => {
+        if(number === 0) {
+          this.setMessage('Transaction Confirmed!', receipt.txHash);
+          setTimeout(() => {
+            this.clearMessage();
+          }, 10000);
+        }
+      }).on('error', (err, receipt) => {
+        this.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
         setTimeout(() => {
           this.clearMessage();
         }, 10000);
-      }
-    }).on('error', (err, receipt) => {
-      this.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
-      setTimeout(() => {
-        this.clearMessage();
-      }, 10000);
-    });
+      });
 
-    const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
-    this.setState({fundId: (nextId - 1).toString()});
+      const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
+      this.setState({fundId: (nextId - 1).toString()});
+    }
   }
 
   setMessage = (newMessage, txHash) => {
@@ -117,7 +136,7 @@ class FactoryContainer extends Component {
           handleBeneficiaryChange={this.handleBeneficiaryChange}
           handleSubmit={this.handleSubmit}
           expiration={this.state.expiration}
-          beneficiary={this.state.beneficiary}
+          beneficiaryValue={this.state.beneficiaryValue}
           date={this.state.date}
           invalidAddress={this.state.invalidAddress} />
         <Message 
