@@ -27,11 +27,15 @@ class Details extends Component {
       <div className="fund__details">
         <p className="fund__detail">
           <span className="fund__detail--bold">Owner:</span> 
-          {this.state.owner}
+          {this.state.owner ? 
+            `${this.state.owner.slice(0, 4)}...${this.state.owner.slice(this.state.owner.length - 4, this.state.owner.length)}` : 
+            null}
         </p>
         <p className="fund__detail">
-        <span className="fund__detail--bold">Beneficiary:</span> 
-        {this.state.beneficiary}
+          <span className="fund__detail--bold">Beneficiary:</span> 
+          {this.state.beneficiary ? 
+            `${this.state.beneficiary.slice(0, 4)}...${this.state.beneficiary.slice(this.state.beneficiary.length - 4, this.state.beneficiary.length)}` : 
+            null}
         </p>
       </div>
     );
