@@ -1156,6 +1156,18 @@ export const TOKEN_LIST = {
       [SYMBOL]: 'XEENUS',
       [DECIMALS]: '18',
       [LOGO]:
+      'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' },
+  '0xF6fF95D53E08c9660dC7820fD5A775484f77183A':
+    { [NAME]: 'Yeenus ���',
+      [SYMBOL]: 'YEENUS',
+      [DECIMALS]: '8',
+      [LOGO]:
+      'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' },
+  '0xC84f8B669Ccb91C86AB2b38060362b9956f2De52':
+    { [NAME]: 'Zeenus ���',
+      [SYMBOL]: 'ZEENUS',
+      [DECIMALS]: '0',
+      [LOGO]:
       'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' } },
   4: { '0x0000000000000000000000000000000000000000':
       { [NAME]: 'Ethereum',
