@@ -83,4 +83,20 @@ describe('TrustlessFund', () => {
       });
     });
   });
+
+  describe('Increase Time', () => {
+    it('reverts decreased expiration', async () => {
+      await expectRevert(
+        this.fund.increaseTime(0, {from: owner}),
+        'can only increase expiration'
+      );
+    });
+
+    it('reverts if not owner', async () => {
+      await expectRevert(
+        this.fund.increaseTime(2, {from: beneficiary}),
+        'Ownable: caller is not the owner'
+      );
+    });
+  });
 });
