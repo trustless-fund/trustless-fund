@@ -99,4 +99,27 @@ describe('TrustlessFund', () => {
       );
     });
   });
+
+  describe('Update Beneficiary', () => {
+    it('reverts if not owner', async () => {
+      await expectRevert(
+        this.fund.updateBeneficiary(user, {from: beneficiary}),
+        'Ownable: caller is not the owner'
+      );
+    });
+
+    it('reverts if same beneficiary', async () => {
+      await expectRevert(
+        this.fund.updateBeneficiary(beneficiary, {from: owner}),
+        'same beneficiary'
+      );
+    });
+
+    it('reverts if burn address', async () => {
+      await expectRevert(
+        this.fund.updateBeneficiary(constants.ZERO_ADDRESS, {from: owner}),
+        'cannot set as burn address'
+      );
+    });
+  });
 });
