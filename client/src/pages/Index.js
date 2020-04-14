@@ -31,7 +31,7 @@ class Index extends Component {
           {drizzleContext => {
             const {drizzle, drizzleState, initialized} = drizzleContext;
 
-            if(!initialized) {
+            if(window.ethereum && !initialized) {
               return (
                 <div className="loading">
                   <img src={logo} alt="Trustless Fund" className="loading__image" />

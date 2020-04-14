@@ -26,11 +26,15 @@ class FundContainer extends Component {
       txHash: null,
       assetList: [],
       tokenList: null,
-      allTokens: TOKEN_LIST[this.props.drizzleState.web3.networkId],
+      allTokens: null,
       usdAmounts: null,
       searchToken: '',
       noProvider: false,
       expiration: null
+    }
+
+    if(window.ethereum) {
+      this.state.allTokens = TOKEN_LIST[this.props.drizzleState.web3.networkId];
     }
   }
 

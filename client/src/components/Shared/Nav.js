@@ -8,12 +8,13 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: this.props.drizzleState.accounts[0],
+      address: null,
       noProvider: false,
       testNetwork: false
     }
 
     if(window.ethereum) {
+      this.state.address = this.props.drizzleState.accounts[0];
       window.ethereum.on('accountsChanged', (accounts) => {
         this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
       });
@@ -21,17 +22,22 @@ class Nav extends Component {
   }
 
   componentDidMount = () => {
-    if(!this.props.drizzle.web3.givenProvider) {
+    try {
+      if(!this.props.drizzle.web3.givenProvider) {
+        this.setState({address: null});
+        this.setState({noProvider: true});
+      } else {
+        this.setState({address: this.props.drizzleState.accounts[0]});
+        this.setState({noProvider: false});
+      }
+      if(this.props.drizzleState.web3.networkId !== 1) {
+        this.setState({testNetwork: true});
+      } else {
+        this.setState({testNetwork: false})
+      }
+    } catch {
       this.setState({address: null});
       this.setState({noProvider: true});
-    } else {
-      this.setState({address: this.props.drizzleState.accounts[0]});
-      this.setState({noProvider: false});
-    }
-    if(this.props.drizzleState.web3.networkId !== 1) {
-      this.setState({testNetwork: true});
-    } else {
-      this.setState({testNetwork: false})
     }
   }
 
