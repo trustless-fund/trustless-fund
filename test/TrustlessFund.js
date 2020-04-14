@@ -67,6 +67,15 @@ describe('TrustlessFund', () => {
       );
     });
 
+    it('emits withdraw event', async () => {
+      const receipt = await this.fund.withdraw('100', constants.ZERO_ADDRESS, {from: beneficiary});
+      expectEvent(receipt, 'Withdraw', {
+        _to: beneficiary,
+        _value: '100',
+        _token: constants.ZERO_ADDRESS
+      });
+    });
+
     describe('Locked', () => {
       let lockedFund;
       beforeEach(async () => {
@@ -98,6 +107,13 @@ describe('TrustlessFund', () => {
         'Ownable: caller is not the owner'
       );
     });
+
+    it('emits increasetime event', async () => {
+      const receipt = await this.fund.increaseTime(3, {from: owner});
+      expectEvent(receipt, 'IncreaseTime', {
+        _newExpiration: '3'
+      });
+    });
   });
 
   describe('Update Beneficiary', () => {
@@ -120,6 +136,13 @@ describe('TrustlessFund', () => {
         this.fund.updateBeneficiary(constants.ZERO_ADDRESS, {from: owner}),
         'cannot set as burn address'
       );
+    });
+
+    it('emits updatebeneficiary event', async () => {
+      const receipt = await this.fund.updateBeneficiary(user, {from: owner});
+      expectEvent(receipt, 'UpdateBeneficiary', {
+        _newBeneficiary: user
+      });
     });
   });
 });
