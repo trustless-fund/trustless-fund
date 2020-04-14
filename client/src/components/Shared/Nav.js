@@ -17,6 +17,7 @@ class Nav extends Component {
       this.state.address = this.props.drizzleState.accounts[0];
       window.ethereum.on('accountsChanged', (accounts) => {
         this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
+        this.setState({address: accounts[0]});
       });
     }
   }
