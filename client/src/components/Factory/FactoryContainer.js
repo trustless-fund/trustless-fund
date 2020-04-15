@@ -114,11 +114,11 @@ class FactoryContainer extends Component {
           <div className="fund-created">
             <Button 
               text="Create Fund" 
-              class="outline" 
+              class="outline fund-created__button" 
               link='/factory' button={false} />
             <Button 
               text="Go to Fund" 
-              class="solid" 
+              class="solid fund-created__button" 
               link={`/fund/${this.state.fundId}`} button={false} />
           </div>
           <Message 
