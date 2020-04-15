@@ -14,7 +14,6 @@
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
     "openzeppelin-solidity": "^2.5.0",
-    "react-datepicker": "^2.14.1",
     "redux-devtools-extension": "^2.13.8",
     "solc": "^0.6.0",
     "solc-js": "^1.0.1",
