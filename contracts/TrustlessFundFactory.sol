@@ -79,6 +79,7 @@ contract TrustlessFundFactory is Ownable {
     require(funds[nextId] == address(0), 'id already in use');
     require(msg.value == fee, 'must pay fee');
     TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
+    feesAccrued += fee;
     funds[nextId] = address(fund);
     userFunds[msg.sender].push(nextId);
     nextId++;
@@ -99,6 +100,7 @@ contract TrustlessFundFactory is Ownable {
   */
   function collectFees(uint _amount) public onlyOwner() {
     require(feesAccrued > 0, 'no fees accrued');
+    require(_amount < feesAccrued, 'not enough fees accrued');
     feesAccrued -= _amount;
     (bool success, ) = msg.sender.call.value(_amount)("");
     require(success, "Transfer failed.");
