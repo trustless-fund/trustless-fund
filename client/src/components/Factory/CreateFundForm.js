@@ -31,7 +31,7 @@ class CreateFundForm extends Component {
               selected={this.props.expiration}
               onChange={(date) => this.props.handleExpirationChange(date)}
               showPopperArrow={false}
-              minDate={this.props.expiration} />
+              minDate={this.props.minDate} />
           </label>
           <label className="create-fund__label">
             Choose a beneficiary address

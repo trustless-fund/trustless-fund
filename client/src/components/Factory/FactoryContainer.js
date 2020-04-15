@@ -13,7 +13,8 @@ class FactoryContainer extends Component {
     fundId: null,
     messsage: null,
     txHash: null,
-    invalidAddress: false
+    invalidAddress: false,
+    minDate: null
   }
 
   componentDidMount = () => {
@@ -23,6 +24,7 @@ class FactoryContainer extends Component {
   getDate = () => {
     const date = Date.now();
     this.setState({expiration: date});
+    this.setState({minDate: date});
   }
 
   handleExpirationChange = (date) => {
@@ -64,9 +66,9 @@ class FactoryContainer extends Component {
     if(!this.state.invalidAddress) {
       let expiration;
       if(this.state.expiration instanceof Date) {
-        expiration = this.state.expiration.getTime() / 1000;
+        expiration = Math.floor(this.state.expiration.getTime() / 1000);
       } else {
-        expiration = this.state.expiration;
+        expiration = Math.floor(this.state.expiration / 1000);
       }
 
       await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
@@ -114,11 +116,11 @@ class FactoryContainer extends Component {
           <div className="fund-created">
             <Button 
               text="Create Fund" 
-              class="outline" 
+              class="outline fund-created__button" 
               link='/factory' button={false} />
             <Button 
               text="Go to Fund" 
-              class="solid" 
+              class="solid fund-created__button" 
               link={`/fund/${this.state.fundId}`} button={false} />
           </div>
           <Message 
@@ -138,7 +140,8 @@ class FactoryContainer extends Component {
           expiration={this.state.expiration}
           beneficiaryValue={this.state.beneficiaryValue}
           date={this.state.date}
-          invalidAddress={this.state.invalidAddress} />
+          invalidAddress={this.state.invalidAddress}
+          minDate={this.state.minDate} />
         <Message 
           message={this.state.message} 
           txHash={this.state.txHash} 
