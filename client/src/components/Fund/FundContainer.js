@@ -288,7 +288,7 @@ class FundContainer extends Component {
                 button={true}
               />
             </div>
-            {this.state.renderWithdrawal &&
+            {this.state.assetList.length > 0 && this.state.renderWithdrawal &&
               <div onClick={this.renderWithdrawalModal}>
                 <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
               </div>
