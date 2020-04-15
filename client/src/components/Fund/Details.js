@@ -5,11 +5,16 @@ class Details extends Component {
     super(props);
     this.state = {
       owner: null,
-      beneficiary: null
+      beneficiary: null,
+      etherscan: null
     }
 
     this.getOwner();
     this.getBeneficiary();
+  }
+
+  componentDidMount = () => {
+    this.getEtherscanLink();
   }
 
   getOwner = async () => {
@@ -22,9 +27,34 @@ class Details extends Component {
     this.setState({beneficiary});
   }
 
+  getEtherscanLink = () => {
+    if(this.props.drizzleState.web3.networkId === 1) {
+      return this.setState({etherscan: `https://etherscan.io/address/${this.props.fund._address}`});
+    }
+    if(this.props.drizzleState.web3.networkId === 3) {
+      return this.setState({etherscan: `https://ropsten.etherscan.io/address/${this.props.fund._address}`});
+    }
+    if(this.props.drizzleState.web3.networkId === 4) {
+      return this.setState({etherscan: `https://rinkeby.etherscan.io/address/${this.props.fund._address}`});
+    }
+    if(this.props.drizzleState.web3.networkId === 5) {
+      return this.setState({etherscan: `https://goerli.etherscan.io/address/${this.props.fund._address}`});
+    }
+    if(this.props.drizzleState.web3.networkId === 42) {
+      return this.setState({etherscan: `https://kovan.etherscan.io/address/${this.props.fund._address}`});
+    }
+  }
+
   render() {
     return (
       <div className="fund__details">
+        <a 
+          href={this.state.etherscan}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fund__detail-link">
+          View on etherscan
+        </a>
         <p className="fund__detail">
           <span className="fund__detail--bold">Owner:</span> 
           {this.state.owner ? 
