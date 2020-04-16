@@ -1,9 +1,8 @@
 pragma solidity 0.5.16;
 
 import './TrustlessFund.sol';
-import "@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract TrustlessFundFactory is Ownable {
+contract TrustlessFundFactory {
   /*** STORAGE VARIABLES ***/
 
   /**
