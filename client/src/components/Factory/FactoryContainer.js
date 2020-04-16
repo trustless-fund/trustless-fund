@@ -76,9 +76,11 @@ class FactoryContainer extends Component {
         this.state.beneficiary
       ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
         this.setMessage('Transaction Pending...', txHash);
-      }).on('confirmation', (number, receipt) => {
+      }).on('confirmation', async (number, receipt) => {
         if(number === 0) {
           this.setMessage('Transaction Confirmed!', receipt.txHash);
+          const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
+          this.setState({fundId: (nextId - 1).toString()});
           setTimeout(() => {
             this.clearMessage();
           }, 10000);
@@ -89,9 +91,6 @@ class FactoryContainer extends Component {
           this.clearMessage();
         }, 10000);
       });
-
-      const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
-      this.setState({fundId: (nextId - 1).toString()});
     }
   }
 
