@@ -80,14 +80,7 @@ class Nav extends Component {
       return (
         <nav className="nav-error">
           <p className="nav-error__error">
-            No web3 detected. Please download and connect to 
-            <a 
-              href="https://metamask.io/"
-              className="nav-error__link"
-              target="_blank"
-              rel="noopener noreferrer">
-              Metamask.
-            </a>
+            No web3 detected. Please download and connect to Metamask.
           </p>
           <div className="nav-error__content">
             <a href="/" className="nav__header">
