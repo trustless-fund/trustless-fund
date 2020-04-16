@@ -328,7 +328,7 @@ class FundContainer extends Component {
             </div>
           }
           <Warning 
-            message="This application is in beta. Use at your own risk."
+            message="This application is unaudited. Use at your own risk."
             className="fund__warning"/>
           <Details 
             drizzle={this.props.drizzle} 

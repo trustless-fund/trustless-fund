@@ -91,12 +91,14 @@ class DepositWithdrawForm extends Component {
       if(this.state.amount > this.state.balance) {
         withdrawButtons.forEach(button => {
           if(!button.classList.contains('disabled')) {
+            button.disabled = true;
             button.classList.add('disabled');
           }
         });
       } else {
         withdrawButtons.forEach(button => {
           if(button.classList.contains('disabled')) {
+            button.disabled = false;
             button.classList.remove('disabled');
           }
         });
@@ -188,7 +190,6 @@ class DepositWithdrawForm extends Component {
       return this.setState({approve: false});
     }
     
-    // TODO: Only run if is address
     const token = await new this.props.drizzle.web3.eth.Contract(
       ERC20, this.state.token
     );
@@ -206,7 +207,6 @@ class DepositWithdrawForm extends Component {
   }
 
   approveToken = async () => {
-    // TODO: Only run if is address
     const token = await new this.props.drizzle.web3.eth.Contract(
       ERC20, this.state.token
     );
@@ -234,7 +234,6 @@ class DepositWithdrawForm extends Component {
   }
 
   infiniteApproveToken = async () => {
-    // TODO: Only run if is address
     const token = await new this.props.drizzle.web3.eth.Contract(
       ERC20, this.state.token
     );
@@ -357,7 +356,6 @@ class DepositWithdrawForm extends Component {
               Max: {this.state.balance}
             </button>
           }
-          {/* TODO: Disable if not unlocked */}
           <Button 
             text={this.state.deposit ? 'Deposit' : 'Withdraw'}
             class={`solid deposit__button`}

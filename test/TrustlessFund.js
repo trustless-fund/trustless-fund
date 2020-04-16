@@ -1,4 +1,4 @@
-const { accounts, contract } = require('@openzeppelin/test-environment');
+const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
 const [ owner, beneficiary, user ] = accounts;
 const { expect } = require('chai');
 const {
@@ -8,6 +8,7 @@ const {
 } = require('@openzeppelin/test-helpers');
 
 const TrustlessFund = contract.fromArtifact('TrustlessFund');
+const Token = contract.fromArtifact('Token');
 
 describe('TrustlessFund', () => {
   beforeEach(async () => {
@@ -38,7 +39,30 @@ describe('TrustlessFund', () => {
       });
     });
 
-    // Add additional test for ERC20s
+    describe('Deploy token', () => {
+      beforeEach(async () => {
+        this.token = await Token.new({from: owner});
+        await this.token.mint(owner, 1000, {from: owner});
+      });
+
+      it('returns correct amount of deposited ERC20', async () => {
+        await this.token.approve(this.fund.address, '100', {from: owner});
+        await this.fund.deposit('100', this.token.address, {from: owner});
+        const token = await this.fund.tokens(this.token.address);
+        const balance = await token.balance.toString();
+        const userBalance = await this.token.balanceOf(owner);
+        expect(balance).to.equal('100');
+        expect(userBalance.toString()).to.equal('900');
+      });
+
+      it('reverts if insufficient ERC20 balance', async () => {
+        await this.token.approve(this.fund.address, '1100', {from: owner});
+        await expectRevert(
+          this.fund.deposit('1100', this.token.address, {from: owner}),
+          "ERC20: transfer amount exceeds balance"
+        );
+      });
+    });
   });
 
   describe('Withdrawals', () => {
@@ -76,6 +100,38 @@ describe('TrustlessFund', () => {
       });
     });
 
+    describe('Deploy token', () => {
+      beforeEach(async () => {
+        this.token = await Token.new({from: owner});
+        await this.token.mint(owner, 1000, {from: owner});
+        await this.token.approve(this.fund.address, '100', {from: owner});
+        await this.fund.deposit('100', this.token.address, {from: owner});
+      });
+
+      it('returns correct amount of deposited ERC20', async () => {
+        await this.fund.withdraw('50', this.token.address, {from: beneficiary});
+        const token = await this.fund.tokens(this.token.address);
+        const balance = await token.balance.toString();
+        const userBalance = await this.token.balanceOf(beneficiary);
+        expect(balance).to.equal('50');
+        expect(userBalance.toString()).to.equal('50');
+      });
+
+      it('reverts if insufficient ERC20 balance', async () => {
+        await expectRevert(
+          this.fund.withdraw('110', this.token.address, {from: beneficiary}),
+          'not enough balance'
+        );
+      });
+
+      it('reverts ERC20 withdrawal if msg.sender not beneficiary', async () => {
+        await expectRevert(
+          this.fund.withdraw('50', this.token.address, {from: user}),
+          'only the beneficiary can perform this function'
+        );
+      });
+    });
+
     describe('Locked', () => {
       let lockedFund;
       beforeEach(async () => {
@@ -84,7 +140,7 @@ describe('TrustlessFund', () => {
         await lockedFund.deposit('100', constants.ZERO_ADDRESS, {from: owner, value: '100'});
       });
 
-      it('reverts if withdraw period not expired', async () => {
+      it('reverts if timelock period not expired', async () => {
         await expectRevert(
           lockedFund.withdraw('100', constants.ZERO_ADDRESS, {from: beneficiary}),
           'contract is still locked'

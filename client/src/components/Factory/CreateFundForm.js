@@ -54,7 +54,7 @@ class CreateFundForm extends Component {
             link={null} button={true} 
             onClick={this.props.handleSubmit} />
           <Warning 
-            message="This application is in beta. Use at your own risk." />
+            message="This application is unaudited. Use at your own risk." />
         </form>
       </div>
     );

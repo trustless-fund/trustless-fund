@@ -95,8 +95,6 @@ class Asset extends Component {
     return (
       <li className="assets__asset">
         <img 
-          // TODO: Replace address with this.state.token.address
-          // TODO: Get eth logo if zero address
           src={this.props.allTokens[this.state.token.address].logo} 
           alt="Logo"
           className="assets__asset-logo" />
