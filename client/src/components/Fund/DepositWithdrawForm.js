@@ -91,12 +91,14 @@ class DepositWithdrawForm extends Component {
       if(this.state.amount > this.state.balance) {
         withdrawButtons.forEach(button => {
           if(!button.classList.contains('disabled')) {
+            button.disabled = true;
             button.classList.add('disabled');
           }
         });
       } else {
         withdrawButtons.forEach(button => {
           if(button.classList.contains('disabled')) {
+            button.disabled = false;
             button.classList.remove('disabled');
           }
         });
