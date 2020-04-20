@@ -16,7 +16,7 @@ class DepositWithdrawForm extends Component {
     renderDropdown: false,
     className: this.props.deposit ? 'deposit' : 'withdraw',
     deposit: this.props.deposit,
-    balance: null
+    balance: 0
   }
 
   componentDidMount = () => {
@@ -276,9 +276,12 @@ class DepositWithdrawForm extends Component {
         } else {
           balance = this.props.drizzle.web3.utils.fromWei(asset.balance);
         }
-        this.setState({balance});
+
+        return this.setState({balance});
       }
     });
+
+    this.setState({balance: 0});
   }
 
   setMaxAmount = async () => {
