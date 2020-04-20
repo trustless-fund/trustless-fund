@@ -14,6 +14,7 @@ class FactoryContainer extends Component {
     messsage: null,
     txHash: null,
     invalidAddress: false,
+    invalidExpiration: false,
     minDate: null
   }
 
@@ -28,7 +29,11 @@ class FactoryContainer extends Component {
   }
 
   handleExpirationChange = (date) => {
+    if(date > 32503680000000) {
+      return this.setState({invalidExpiration: true});
+    }
     this.setState({expiration: date});
+    this.setState({invalidExpiration: false});
   }
 
   handleBeneficiaryChange = async (e) => {
@@ -144,6 +149,7 @@ class FactoryContainer extends Component {
           beneficiaryValue={this.state.beneficiaryValue}
           date={this.state.date}
           invalidAddress={this.state.invalidAddress}
+          invalidExpiration={this.state.invalidExpiration}
           minDate={this.state.minDate} />
         <Message 
           message={this.state.message} 

@@ -8,11 +8,13 @@ import '../../layout/components/createfund.sass';
 
 class CreateFundForm extends Component {
   state = {
-    invalidAddress: this.props.invalidAddress
+    invalidAddress: this.props.invalidAddress,
+    invalidExpiration: this.props.invalidExpiration
   }
 
   componentWillReceiveProps = async (nextProps) => {
     await this.setState({invalidAddress: nextProps.invalidAddress});
+    await this.setState({invalidExpiration: nextProps.invalidExpiration});
   }
 
   render() {
@@ -46,6 +48,11 @@ class CreateFundForm extends Component {
           {this.state.invalidAddress &&
             <p className="create-fund__invalid">
               Invalid Address
+            </p>
+          }
+          {this.state.invalidExpiration &&
+            <p className="create-fund__invalid">
+              Invalid Expiration
             </p>
           }
           <Button 
