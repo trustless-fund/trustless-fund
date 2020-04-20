@@ -1,5 +1,6 @@
 @import '../config/_colors'
 @import '../config/_variables'
+@import '../config/_breakpoints'
 
 .deposit
   position: relative
@@ -8,11 +9,14 @@
   flex-direction: column
   align-items: center
   justify-content: center
-  padding: 40px
+  padding: 64px
   border-radius: $border-radius
   border: 1px solid $color-grey
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.25)
   max-width: 100vw
+
+  +media($breakpoint-sm)
+    padding: 24px 8px
 
 .deposit__background
   position: absolute
