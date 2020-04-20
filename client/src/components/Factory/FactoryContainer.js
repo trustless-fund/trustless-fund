@@ -40,6 +40,10 @@ class FactoryContainer extends Component {
       const address = 
         await this.props.drizzle.web3.eth.ens.getAddress(this.state.beneficiaryValue);
 
+      if(address === '0x0000000000000000000000000000000000000000') {
+        return this.setState({invalidAddress: true});
+      }
+
       if(this.props.drizzle.web3.utils.isAddress(address)) {
         this.setState({invalidAddress: false});
         this.setState({beneficiary: address});
