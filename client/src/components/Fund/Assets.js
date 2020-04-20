@@ -26,7 +26,7 @@ class Assets extends Component {
           </p>
         </div>
         {this.state.assetList.length === 0 &&
-          <p className="asset__empty">
+          <p className="assets__empty">
             No assets yet... Click deposit to get started.
           </p>
         }
