@@ -27,6 +27,13 @@ describe('TrustlessFundFactory', () => {
       ).to.not.throw();
     });
 
+    it('reverts if beneficiary is burn address', async () => {
+      await expectRevert(
+        this.factory.createFund(1, constants.ZERO_ADDRESS, {from: owner}),
+        'beneficiary is burn address'
+      );
+    });
+
     it('retrieves a fund address given its id', async () => {
       const fundAddress = await this.factory.getFund(0);
       expect(fundAddress.length).to.equal(42);
