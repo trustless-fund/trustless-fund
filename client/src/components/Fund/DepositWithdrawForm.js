@@ -285,7 +285,6 @@ class DepositWithdrawForm extends Component {
   }
 
   setMaxAmount = async () => {
-    await this.getBalance();
     this.setState({amount: this.state.balance});
   }
 
