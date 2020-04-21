@@ -50,7 +50,8 @@ class Asset extends Component {
           if(this.isEmpty(res)) {
             return;
           }
-          const usdValue = (res[this.state.token.address].usd * this.state.balance).toFixed();
+          const token = this.state.token.address.toLowerCase();
+          const usdValue = (res[token].usd * this.state.balance).toFixed(2);
           this.setState({usdValue});
         });
     }
