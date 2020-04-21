@@ -574,7 +574,14 @@ export const TOKEN_LIST = {
       [SYMBOL]: 'ZRX',
       [DECIMALS]: 18,
       [LOGO]:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xE41d2489571d322189246DaFA5ebDe1F4699F498/logo.png' } },
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xE41d2489571d322189246DaFA5ebDe1F4699F498/logo.png' },
+  '0x39aa39c021dfbae8fac545936693ac917d5e7563':
+    { [NAME]: 'Compound USDC',
+      [SYMBOL]: 'cUSDC',
+      [DECIMALS]: 8,
+      [LOGO]:
+      'https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1567581577' }
+  },
   3: { 
   '0x0000000000000000000000000000000000000000':
     { [NAME]: 'Ethereum',
