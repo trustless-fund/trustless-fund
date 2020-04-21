@@ -580,7 +580,13 @@ export const TOKEN_LIST = {
       [SYMBOL]: 'cUSDC',
       [DECIMALS]: 8,
       [LOGO]:
-      'https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1567581577' }
+      'https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1567581577' },
+  '0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd':
+    { [NAME]: 'PieDAO BTC++',
+      [SYMBOL]: 'BTC++',
+      [DECIMALS]: 18,
+      [LOGO]:
+      'https://assets.coingecko.com/coins/images/10959/large/BTC__.png?1586499443' }
   },
   3: { 
   '0x0000000000000000000000000000000000000000':
