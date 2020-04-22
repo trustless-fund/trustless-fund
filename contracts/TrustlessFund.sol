@@ -20,23 +20,14 @@ contract TrustlessFund is Ownable {
   address public beneficiary;
 
   /**
-    * @notice Tracks token balance and whether it exists in
-              the lookup table.
-  */
-  struct Token {
-    uint balance;
-    bool exists;
-  }
-
-  /**
     * @notice Token look up table for front-end access.
   */
   address[] public tokenLUT;
 
   /**
-    * @notice Maps token address to token struct.
+    * @notice Checks whether a token exists in the fund.
   */
-  mapping(address => Token) public tokens;
+  mapping(address => bool) public tokens;
 
   /*** EVENTS ***/
 
@@ -109,20 +100,18 @@ contract TrustlessFund is Ownable {
   function deposit(uint _amount, address _token) public payable {
     if(_token == address(0)) {
       require(msg.value == _amount, 'incorrect amount');
-      tokens[_token].balance += _amount;
-      if(tokens[_token].exists == false) {
-        tokens[_token].exists = true;
+      if(!tokens[_token]) {
         tokenLUT.push(_token);
+        tokens[_token] = true;
       }
       emit Deposit(msg.sender, _amount, _token);
     }
     else {
       IERC20 token = IERC20(_token);
       require(token.transferFrom(msg.sender, address(this), _amount), 'transfer failed');
-      tokens[_token].balance += _amount;
-      if(tokens[_token].exists == false) {
-        tokens[_token].exists = true;
+      if(!tokens[_token]) {
         tokenLUT.push(_token);
+        tokens[_token] = true;
       }
       emit Deposit(msg.sender, _amount, _token);
     }
@@ -137,15 +126,11 @@ contract TrustlessFund is Ownable {
   */
   function withdraw(uint _amount, address _token) public isExpired() onlyBeneficiary() {
     if(_token == address(0)) {
-      require(tokens[_token].balance >= _amount, 'not enough balance');
-      tokens[_token].balance -= _amount;
       (bool success, ) = msg.sender.call.value(_amount)("");
       require(success, "Transfer failed.");
       emit Withdraw(msg.sender, _amount, _token);
     } else {
       IERC20 token = IERC20(_token);
-      require(tokens[_token].balance >= _amount, 'not enough balance');
-      tokens[_token].balance -= _amount;
       require(token.transfer(msg.sender, _amount), 'transfer failed');
       emit Withdraw(msg.sender, _amount, _token);
     }
