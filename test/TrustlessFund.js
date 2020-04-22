@@ -18,8 +18,7 @@ describe('TrustlessFund', () => {
   describe('Deposits', () => {
     it('returns correct amount of deposited ETH', async () => {
       await this.fund.deposit('100', constants.ZERO_ADDRESS, {from: owner, value: '100'});
-      const token = await this.fund.tokens(constants.ZERO_ADDRESS);
-      const balance = await token.balance.toString();
+      const balance = await web3.eth.getBalance(this.fund.address);
       expect(balance).to.equal('100');
     });
 
@@ -48,10 +47,9 @@ describe('TrustlessFund', () => {
       it('returns correct amount of deposited ERC20', async () => {
         await this.token.approve(this.fund.address, '100', {from: owner});
         await this.fund.deposit('100', this.token.address, {from: owner});
-        const token = await this.fund.tokens(this.token.address);
-        const balance = await token.balance.toString();
+        const balance = await this.token.balanceOf(this.fund.address);
         const userBalance = await this.token.balanceOf(owner);
-        expect(balance).to.equal('100');
+        expect(balance.toString()).to.equal('100');
         expect(userBalance.toString()).to.equal('900');
       });
 
@@ -72,8 +70,7 @@ describe('TrustlessFund', () => {
 
     it('successfully withdraws eth', async () => {
       await this.fund.withdraw('50', constants.ZERO_ADDRESS, {from: beneficiary});
-      const token = await this.fund.tokens(constants.ZERO_ADDRESS);
-      const balance = await token.balance.toString();
+      const balance = await web3.eth.getBalance(this.fund.address);
       expect(balance).to.equal('50');
     });
 
@@ -87,7 +84,7 @@ describe('TrustlessFund', () => {
     it('reverts if not enough balance', async () => {
       await expectRevert(
         this.fund.withdraw('101', constants.ZERO_ADDRESS, {from: beneficiary}),
-        'not enough balance'
+        "Transfer failed."
       );
     });
 
@@ -110,17 +107,16 @@ describe('TrustlessFund', () => {
 
       it('returns correct amount of deposited ERC20', async () => {
         await this.fund.withdraw('50', this.token.address, {from: beneficiary});
-        const token = await this.fund.tokens(this.token.address);
-        const balance = await token.balance.toString();
+        const balance = await this.token.balanceOf(this.fund.address);
         const userBalance = await this.token.balanceOf(beneficiary);
-        expect(balance).to.equal('50');
+        expect(balance.toString()).to.equal('50');
         expect(userBalance.toString()).to.equal('50');
       });
 
       it('reverts if insufficient ERC20 balance', async () => {
         await expectRevert(
           this.fund.withdraw('110', this.token.address, {from: beneficiary}),
-          'not enough balance'
+          "ERC20: transfer amount exceeds balance."
         );
       });
 
