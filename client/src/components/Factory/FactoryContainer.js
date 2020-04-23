@@ -15,11 +15,23 @@ class FactoryContainer extends Component {
     txHash: null,
     invalidAddress: false,
     invalidExpiration: false,
-    minDate: null
+    minDate: null,
+    factory: null
   }
 
   componentDidMount = () => {
     this.getDate();
+    this.getFactoryContract();
+  }
+
+  getFactoryContract = () => {
+    let contract;
+    if(this.props.version === 'v1') {
+      contract = this.props.drizzle.contracts.TrustlessFundFactory;
+    } else if(this.props.version === 'v2') {
+      contract = this.props.drizzle.contracts.TrustlessFundFactoryV2;
+    }
+    this.setState({factory: contract});
   }
 
   getDate = () => {
@@ -82,7 +94,7 @@ class FactoryContainer extends Component {
         expiration = Math.floor(this.state.expiration / 1000);
       }
 
-      await this.props.drizzle.contracts.TrustlessFundFactory.methods.createFund(
+      await this.state.factory.methods.createFund(
         expiration,
         this.state.beneficiary
       ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
@@ -90,7 +102,7 @@ class FactoryContainer extends Component {
       }).on('confirmation', async (number, receipt) => {
         if(number === 0) {
           this.setMessage('Transaction Confirmed!', receipt.txHash);
-          const nextId = await this.props.drizzle.contracts.TrustlessFundFactory.methods.nextId().call();
+          const nextId = await this.state.factory.methods.nextId().call();
           this.setState({fundId: (nextId - 1).toString()});
           setTimeout(() => {
             this.clearMessage();
@@ -127,11 +139,11 @@ class FactoryContainer extends Component {
             <Button 
               text="Create Fund" 
               class="outline fund-created__button" 
-              link='/factory' button={false} />
+              link={`/${this.props.version}/factory`} button={false} />
             <Button 
               text="Go to Fund" 
               class="solid fund-created__button" 
-              link={`/fund/${this.state.fundId}`} button={false} />
+              link={`/${this.props.version}/fund/${this.state.fundId}`} button={false} />
           </div>
           <Message 
             message={this.state.message} 
