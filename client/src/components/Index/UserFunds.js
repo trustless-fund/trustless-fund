@@ -101,7 +101,6 @@ class UserFunds extends Component {
   }
 
   render() {
-    console.log(this.state.userFunds)
     if(this.state.render) {
       return (
         <section className={`user-funds${this.state.userFundsLength < 10 ? ' center' : ''}`}>
