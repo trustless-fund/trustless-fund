@@ -24,7 +24,7 @@ class Footer extends Component {
           <a href="https://medium.com/trustless-fund">
             <img src={medium} alt="Medium" className="footer__icon" />
           </a>
-          <a href="https://discord.gg/m8eYjX">
+          <a href="https://discord.gg/sC7Rzd">
             <img src={discord} alt="Discord" className="footer__icon" />
           </a>
         </div>
