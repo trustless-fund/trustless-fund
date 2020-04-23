@@ -1,6 +1,6 @@
 pragma solidity 0.5.16;
 
-import './TrustlessFundV2.sol';
+import './TrustlessFund.sol';
 
 contract TrustlessFundFactoryV2 {
   /*** STORAGE VARIABLES ***/
@@ -59,7 +59,7 @@ contract TrustlessFundFactoryV2 {
   function createFund(uint _expiration, address _beneficiary) public {
     require(funds[nextId] == address(0), 'id already in use');
     require(_beneficiary != address(0), 'beneficiary is burn address');
-    TrustlessFund fund = new TrustlessFund(_expiration, _beneficiary, msg.sender);
+    TrustlessFundV2 fund = new TrustlessFundV2(_expiration, _beneficiary, msg.sender);
     funds[nextId] = address(fund);
     userFunds[msg.sender].push(nextId);
     nextId++;
