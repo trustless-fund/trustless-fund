@@ -1,6 +1,6 @@
 pragma solidity 0.5.16;
 
-import './TrustlessFund.sol';
+import './TrustlessFundV2.sol';
 
 contract TrustlessFundFactoryV2 {
   /*** STORAGE VARIABLES ***/
