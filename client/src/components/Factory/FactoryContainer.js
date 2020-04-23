@@ -138,7 +138,7 @@ class FactoryContainer extends Component {
             <Button 
               text="Go to Fund" 
               class="solid fund-created__button" 
-              link={`/${this.props.version}/fund/${this.state.fundId}`} button={false} />
+              link={`/v2/fund/${this.state.fundId}`} button={false} />
           </div>
           <Message 
             message={this.state.message} 

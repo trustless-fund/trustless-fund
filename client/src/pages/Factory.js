@@ -45,10 +45,7 @@ class Factory extends Component {
             return(
               <>
                 <Nav drizzle={drizzle} drizzleState={drizzleState} />
-                <FactoryContainer 
-                  drizzle={drizzle} 
-                  drizzleState={drizzleState}
-                  version={this.props.match.params.version} />
+                <FactoryContainer drizzle={drizzle} drizzleState={drizzleState} />
                 <Footer drizzle={drizzle} drizzleState={drizzleState} />
               </>
             );
