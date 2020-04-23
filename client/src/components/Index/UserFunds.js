@@ -103,7 +103,7 @@ class UserFunds extends Component {
   render() {
     if(this.state.render) {
       return (
-        <section className={`user-funds${this.state.userFundsLength < 10 ? ' center' : ''}`}>
+        <section className='user-funds'>
           <h2 className="user-funds__header">
             Your Funds
           </h2>
