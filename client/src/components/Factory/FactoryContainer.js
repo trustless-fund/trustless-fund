@@ -25,12 +25,7 @@ class FactoryContainer extends Component {
   }
 
   getFactoryContract = () => {
-    let contract;
-    if(this.props.version === 'v1') {
-      contract = this.props.drizzle.contracts.TrustlessFundFactory;
-    } else if(this.props.version === 'v2') {
-      contract = this.props.drizzle.contracts.TrustlessFundFactoryV2;
-    }
+    const contract = this.props.drizzle.contracts.TrustlessFundFactoryV2;
     this.setState({factory: contract});
   }
 
@@ -139,7 +134,7 @@ class FactoryContainer extends Component {
             <Button 
               text="Create Fund" 
               class="outline fund-created__button" 
-              link={`/${this.props.version}/factory`} button={false} />
+              link='/factory' button={false} />
             <Button 
               text="Go to Fund" 
               class="solid fund-created__button" 

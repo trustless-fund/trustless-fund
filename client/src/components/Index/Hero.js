@@ -58,7 +58,7 @@ class Hero extends Component {
             <Button 
               text="Create Fund" 
               class="solid hero__button" 
-              link="/v2/factory" 
+              link="/factory" 
               button={false} />
             <a 
               href="https://docs.trustless.fund/" 

@@ -124,7 +124,7 @@ class UserFunds extends Component {
           <Button 
             text="Create Fund" 
             class="solid user-funds__button" 
-            link="/v2/factory" 
+            link="/factory" 
             button={false} />
         </section>
       );
