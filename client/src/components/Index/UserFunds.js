@@ -34,9 +34,13 @@ class UserFunds extends Component {
   }
 
   getUserFundsLength = async () => {
-    const fundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+    const v1FundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
+    const v2FundIdArray = await this.props.drizzle.contracts.TrustlessFundFactoryV2.methods.getUserFunds(
+      this.props.drizzleState.accounts[0]
+    ).call();
+    const fundIdArray = v1FundIdArray.concat(v2FundIdArray);
 
     this.setState({userFundsLength: fundIdArray.length});
 
@@ -48,12 +52,15 @@ class UserFunds extends Component {
   }
 
   getUserFunds = async () => {
-    const fundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+    const v1FundIdArray = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+      this.props.drizzleState.accounts[0]
+    ).call();
+    const v2FundIdArray = await this.props.drizzle.contracts.TrustlessFundFactoryV2.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
 
     let fundList = [];
-    for(const id of fundIdArray) {
+    for(const id of v1FundIdArray) {
       const address = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getFund(
         id
       ).call();
@@ -65,15 +72,36 @@ class UserFunds extends Component {
       const fundObj = {
         beneficiary,
         expiration,
-        id
+        id,
+        version: 'v1'
       }
 
       fundList.push(fundObj);
-      this.setState({userFunds: fundList});
     }
+    for(const id of v2FundIdArray) {
+      const address = await this.props.drizzle.contracts.TrustlessFundFactoryV2.methods.getFund(
+        id
+      ).call();
+      
+      const fund = await new this.props.drizzle.web3.eth.Contract(TrustlessFund.abi, address);
+      const beneficiary = await fund.methods.beneficiary().call();
+      const expiration = await fund.methods.expiration().call();
+
+      const fundObj = {
+        beneficiary,
+        expiration,
+        id,
+        version: 'v2'
+      }
+
+      fundList.push(fundObj);
+    }
+
+    this.setState({userFunds: fundList});
   }
 
   render() {
+    console.log(this.state.userFunds)
     if(this.state.render) {
       return (
         <section className={`user-funds${this.state.userFundsLength < 10 ? ' center' : ''}`}>

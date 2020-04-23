@@ -26,9 +26,14 @@ class Hero extends Component {
   }
 
   getUserFunds = async () => {
-    const userFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
+    const v1UserFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
+    const v2UserFunds = await this.props.drizzle.contracts.TrustlessFundFactoryV2.methods.getUserFunds(
+      this.props.drizzleState.accounts[0]
+    ).call();
+
+    const userFunds = v1UserFunds.concat(v2UserFunds);
 
     this.setState({userFunds});
 
@@ -53,7 +58,7 @@ class Hero extends Component {
             <Button 
               text="Create Fund" 
               class="solid hero__button" 
-              link="/factory" 
+              link="/v2/factory" 
               button={false} />
             <a 
               href="https://docs.trustless.fund/" 

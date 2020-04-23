@@ -25,7 +25,7 @@ class UserFund extends Component {
           {this.props.fund.id}
         </td>
         <td className="user-funds__table-data user-funds__table-data--link">
-          <a href={`/fund/${this.props.fund.id}`} className="user-funds__link">
+          <a href={`${this.props.fund.version}/fund/${this.props.fund.id}`} className="user-funds__link">
             <img src={link} alt="Link icon" className="user-funds__icon" />
           </a>
         </td>
