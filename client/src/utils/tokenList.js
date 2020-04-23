@@ -17,12 +17,12 @@ export const TOKEN_LIST = {
       [DECIMALS]: 8,
       [LOGO]:
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xB6eD7644C69416d67B522e20bC294A9a9B405B31/logo.png' },
-  // '0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d':
-  //   { [NAME]: 'Aave Interest bearing DAI',
-  //     [SYMBOL]: 'aDAI',
-  //     [DECIMALS]: 18,
-  //     [LOGO]:
-  //     'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d/logo.png' },
+  '0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d':
+    { [NAME]: 'Aave Interest bearing DAI',
+      [SYMBOL]: 'aDAI',
+      [DECIMALS]: 18,
+      [LOGO]:
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d/logo.png' },
   '0x737F98AC8cA59f2C68aD658E3C3d8C8963E40a4c':
     { [NAME]: 'Amon',
       [SYMBOL]: 'AMN',
