@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract TrustlessFund is Ownable {
+contract TrustlessFundV2 is Ownable {
   using SafeMath for uint;
 
   /*** STORAGE VARIABLES ***/

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 import Index from './pages/Index';
@@ -18,12 +19,15 @@ class App extends Component {
           exact path="/" 
           component={Index}
         />
+        <Route path="/factory">
+          <Redirect to="/v2/factory" />
+        </Route>
         <Route 
-          path="/factory" 
+          path="/:version/factory" 
           component={Factory}
         />
         <Route 
-          path="/fund/:fundId" 
+          path="/:version/fund/:fundId" 
           component={Fund}
         />
       </Router>

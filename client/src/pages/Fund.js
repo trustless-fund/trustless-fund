@@ -6,26 +6,48 @@ import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 import logo from '../assets/logo.png';
 
-import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
+import TrustlessFundFactoryV2 from '../contracts/TrustlessFundFactoryV2.json';
+import TrustlessFundFactoryV1 from '../contracts/TrustlessFundFactory.json';
 import '../layout/components/loading.sass';
 
-const drizzleOptions = {
-  contracts: [
-    TrustlessFundFactory
-  ], 
-  events: {
-    TrustlessFundFactory: [
-      'CreateFund'
-    ]
-  }
-}
-
-const drizzle = new Drizzle(drizzleOptions);
-
 class Fund extends Component {
+  constructor(props) {
+    super(props);
+
+    let drizzleOptions
+
+    if(this.props.match.params.version === 'v1') {
+      drizzleOptions = {
+        contracts: [
+          TrustlessFundFactoryV1
+        ], 
+        events: {
+          TrustlessFundFactoryV1: [
+            'CreateFund'
+          ]
+        }
+      }
+    } else if(this.props.match.params.version === 'v2') {
+      drizzleOptions = {
+        contracts: [
+          TrustlessFundFactoryV2
+        ], 
+        events: {
+          TrustlessFundFactoryV2: [
+            'CreateFund'
+          ]
+        }
+      }
+    } else {
+      // TODO: Set error state and render error component
+    }
+
+    this.drizzle = new Drizzle(drizzleOptions);
+  }
+
   render() {
     return (
-      <DrizzleContext.Provider drizzle={drizzle}>
+      <DrizzleContext.Provider drizzle={this.drizzle}>
         <DrizzleContext.Consumer>
           {drizzleContext => {
             const {drizzle, drizzleState, initialized} = drizzleContext;

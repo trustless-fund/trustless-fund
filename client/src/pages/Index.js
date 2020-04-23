@@ -7,15 +7,20 @@ import { DrizzleContext } from "@drizzle/react-plugin";
 import { Drizzle } from "@drizzle/store";
 import logo from '../assets/logo.png';
 
-import TrustlessFundFactory from '../contracts/TrustlessFundFactory.json';
+import TrustlessFundFactoryV2 from '../contracts/TrustlessFundFactoryV2.json';
+import TrustlessFundFactoryV1 from '../contracts/TrustlessFundFactory.json';
 import '../layout/components/loading.sass';
 
 const drizzleOptions = {
   contracts: [
-    TrustlessFundFactory
+    TrustlessFundFactoryV2,
+    TrustlessFundFactoryV1
   ], 
   events: {
-    TrustlessFundFactory: [
+    TrustlessFundFactoryV2: [
+      'CreateFund'
+    ],
+    TrustlessFundFactoryV1: [
       'CreateFund'
     ]
   }

@@ -1,5 +1,5 @@
 {
-  "contractName": "TrustlessFundFactory",
+  "contractName": "TrustlessFundFactoryV2",
   "abi": [
     {
       "anonymous": false,
