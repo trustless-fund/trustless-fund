@@ -618,5 +618,36 @@ export const TOKEN_LIST = {
       [SYMBOL]: 'ZEENUS',
       [DECIMALS]: '0',
       [LOGO]:
-      'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' } }
+      'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' } },
+  4: { 
+    '0x0000000000000000000000000000000000000000':
+      { [NAME]: 'Ethereum',
+        [SYMBOL]: 'ETH',
+        [DECIMALS]: 18,
+        [LOGO]:
+        'https://cdn.iconscout.com/icon/free/png-256/ethereum-3-569581.png' },
+    '0xaFF4481D10270F50f203E0763e2597776068CBc5':
+      { [NAME]: 'Weenus ���',
+        [SYMBOL]: 'WEENUS',
+        [DECIMALS]: '18',
+        [LOGO]:
+        'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' },
+    '0x022E292b44B5a146F2e8ee36Ff44D3dd863C915c':
+      { [NAME]: 'Xeenus ���',
+        [SYMBOL]: 'XEENUS',
+        [DECIMALS]: '18',
+        [LOGO]:
+        'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' },
+    '0xc6fDe3FD2Cc2b173aEC24cc3f267cb3Cd78a26B7':
+      { [NAME]: 'Yeenus ���',
+        [SYMBOL]: 'YEENUS',
+        [DECIMALS]: '8',
+        [LOGO]:
+        'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' },
+    '0x1f9061B953bBa0E36BF50F21876132DcF276fC6e':
+      { [NAME]: 'Zeenus ���',
+        [SYMBOL]: 'ZEENUS',
+        [DECIMALS]: '0',
+        [LOGO]:
+        'https://assets-global.website-files.com/5cb0ac9c57054973ac1bf1e4/5cd059557473d12c2ea50768_2165.png' } }
 }
