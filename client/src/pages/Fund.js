@@ -68,7 +68,8 @@ class Fund extends Component {
                 <FundContainer 
                   drizzle={drizzle} 
                   drizzleState={drizzleState} 
-                  fundId={this.props.match.params.fundId} />
+                  fundId={this.props.match.params.fundId}
+                  version={this.props.match.params.version} />
                 <Footer 
                   drizzle={drizzle} 
                   drizzleState={drizzleState} />

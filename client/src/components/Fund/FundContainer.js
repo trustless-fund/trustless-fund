@@ -8,7 +8,9 @@ import Button from '../Shared/Button';
 import Message from '../Shared/Message';
 import Warning from '../Shared/Warning';
 import TrustlessFund from '../../contracts/TrustlessFund.json';
+import TrustlessFundV2 from '../../contracts/TrustlessFundV2.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
+import ERC20 from '../../contracts/ERC20.json';
 
 import '../../layout/components/fund.sass';
 import '../../layout/components/withdraw.sass';
@@ -30,7 +32,8 @@ class FundContainer extends Component {
       usdAmounts: null,
       searchToken: '',
       noProvider: false,
-      expiration: null
+      expiration: null,
+      factory: null
     }
 
     if(window.ethereum) {
@@ -40,6 +43,7 @@ class FundContainer extends Component {
 
   componentDidMount = async () => {
     if(this.props.drizzle.web3.givenProvider) {
+      await this.getFactoryContract();
       await this.getFund();
       await this.getAssets();
       await this.getUsdAmounts();
@@ -57,17 +61,35 @@ class FundContainer extends Component {
     }
   }
 
+  getFactoryContract = () => {
+    let factory;
+    if(this.props.version === 'v1') {
+      factory = this.props.drizzle.contracts.TrustlessFundFactory;
+    } else if(this.props.version === 'v2') {
+      factory = this.props.drizzle.contracts.TrustlessFundFactoryV2;
+    }
+    this.setState({factory});
+  }
+
   getFund = async () => {
     const fundAddress = 
-      await this.props.drizzle.contracts.TrustlessFundFactory.methods.getFund(this.props.fundId).call();
+      await this.state.factory.methods.getFund(this.props.fundId).call();
 
     await this.isInvalidFund(fundAddress);
 
     if(!this.state.invalidFund) {
-      const fund = await new this.props.drizzle.web3.eth.Contract(
-        TrustlessFund.abi,
-        fundAddress
-      );
+      let fund;
+      if(this.props.version === 'v1') {
+        fund = await new this.props.drizzle.web3.eth.Contract(
+          TrustlessFund.abi,
+          fundAddress
+        );
+      } else if(this.props.version === 'v2') {
+        fund = await new this.props.drizzle.web3.eth.Contract(
+          TrustlessFundV2.abi,
+          fundAddress
+        );
+      }
     
       this.setState({fund});
     }
@@ -158,8 +180,21 @@ class FundContainer extends Component {
     if(tokenLUTSize > 0) {
       for(let i = 0; i < tokenLUTSize; i++) {
         const tokenAddress = await this.state.fund.methods.tokenLUT(i).call();
-        const token = await this.state.fund.methods.tokens(tokenAddress).call();
-        assetList.push({address: tokenAddress, balance: token.balance});
+        if(this.props.version === 'v1') {
+          const token = await this.state.fund.methods.tokens(tokenAddress).call();
+          assetList.push({address: tokenAddress, balance: token.balance});
+        } else if(this.props.version === 'v2') {
+          let balance;
+          if(tokenAddress === '0x0000000000000000000000000000000000000000') {
+            balance = await this.props.drizzle.web3.eth.getBalance(this.state.fund._address);
+          } else {
+            const token = await new this.props.drizzle.web3.eth.Contract(
+              ERC20, tokenAddress
+            );
+            balance = await token.methods.balanceOf(this.state.fund._address).call();
+          }
+          assetList.push({address: tokenAddress, balance});
+        }
       }
     }
 
