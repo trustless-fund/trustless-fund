@@ -3126,8 +3126,8 @@
         }
       },
       "links": {},
-      "address": "0x00DF98E9101436daA392E09B35998b04F9cA1209",
-      "transactionHash": "0xf46e2db6c3b52248aba222608053e4ceefff869520be834afbd534b59e232720"
+      "address": "0x3f185d60BbBc14B8eba3ee0dd020092a5aAd8BCd",
+      "transactionHash": "0x8cb7fc38d65674b36c4fa5c4a11588143645345f33931320a2e4b6f0e38dd9f2"
     },
     "3": {
       "events": {
@@ -3343,8 +3343,7 @@
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2020-04-23T22:11:39.632Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-04-24T21:36:51.255Z",
   "devdoc": {
     "methods": {
       "createFund(uint256,address)": {
