@@ -267,7 +267,15 @@ class FundContainer extends Component {
         }
       });
 
-    this.setState({tokenList});
+      // Remove aDai from token list if v1 fund
+      let filteredTokenList;
+      if(this.props.version === 'v1') {
+        filteredTokenList = tokenList.filter(token => token !== '0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d');
+      } else {
+        filteredTokenList = tokenList;
+      }
+
+    this.setState({tokenList: filteredTokenList});
   }
 
   setExpiration = (expiration) => {
