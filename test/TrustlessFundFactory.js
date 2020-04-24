@@ -8,7 +8,7 @@ const {
   expectRevert
 } = require('@openzeppelin/test-helpers');
 
-const TrustlessFundFactory = contract.fromArtifact('TrustlessFundFactory');
+const TrustlessFundFactory = contract.fromArtifact('TrustlessFundFactoryV2');
 
 describe('TrustlessFundFactory', () => {
   beforeEach(async () => {
