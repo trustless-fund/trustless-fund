@@ -1,29 +1,38 @@
 import React, {Component} from 'react';
 import Warning from '../Shared/Warning';
+import DatePicker from 'react-datepicker';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
       beneficiary: '',
-      expiration: ''
+      expiration: 0,
+      minDate: 0,
+      invalidExpiration: false
     }
   }
 
   componentDidMount = async () => {
     const beneficiary = await this.props.fund.methods.beneficiary().call();
     const expiration = await this.props.fund.methods.expiration().call();
+    const expirationDate = new Date(expiration * 1000);
 
     this.setState({beneficiary});
-    this.setState({expiration});
+    this.setState({expiration: expirationDate});
+    this.setState({minDate: expirationDate});
   }
 
   handleBeneficiaryChange = (e) => {
     this.setState({beneficiary: e.target.value});
   }
 
-  handleExpirationChange = () => {
-
+  handleExpirationChange = (date) => {
+    if(date > 32503680000000) {
+      return this.setState({invalidExpiration: true});
+    }
+    this.setState({expiration: date});
+    this.setState({invalidExpiration: false});
   }
 
   handleBeneficiarySubmit = async (e) => {
@@ -86,12 +95,11 @@ class Settings extends Component {
           onSubmit={this.handleExpirationSubmit}>
           <label className="settings__label">
             Expiration Date
-            <input 
-              type="text"
-              className="settings__input"
-              value={this.state.expiration}
-              onChange={this.handleExpirationChange}>
-            </input>
+            <DatePicker 
+              selected={this.state.expiration}
+              onChange={(date) => this.handleExpirationChange(date)}
+              showPopperArrow={false}
+              minDate={this.state.minDate} />
           </label>
           <button className="settings__button">
             Change
