@@ -4,6 +4,7 @@ import DepositWithdrawForm from './DepositWithdrawForm';
 import Assets from './Assets';
 import Expiration from './Expiration';
 import Details from './Details';
+import Settings from './Settings';
 import Button from '../Shared/Button';
 import Message from '../Shared/Message';
 import Warning from '../Shared/Warning';
@@ -33,7 +34,8 @@ class FundContainer extends Component {
       searchToken: '',
       noProvider: false,
       expiration: null,
-      factory: null
+      factory: null,
+      settingsModal: false
     }
 
     if(window.ethereum) {
@@ -157,6 +159,10 @@ class FundContainer extends Component {
         this.setState({withdrawalModal: false});
       }, 200);
     }
+  }
+
+  renderSettingsModal = () => {
+    this.setState({settingsModal: true});
   }
 
   setMessage = (newMessage, txHash) => {
@@ -377,6 +383,14 @@ class FundContainer extends Component {
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
             fund={this.state.fund} />
+          <p 
+            className="fund__settings"
+            onClick={this.renderSettingsModal} >
+            Settings
+          </p>
+          {this.state.settingsModal &&
+            <Settings />
+          }
           <Message 
             message={this.state.message} 
             txHash={this.state.txHash}
