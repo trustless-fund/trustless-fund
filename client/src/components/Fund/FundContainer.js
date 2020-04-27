@@ -165,6 +165,13 @@ class FundContainer extends Component {
     this.setState({settingsModal: true});
   }
 
+  closeSettingsModal = (e) => {
+    const settingsBackground = document.querySelector('.settings__background');
+    if(e.target === settingsBackground) {
+      this.setState({settingsModal: false});
+    }
+  }
+
   setMessage = (newMessage, txHash) => {
     this.setState({
       message: newMessage,
@@ -389,7 +396,7 @@ class FundContainer extends Component {
             Settings
           </p>
           {this.state.settingsModal &&
-            <div className="settings__background"> 
+            <div className="settings__background" onClick={this.closeSettingsModal}> 
               <Settings 
                 fund={this.state.fund}
                 drizzleState={this.props.drizzleState}
