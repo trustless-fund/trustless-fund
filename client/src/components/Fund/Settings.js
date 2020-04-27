@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Warning from '../Shared/Warning';
 import DatePicker from 'react-datepicker';
 
+import '../../layout/components/settings.sass';
+
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -154,16 +156,17 @@ class Settings extends Component {
           <label className="settings__label">
             Renounce Ownership
           </label>
-          <button className="settings__button">
+          <button className="settings__button settings__button--renounce">
             Renounce
           </button>
-          <p className="setting__renounce-note">
+          <p className="settings__renounce-note">
             Note: If you renounce ownership, you will no longer 
             have the ability to modify the beneficiary address or 
             expiration date.
           </p>
         </form>
         <Warning
+          className="settings__warning"
           message="These are potentially destructive actions." />
       </div>
     );
