@@ -57,12 +57,55 @@ class Settings extends Component {
     });
   }
 
-  handleExpirationSubmit = () => {
+  handleExpirationSubmit = async (e) => {
+    e.preventDefault();
 
+    let expiration;
+    if(this.state.expiration instanceof Date) {
+      expiration = Math.floor(this.state.expiration.getTime() / 1000);
+    } else {
+      expiration = Math.floor(this.state.expiration / 1000);
+    }
+
+    await this.props.fund.methods.increaseTime(expiration).send({
+      from: this.props.drizzleState.accounts[0]
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
+    });
   }
 
-  handleRenounceSubmit = () => {
+  handleRenounceSubmit = async (e) => {
+    e.preventDefault()
 
+    await this.props.fund.methods.renounceOwnership().send({
+      from: this.props.drizzleState.accounts[0]
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
+    });
   }
 
   render() {
