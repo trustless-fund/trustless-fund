@@ -11,7 +11,7 @@ class Settings extends Component {
       beneficiary: '',
       expiration: 0,
       minDate: 0,
-      invalidExpiration: false
+      invalidAddress: false
     }
   }
 
@@ -30,15 +30,16 @@ class Settings extends Component {
   }
 
   handleExpirationChange = (date) => {
-    if(date > 32503680000000) {
-      return this.setState({invalidExpiration: true});
-    }
     this.setState({expiration: date});
-    this.setState({invalidExpiration: false});
   }
 
   handleBeneficiarySubmit = async (e) => {
     e.preventDefault();
+
+    if(!this.props.drizzle.web3.utils.isAddress(this.state.beneficiary)) {
+      return this.setState({invalidAddress: true});
+    }
+    this.setState({invalidAddress: false});
 
     await this.props.fund.methods.updateBeneficiary(this.state.beneficiary).send({
       from: this.props.drizzleState.accounts[0]
@@ -131,6 +132,11 @@ class Settings extends Component {
               onChange={this.handleBeneficiaryChange}>
             </input>
           </label>
+          {this.state.invalidAddress &&
+            <p className="settings__invalid">
+              Invalid Address
+            </p>
+          }
           <button className="settings__button">
             Change
           </button>

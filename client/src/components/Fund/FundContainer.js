@@ -414,6 +414,7 @@ class FundContainer extends Component {
               <Settings 
                 fund={this.state.fund}
                 drizzleState={this.props.drizzleState}
+                drizzle={this.props.drizzle}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage} />
             </div>
