@@ -35,7 +35,8 @@ class FundContainer extends Component {
       noProvider: false,
       expiration: null,
       factory: null,
-      settingsModal: false
+      settingsModal: false,
+      renderSettings: false
     }
 
     if(window.ethereum) {
@@ -51,6 +52,7 @@ class FundContainer extends Component {
       await this.getUsdAmounts();
       this.getTokenList();
       this.renderWithdrawal();
+      this.renderSettings();
     } else {
       this.setState({noProvider: true});
     }
@@ -122,6 +124,16 @@ class FundContainer extends Component {
       this.setState({renderWithdrawal: true});
     } else {
       this.setState({renderWithdrawal: false});
+    }
+  }
+
+  renderSettings = async () => {
+    const owner = await this.state.fund.methods.owner().call();
+
+    if(this.props.drizzleState.accounts[0] === owner) {
+      this.setState({renderSettings: true});
+    } else {
+      this.setState({renderSettings: false});
     }
   }
 
@@ -390,11 +402,13 @@ class FundContainer extends Component {
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
             fund={this.state.fund} />
-          <p 
-            className="fund__settings"
-            onClick={this.renderSettingsModal} >
-            Settings
-          </p>
+          {this.state.renderSettings && 
+            <p 
+              className="fund__settings"
+              onClick={this.renderSettingsModal} >
+              Settings
+            </p>
+          }
           {this.state.settingsModal &&
             <div className="settings__background" onClick={this.closeSettingsModal}> 
               <Settings 
