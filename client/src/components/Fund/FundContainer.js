@@ -389,7 +389,9 @@ class FundContainer extends Component {
             Settings
           </p>
           {this.state.settingsModal &&
-            <Settings />
+            <div className="settings__background"> 
+              <Settings />
+            </div>
           }
           <Message 
             message={this.state.message} 
