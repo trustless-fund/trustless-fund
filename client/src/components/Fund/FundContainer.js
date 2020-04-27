@@ -390,7 +390,11 @@ class FundContainer extends Component {
           </p>
           {this.state.settingsModal &&
             <div className="settings__background"> 
-              <Settings />
+              <Settings 
+                fund={this.state.fund}
+                drizzleState={this.props.drizzleState}
+                setMessage={this.setMessage}
+                clearMessage={this.clearMessage} />
             </div>
           }
           <Message 

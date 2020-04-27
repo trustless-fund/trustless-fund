@@ -5,20 +5,47 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      beneficiary: null,
+      beneficiary: '',
+      expiration: ''
     }
   }
 
-  handleBeneficiaryChange = () => {
+  componentDidMount = async () => {
+    const beneficiary = await this.props.fund.methods.beneficiary().call();
+    const expiration = await this.props.fund.methods.expiration().call();
 
+    this.setState({beneficiary});
+    this.setState({expiration});
+  }
+
+  handleBeneficiaryChange = (e) => {
+    this.setState({beneficiary: e.target.value});
   }
 
   handleExpirationChange = () => {
 
   }
 
-  handleBeneficiarySubmit = () => {
+  handleBeneficiarySubmit = async (e) => {
+    e.preventDefault();
 
+    await this.props.fund.methods.updateBeneficiary(this.state.beneficiary).send({
+      from: this.props.drizzleState.accounts[0]
+    }, (err, txHash) => {
+      this.props.setMessage('Transaction Pending...', txHash);
+    }).on('confirmation', (number, receipt) => {
+      if(number === 0) {
+        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+        setTimeout(() => {
+          this.props.clearMessage();
+        }, 10000);
+      }
+    }).on('error', (err, receipt) => {
+      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
+      setTimeout(() => {
+        this.props.clearMessage();
+      }, 10000);
+    });
   }
 
   handleExpirationSubmit = () => {
