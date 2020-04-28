@@ -14,18 +14,18 @@ class Hero extends Component {
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts) => {
         this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
-        this.getUserFunds();
+        this.isUserFunds();
       });
     }
 
     if(this.props.drizzle.web3.givenProvider) {
-      this.getUserFunds();
+      this.isUserFunds();
     } else {
       this.state = {render: true}
     }
   }
 
-  getUserFunds = async () => {
+  isUserFunds = async () => {
     const v1UserFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
       this.props.drizzleState.accounts[0]
     ).call();
