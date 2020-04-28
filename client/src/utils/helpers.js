@@ -20,7 +20,10 @@ export const getUsdValue = async (tokenAddress, balance) => {
         const token = tokenAddress.toLowerCase();
         usdValue = (res[token].usd * balance).toFixed(2);
       });
-    return usdValue;
+    if(usdValue) {
+      return usdValue;
+    }
+    return 0;
   }
 }
 
