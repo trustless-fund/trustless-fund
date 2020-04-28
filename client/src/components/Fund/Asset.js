@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ERC20 from '../../contracts/ERC20.json';
+import {getUsdValue} from '../../utils/helpers';
 
 class Asset extends Component {
   constructor(props) {
@@ -12,50 +13,17 @@ class Asset extends Component {
     }
   }
 
-  componentDidMount = () => {
-    this.getBalance();
-    this.getUsdValue();
+  componentDidMount = async () => {
+    await this.getBalance();
+    const usdValue = await getUsdValue(this.state.token.address, this.state.realBalance);
+    this.setState({usdValue});
   }
 
   componentWillReceiveProps = async (nextProps) => {
     await this.setState({token: nextProps.token});
     await this.getBalance();
-    this.getUsdValue();
-  }
-
-  // Source: https://stackoverflow.com/a/32108184/13171993
-  isEmpty = (obj) => {
-    for(var prop in obj) {
-      if(obj.hasOwnProperty(prop)) {
-        return false;
-      }
-    }
-  
-    return JSON.stringify(obj) === JSON.stringify({});
-  }
-
-  getUsdValue = async () => {
-    if(this.state.token.address === '0x0000000000000000000000000000000000000000') {
-      fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
-        .then((res) => {
-          return res.json();
-        }).then((res) => {
-          const usdValue = (res.ethereum.usd * this.state.realBalance).toFixed(2);
-          this.setState({usdValue});
-        });
-    } else {
-      fetch(`https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=${this.state.token.address}&vs_currencies=usd`)
-        .then((res) => {
-          return res.json();
-        }).then((res) => {
-          if(this.isEmpty(res)) {
-            return;
-          }
-          const token = this.state.token.address.toLowerCase();
-          const usdValue = (res[token].usd * this.state.realBalance).toFixed(2);
-          this.setState({usdValue});
-        });
-    }
+    const usdValue = await getUsdValue(this.state.token.address, this.state.realBalance);
+    this.setState({usdValue});
   }
 
   getDecimals = async () => {

@@ -12,6 +12,7 @@ import TrustlessFund from '../../contracts/TrustlessFund.json';
 import TrustlessFundV2 from '../../contracts/TrustlessFundV2.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
 import ERC20 from '../../contracts/ERC20.json';
+import {getUsdValue} from '../../utils/helpers';
 
 import '../../layout/components/fund.sass';
 import '../../layout/components/withdraw.sass';
@@ -231,11 +232,12 @@ class FundContainer extends Component {
     this.getTokenList();
   }
 
-  getUsdAmounts = () => {
+  getUsdAmounts = async () => {
     let usdAmounts = {}
-    this.state.assetList.forEach(asset => {
+    this.state.assetList.forEach(async (asset) => {
       if(asset.balance > 0) {
-        usdAmounts[asset.address] = asset.balance;
+        const usdAmount = await getUsdValue(asset.address, asset.balance);
+        usdAmounts[asset.address] = usdAmount;
       }
     });
 
