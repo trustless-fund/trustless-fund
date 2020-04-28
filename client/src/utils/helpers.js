@@ -36,3 +36,22 @@ export const isEmpty = (obj) => {
 
   return JSON.stringify(obj) === JSON.stringify({});
 }
+
+export const resolveENSAddress = async (ENS, web3) => {
+  try {
+    const address = 
+      await web3.eth.ens.getAddress(ENS);
+
+    console.log(address)
+
+    if(address === '0x0000000000000000000000000000000000000000') {
+      return false;
+    }
+
+    if(web3.utils.isAddress(address)) {
+      return address;
+    }
+  } catch {
+    return false;
+  }
+}

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CreateFundForm from './CreateFundForm';
 import Message from '../Shared/Message';
 import Button from '../Shared/Button';
+import {resolveENSAddress} from '../../utils/helpers';
 
 import '../../layout/components/fundcreated.sass';
 
@@ -47,32 +48,18 @@ class FactoryContainer extends Component {
     await this.setState({beneficiaryValue: e.target.value});
   }
 
-  resolveENSAddress = async () => {
-    try {
-      const address = 
-        await this.props.drizzle.web3.eth.ens.getAddress(this.state.beneficiaryValue);
-
-      console.log(address);
-
-      if(address === '0x0000000000000000000000000000000000000000') {
-        return this.setState({invalidAddress: true});
-      }
-
-      if(this.props.drizzle.web3.utils.isAddress(address)) {
-        this.setState({invalidAddress: false});
-        this.setState({beneficiary: address});
-      }
-    } catch {
-      this.setState({invalidAddress: true});
-    }
-  }
-
   isAddress = async () => {
     if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
       this.setState({beneficiary: this.state.beneficiaryValue});
       this.setState({invalidAddress: false});
     } else {
-      await this.resolveENSAddress();
+      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+      if(address) {
+        this.setState({invalidAddress: false});
+        this.setState({beneficiary: address});
+      } else {
+        this.setState({invalidAddress: true});
+      }
     }
   }
 
