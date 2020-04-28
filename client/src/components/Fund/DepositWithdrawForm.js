@@ -134,6 +134,7 @@ class DepositWithdrawForm extends Component {
       value: sendAmount
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
+      this.props.closeDepositModal();
     }).on('confirmation', (number, receipt) => {
       if(number === 0) {
         this.props.setMessage('Transaction Confirmed!', receipt.txHash);
@@ -169,6 +170,7 @@ class DepositWithdrawForm extends Component {
       from: this.props.drizzleState.accounts[0]
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
+      this.props.closeWithdrawalModal();
     }).on('confirmation', (number, receipt) => {
       if(number === 0) {
         this.props.setMessage('Transaction Confirmed!', receipt.txHash);

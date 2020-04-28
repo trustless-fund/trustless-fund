@@ -137,36 +137,30 @@ class FundContainer extends Component {
     this.setState({depositModal: true});
   }
 
-  closeDepositModal = (e) => {
+  depositBackgroundClick = (e) => {
     const depositBackground = document.querySelector('.deposit__background');
-    const depositButton = document.querySelector('.deposit__button');
     if(e.target === depositBackground) {
-      this.setState({depositModal: false});
+      this.closeDepositModal();
     }
-    if(e.target === depositButton) {
-      // TODO: Find better solution than setTimeout
-      setTimeout(() => {
-        this.setState({depositModal: false});
-      }, 200);
-    }
+  }
+
+  closeDepositModal = () => {
+    this.setState({depositModal: false})
   }
 
   renderWithdrawalModal = () => {
     this.setState({withdrawalModal: true});
   }
 
-  closeWithdrawalModal = (e) => {
+  withdrawBackgroundClick = (e) => {
     const withdrawBackground = document.querySelector('.withdraw__background');
-    const withdrawButton = document.querySelector('.deposit__button');
     if(e.target === withdrawBackground) {
-      this.setState({withdrawalModal: false});
+      this.closeWithdrawalModal();
     }
-    if(e.target === withdrawButton) {
-      // TODO: Find better solution than setTimeout
-      setTimeout(() => {
-        this.setState({withdrawalModal: false});
-      }, 200);
-    }
+  }
+
+  closeWithdrawalModal = () => {
+    this.setState({withdrawalModal: false});
   }
 
   renderSettingsModal = () => {
@@ -360,7 +354,7 @@ class FundContainer extends Component {
             }
           </div>
           {this.state.depositModal && 
-            <div className="deposit__background" onClick={this.closeDepositModal}>
+            <div className="deposit__background" onClick={this.depositBackgroundClick}>
               <DepositWithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
@@ -373,11 +367,12 @@ class FundContainer extends Component {
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}
                 deposit={true}
-                expiration={this.state.expiration} />
+                expiration={this.state.expiration}
+                closeDepositModal={this.closeDepositModal} />
             </div>
           }
           {this.state.withdrawalModal &&
-            <div className="withdraw__background" onClick={this.closeWithdrawalModal}>
+            <div className="withdraw__background" onClick={this.withdrawBackgroundClick}>
               <DepositWithdrawForm 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
@@ -389,7 +384,8 @@ class FundContainer extends Component {
                 handleSearchTokenChange={this.handleSearchTokenChange}
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}
-                deposit={false} />
+                deposit={false}
+                closeWithdrawalModal={this.closeWithdrawalModal} />
             </div>
           }
           <Warning 
