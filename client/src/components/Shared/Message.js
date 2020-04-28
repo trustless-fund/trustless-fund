@@ -1,65 +1,30 @@
 import React, {Component} from 'react';
+import {getEtherscanLink} from '../../utils/helpers';
 
 import '../../layout/components/message.sass';
 
 class Message extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      etherscan: null
+    }
+  }
+
+  componentWillReceiveProps = async () => {
+    const etherscan = await getEtherscanLink(this.props.drizzleState.web3.networkId, `/tx/${this.props.txHash}`);
+    this.setState({etherscan});
+  }
+ 
   render() {
     if(this.props.message) {
-      if(this.props.drizzleState.web3.networkId === 1) {
+      if(this.props.drizzleState.web3.networkId) {
         return(
           <a 
             className="message"
             target="_blank"
             rel="noopener noreferrer"
-            href={this.props.txHash ? `http://etherscan.io/tx/${this.props.txHash}` : null}
-          >
-            {this.props.message}
-          </a>
-        );
-      }
-      if(this.props.drizzleState.web3.networkId === 3) {
-        return(
-          <a 
-            className="message"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.txHash ? `http://ropsten.etherscan.io/tx/${this.props.txHash}` : null}
-          >
-            {this.props.message}
-          </a>
-        );
-      }
-      if(this.props.drizzleState.web3.networkId === 4) {
-        return(
-          <a 
-            className="message"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.txHash ? `http://rinkeby.etherscan.io/tx/${this.props.txHash}` : null}
-          >
-            {this.props.message}
-          </a>
-        );
-      }
-      if(this.props.drizzleState.web3.networkId === 5) {
-        return(
-          <a 
-            className="message"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.txHash ? `http://goerli.etherscan.io/tx/${this.props.txHash}` : null}
-          >
-            {this.props.message}
-          </a>
-        );
-      }
-      if(this.props.drizzleState.web3.networkId === 42) {
-        return(
-          <a 
-            className="message"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.txHash ? `http://kovan.etherscan.io/tx/${this.props.txHash}` : null}
+            href={this.props.txHash ? this.state.etherscan : null}
           >
             {this.props.message}
           </a>

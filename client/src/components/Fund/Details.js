@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {getEtherscanLink} from '../../utils/helpers';
 
 class Details extends Component {
   constructor(props) {
@@ -13,8 +14,9 @@ class Details extends Component {
     this.getBeneficiary();
   }
 
-  componentDidMount = () => {
-    this.getEtherscanLink();
+  componentDidMount = async () => {
+    const etherscan = await getEtherscanLink(this.props.drizzleState.web3.networkId, `/address/${this.props.fund._address}`);
+    this.setState({etherscan});
   }
 
   getOwner = async () => {
@@ -25,24 +27,6 @@ class Details extends Component {
   getBeneficiary = async () => {
     const beneficiary = await this.props.fund.methods.beneficiary().call();
     this.setState({beneficiary});
-  }
-
-  getEtherscanLink = () => {
-    if(this.props.drizzleState.web3.networkId === 1) {
-      return this.setState({etherscan: `https://etherscan.io/address/${this.props.fund._address}`});
-    }
-    if(this.props.drizzleState.web3.networkId === 3) {
-      return this.setState({etherscan: `https://ropsten.etherscan.io/address/${this.props.fund._address}`});
-    }
-    if(this.props.drizzleState.web3.networkId === 4) {
-      return this.setState({etherscan: `https://rinkeby.etherscan.io/address/${this.props.fund._address}`});
-    }
-    if(this.props.drizzleState.web3.networkId === 5) {
-      return this.setState({etherscan: `https://goerli.etherscan.io/address/${this.props.fund._address}`});
-    }
-    if(this.props.drizzleState.web3.networkId === 42) {
-      return this.setState({etherscan: `https://kovan.etherscan.io/address/${this.props.fund._address}`});
-    }
   }
 
   render() {

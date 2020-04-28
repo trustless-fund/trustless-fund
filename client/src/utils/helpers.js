@@ -61,3 +61,21 @@ export const isZeroAddress = (address) => {
     return true;
   }
 }
+
+export const getEtherscanLink = (networkId, route) => {
+  if(networkId === 1) {
+    return `https://etherscan.io${route}`;
+  }
+  if(networkId === 3) {
+    return `https://ropsten.etherscan.io${route}`;
+  }
+  if(networkId === 4) {
+    return `https://rinkeby.etherscan.io${route}`;
+  }
+  if(networkId === 5) {
+    return `https://goerli.etherscan.io${route}`;
+  }
+  if(networkId === 42) {
+    return `https://kovan.etherscan.io${route}`;
+  }
+}
