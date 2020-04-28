@@ -55,3 +55,9 @@ export const resolveENSAddress = async (ENS, web3) => {
     return false;
   }
 }
+
+export const isInvalidContract = (address) => {
+  if(address === '0x0000000000000000000000000000000000000000') {
+    return true;
+  }
+}

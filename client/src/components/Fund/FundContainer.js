@@ -12,7 +12,7 @@ import TrustlessFund from '../../contracts/TrustlessFund.json';
 import TrustlessFundV2 from '../../contracts/TrustlessFundV2.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
 import ERC20 from '../../contracts/ERC20.json';
-import {getUsdValue} from '../../utils/helpers';
+import {getUsdValue, isInvalidContract} from '../../utils/helpers';
 
 import '../../layout/components/fund.sass';
 import '../../layout/components/withdraw.sass';
@@ -80,7 +80,8 @@ class FundContainer extends Component {
     const fundAddress = 
       await this.state.factory.methods.getFund(this.props.fundId).call();
 
-    await this.isInvalidFund(fundAddress);
+    const invalidFund = await isInvalidContract(fundAddress);
+    await this.setState({invalidFund});
 
     if(!this.state.invalidFund) {
       let fund;
@@ -97,12 +98,6 @@ class FundContainer extends Component {
       }
     
       this.setState({fund});
-    }
-  }
-
-  isInvalidFund = (address) => {
-    if(address === '0x0000000000000000000000000000000000000000') {
-      this.setState({invalidFund: true});
     }
   }
 
