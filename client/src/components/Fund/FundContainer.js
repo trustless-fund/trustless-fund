@@ -28,7 +28,7 @@ class FundContainer extends Component {
       fund: null,
       message: null,
       txHash: null,
-      assetList: [],
+      userAssets: [],
       tokenList: null,
       allTokens: null,
       usdAmounts: null,
@@ -190,14 +190,14 @@ class FundContainer extends Component {
 
   getAssets = async () => {
     const tokenLUTSize = await this.state.fund.methods.getTokenSize().call();
-    let assetList = [];
+    let userAssets = [];
 
     if(tokenLUTSize > 0) {
       for(let i = 0; i < tokenLUTSize; i++) {
         const tokenAddress = await this.state.fund.methods.tokenLUT(i).call();
         if(this.props.version === 'v1') {
           const token = await this.state.fund.methods.tokens(tokenAddress).call();
-          assetList.push({address: tokenAddress, balance: token.balance});
+          userAssets.push({address: tokenAddress, balance: token.balance});
         } else if(this.props.version === 'v2') {
           let balance;
           if(tokenAddress === '0x0000000000000000000000000000000000000000') {
@@ -208,12 +208,12 @@ class FundContainer extends Component {
             );
             balance = await token.methods.balanceOf(this.state.fund._address).call();
           }
-          assetList.push({address: tokenAddress, balance});
+          userAssets.push({address: tokenAddress, balance});
         }
       }
     }
 
-    this.setState({assetList});
+    this.setState({userAssets});
   }
 
   handleSearchTokenChange = async (e, search) => {
@@ -223,7 +223,7 @@ class FundContainer extends Component {
 
   getUsdAmounts = async () => {
     let usdAmounts = {}
-    this.state.assetList.forEach(async (asset) => {
+    this.state.userAssets.forEach(async (asset) => {
       if(asset.balance > 0) {
         const usdAmount = await getUsdValue(asset.address, asset.balance);
         usdAmounts[asset.address] = usdAmount;
@@ -335,7 +335,7 @@ class FundContainer extends Component {
           <Assets 
             drizzle={this.props.drizzle} 
             drizzleState={this.props.drizzleState}
-            assetList={this.state.assetList}
+            userAssets={this.state.userAssets}
             tokenList={this.state.tokenList}
             allTokens={this.state.allTokens} />
           <div className="fund__buttons">
@@ -347,7 +347,7 @@ class FundContainer extends Component {
                 button={true}
               />
             </div>
-            {this.state.assetList.length > 0 && this.state.renderWithdrawal &&
+            {this.state.userAssets.length > 0 && this.state.renderWithdrawal &&
               <div onClick={this.renderWithdrawalModal}>
                 <Button text="Withdraw" class="outline fund__button" link={null} button={true} />
               </div>
@@ -362,7 +362,7 @@ class FundContainer extends Component {
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
                 getAssets={this.getAssets}
-                assetList={this.state.assetList}
+                userAssets={this.state.userAssets}
                 handleSearchTokenChange={this.handleSearchTokenChange}
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}
@@ -380,7 +380,7 @@ class FundContainer extends Component {
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
                 getAssets={this.getAssets}
-                assetList={this.state.assetList}
+                userAssets={this.state.userAssets}
                 handleSearchTokenChange={this.handleSearchTokenChange}
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}

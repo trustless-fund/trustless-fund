@@ -269,7 +269,7 @@ class DepositWithdrawForm extends Component {
   }
 
   getBalance = () => {
-    this.props.assetList.forEach(async (asset) => {
+    this.props.userAssets.forEach(async (asset) => {
       if(asset.address === this.state.token) {
         const decimals = await this.getDecimals();
         let balance;
@@ -318,7 +318,6 @@ class DepositWithdrawForm extends Component {
               <TokenInputDropdown 
                 drizzle={this.props.drizzle}
                 drizzleState={this.props.drizzleState}
-                assetList={this.props.tokenList}
                 searchToken={this.state.searchToken}
                 setToken={this.setToken}
                 allTokens={this.props.allTokens}
