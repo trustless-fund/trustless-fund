@@ -117,9 +117,9 @@ class Settings extends Component {
         <h2 className="settings__header">
           Settings
         </h2>
-        <p className="settings__subheader">
-          Danger Zone
-        </p>
+        <Warning
+          className="settings__warning"
+          message="Warning: these are potentially destructive actions." />
         <form 
           className="settings__form"
           onSubmit={this.handleBeneficiarySubmit}>
@@ -171,9 +171,6 @@ class Settings extends Component {
             expiration date.
           </p>
         </form>
-        <Warning
-          className="settings__warning"
-          message="These are potentially destructive actions." />
       </div>
     );
   }
