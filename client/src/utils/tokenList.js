@@ -586,7 +586,67 @@ export const TOKEN_LIST = {
       [SYMBOL]: 'BTC++',
       [DECIMALS]: 18,
       [LOGO]:
-      'https://assets.coingecko.com/coins/images/10959/large/BTC__.png?1586499443' }
+      'https://assets.coingecko.com/coins/images/10959/large/BTC__.png?1586499443' },
+  '0x8BA6DcC667d3FF64C1A2123cE72FF5F0199E5315':
+    { [NAME]: 'AlexMasmej',
+      [SYMBOL]: 'ALEX',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/ALEX/cf19e0c4-5ebb-47be-b4e9-60f4afc2524e' },
+  '0xdc8092AaF83e00Ebf9B01A2e90b7B7eF867ba503':
+    { [NAME]: 'Calvin',
+      [SYMBOL]: 'CALVIN',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/CALVIN/570a6590-9c86-42de-a43f-faae25e1a069' },
+  '0xe6710e0CdA178f3D921f456902707B0d4C4A332B':
+    { [NAME]: 'Julien',
+      [SYMBOL]: 'JULIEN',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/JULIEN/453c3b8b-6ce2-4790-8c60-a9f5fa640447' },
+  '0xCa7A0Be200c7DE43438878EB54B8b5D31296fBd8':
+    { [NAME]: 'STANI',
+      [SYMBOL]: 'STANI',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/STANI/902ad40c-8be1-4184-87b4-738155f5670b' },
+  '0xA809CeDeE9B61956c768EAa10272dd5E0FD1A985':
+    { [NAME]: 'CAMI',
+      [SYMBOL]: 'CAMI',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/CAMI/d34a32c8-0f7a-422c-93ab-1a9fbd779ded' },
+  '0x8db6Da2120b346FAa7f206841f2FB005BBE0DFD8':
+    { [NAME]: 'Paul Razvan Berg',
+      [SYMBOL]: 'PAUL',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/PAUL/02cbfef1-39f1-471b-994d-ec26e30f1460' },
+  '0x1Bf7F59590048E9e1825CA177b2aBc587383dE0f':
+    { [NAME]: 'Pet3rpan',
+      [SYMBOL]: 'PETER',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/PETER/ea7bb96a-032c-4cf5-9d7a-42cba77fb5af' },
+  '0xE98b5F11897d42Afd17185dd301Bcb2d46389bF1':
+    { [NAME]: 'Dude',
+      [SYMBOL]: 'DUDE',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/DUDE/2e93a725-1fc6-4b0d-82b2-5f1f467dce6f' },
+  '0xd32540c0d54A7fCDD9500bfa57D3Ba1e604581D7':
+    { [NAME]: 'Jules',
+      [SYMBOL]: 'JULES',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/JULES/088966c2-4ce1-41f2-883a-c852addaa307' },
+  '0x6b97CD4FD6A6Bc798a08d58BCf73932863537a90':
+    { [NAME]: 'Marc',
+      [SYMBOL]: 'MARC',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/MARC/31bc67ca-4c6d-452b-addd-9ba71876f56d' },
   },
   3: { 
   '0x0000000000000000000000000000000000000000':
