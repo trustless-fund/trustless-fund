@@ -647,6 +647,12 @@ export const TOKEN_LIST = {
       [DECIMALS]: 4,
       [LOGO]:
       'https://roll-token.s3.amazonaws.com/MARC/31bc67ca-4c6d-452b-addd-9ba71876f56d' },
+  '0xb683d83a532e2cb7dfa5275eed3698436371cc9f':
+    { [NAME]: 'BTU Protocol',
+      [SYMBOL]: 'BTU',
+      [DECIMALS]: 18,
+      [LOGO]:
+      'https://etherscan.io/token/images/btu_28.png' },
   },
   3: { 
   '0x0000000000000000000000000000000000000000':
