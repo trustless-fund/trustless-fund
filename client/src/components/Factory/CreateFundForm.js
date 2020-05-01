@@ -44,6 +44,9 @@ class CreateFundForm extends Component {
               onChange={this.props.handleBeneficiaryChange}
               value={this.props.beneficiary}
             />
+            <span className="create-fund__address">
+              {this.props.ENSAddress}
+            </span>
           </label>
           {this.state.invalidAddress &&
             <p className="create-fund__invalid">

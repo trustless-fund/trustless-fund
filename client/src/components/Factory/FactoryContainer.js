@@ -17,7 +17,8 @@ class FactoryContainer extends Component {
     invalidAddress: false,
     invalidExpiration: false,
     minDate: null,
-    factory: null
+    factory: null,
+    ENSAddress: null
   }
 
   componentDidMount = () => {
@@ -46,6 +47,16 @@ class FactoryContainer extends Component {
 
   handleBeneficiaryChange = async (e) => {
     await this.setState({beneficiaryValue: e.target.value});
+    this.isENSAddress();
+  }
+
+  isENSAddress = async () => {
+    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+    if(address) {
+      this.setState({ENSAddress: address});
+    } else {
+      this.setState({ENSAddress: null});
+    }
   }
 
   isAddress = async () => {
@@ -146,7 +157,8 @@ class FactoryContainer extends Component {
           date={this.state.date}
           invalidAddress={this.state.invalidAddress}
           invalidExpiration={this.state.invalidExpiration}
-          minDate={this.state.minDate} />
+          minDate={this.state.minDate}
+          ENSAddress={this.state.ENSAddress} />
         <Message 
           message={this.state.message} 
           txHash={this.state.txHash} 
