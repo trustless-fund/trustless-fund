@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ENS from 'ethereum-ens';
 
 import logo from '../../assets/logo.png';
 
@@ -10,26 +11,31 @@ class Nav extends Component {
     this.state = {
       address: null,
       noProvider: false,
-      testNetwork: false
+      testNetwork: false,
+      ENSName: null
     }
 
     if(window.ethereum) {
       this.state.address = this.props.drizzleState.accounts[0];
+
       window.ethereum.on('accountsChanged', (accounts) => {
         this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
         this.setState({address: accounts[0]});
       });
+
+      this.ens = new ENS(this.props.drizzle.web3);
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     try {
       if(!this.props.drizzle.web3.givenProvider) {
         this.setState({address: null});
         this.setState({noProvider: true});
       } else {
-        this.setState({address: this.props.drizzleState.accounts[0]});
+        await this.setState({address: this.props.drizzleState.accounts[0]});
         this.setState({noProvider: false});
+        this.getENSName();
       }
       if(this.props.drizzleState.web3.networkId !== 1) {
         this.setState({testNetwork: true});
@@ -54,6 +60,15 @@ class Nav extends Component {
     return networks[id];
   }
 
+  getENSName = async () => {
+    let name = await this.ens.reverse(this.state.address).name();
+    if(this.state.address !== await this.ens.resolver(name).addr()) {
+      name = null;
+    } else {
+      this.setState({ENSName: name});
+    }
+  }
+
   render() {
     if(this.state.testNetwork) {
       return (
@@ -67,9 +82,10 @@ class Nav extends Component {
               Trustless Fund
             </a>
             <button className="nav__button">
-              {this.state.address ? 
-                `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
-                'Connect Wallet'}
+              {this.state.ENSName ? `${this.state.ENSName}` :
+                this.state.address ? 
+                  `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+                  'Connect Wallet'}
             </button>
           </div>
         </nav>
@@ -88,9 +104,10 @@ class Nav extends Component {
               Trustless Fund
             </a>
             <button className="nav__button">
-              {this.state.address ? 
-                `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
-                'Connect Wallet'}
+              {this.state.ENSName ? `${this.state.ENSName}` :
+                  this.state.address ? 
+                    `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+                    'Connect Wallet'}
             </button>
           </div>
         </nav>
@@ -104,9 +121,10 @@ class Nav extends Component {
           Trustless Fund
         </a>
         <button className="nav__button">
-          {this.state.address ? 
-            `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
-            'Connect Wallet'}
+          {this.state.ENSName ? `${this.state.ENSName}` :
+            this.state.address ? 
+              `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+              'Connect Wallet'}
         </button>
       </nav>
     );
