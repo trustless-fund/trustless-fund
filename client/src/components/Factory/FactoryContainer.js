@@ -47,7 +47,9 @@ class FactoryContainer extends Component {
 
   handleBeneficiaryChange = async (e) => {
     await this.setState({beneficiaryValue: e.target.value});
-    this.isENSAddress();
+    setTimeout(() => {
+      this.isENSAddress();
+    }, 300);
   }
 
   isENSAddress = async () => {
