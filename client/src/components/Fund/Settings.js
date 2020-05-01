@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Warning from '../Shared/Warning';
 import DatePicker from 'react-datepicker';
+import {resolveENSAddress} from '../../utils/helpers';
 
 import '../../layout/components/settings.sass';
 
@@ -8,56 +9,82 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      beneficiary: '',
+      beneficiary: null,
+      beneficiaryValue: '',
       expiration: 0,
       minDate: 0,
-      invalidAddress: false
+      invalidAddress: false,
+      ENSAddress: null
     }
   }
 
   componentDidMount = async () => {
-    const beneficiary = await this.props.fund.methods.beneficiary().call();
+    const beneficiaryValue = await this.props.fund.methods.beneficiary().call();
     const expiration = await this.props.fund.methods.expiration().call();
     const expirationDate = new Date(expiration * 1000);
 
-    this.setState({beneficiary});
+    this.setState({beneficiaryValue});
     this.setState({expiration: expirationDate});
     this.setState({minDate: expirationDate});
   }
 
-  handleBeneficiaryChange = (e) => {
-    this.setState({beneficiary: e.target.value});
+  handleBeneficiaryChange = async (e) => {
+    await this.setState({beneficiaryValue: e.target.value});
+    this.isENSAddress();
   }
 
   handleExpirationChange = (date) => {
     this.setState({expiration: date});
   }
 
+  isENSAddress = async () => {
+    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+    if(address) {
+      this.setState({ENSAddress: address});
+    } else {
+      this.setState({ENSAddress: null});
+    }
+  }
+
+  isAddress = async () => {
+    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
+      this.setState({beneficiary: this.state.beneficiaryValue});
+      this.setState({invalidAddress: false});
+    } else {
+      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+      if(address) {
+        this.setState({invalidAddress: false});
+        this.setState({beneficiary: address});
+      } else {
+        this.setState({invalidAddress: true});
+      }
+    }
+  }
+
   handleBeneficiarySubmit = async (e) => {
     e.preventDefault();
 
-    if(!this.props.drizzle.web3.utils.isAddress(this.state.beneficiary)) {
-      return this.setState({invalidAddress: true});
-    }
-    this.setState({invalidAddress: false});
+    await this.isAddress();
 
-    await this.props.fund.methods.updateBeneficiary(this.state.beneficiary).send({
-      from: this.props.drizzleState.accounts[0]
-    }, (err, txHash) => {
-      this.props.setMessage('Transaction Pending...', txHash);
-    }).on('confirmation', (number, receipt) => {
-      if(number === 0) {
-        this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+    if(!this.state.invalidAddress) {
+      await this.props.fund.methods.updateBeneficiary(this.state.beneficiary).send({
+        from: this.props.drizzleState.accounts[0]
+      }, (err, txHash) => {
+        this.props.setMessage('Transaction Pending...', txHash);
+      }).on('confirmation', (number, receipt) => {
+        if(number === 0) {
+          this.props.setMessage('Transaction Confirmed!', receipt.txHash);
+          setTimeout(() => {
+            this.props.clearMessage();
+          }, 10000);
+        }
+      }).on('error', (err, receipt) => {
+        this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
         setTimeout(() => {
           this.props.clearMessage();
         }, 10000);
-      }
-    }).on('error', (err, receipt) => {
-      this.props.setMessage('Transaction Failed.', receipt ? receipt.transactionHash : null);
-      setTimeout(() => {
-        this.props.clearMessage();
-      }, 10000);
-    });
+      });
+    }
   }
 
   handleExpirationSubmit = async (e) => {
@@ -128,9 +155,12 @@ class Settings extends Component {
             <input 
               type="text"
               className="settings__input"
-              value={this.state.beneficiary}
+              value={this.state.beneficiaryValue}
               onChange={this.handleBeneficiaryChange}>
             </input>
+            <span className="settings__address">
+              {this.state.ENSAddress}
+            </span>
           </label>
           {this.state.invalidAddress &&
             <p className="settings__invalid">
