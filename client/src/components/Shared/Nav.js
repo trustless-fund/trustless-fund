@@ -61,11 +61,15 @@ class Nav extends Component {
   }
 
   getENSName = async () => {
-    let name = await this.ens.reverse(this.state.address).name();
-    if(this.state.address !== await this.ens.resolver(name).addr()) {
-      name = null;
-    } else {
-      this.setState({ENSName: name});
+    try {
+      let name = await this.ens.reverse(this.state.address).name();
+      if(this.state.address !== await this.ens.resolver(name).addr()) {
+        name = null;
+      } else {
+        this.setState({ENSName: name});
+      } 
+    } catch {
+      
     }
   }
 
