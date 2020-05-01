@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import {getEtherscanLink} from '../../utils/helpers';
+import ENS from 'ethereum-ens';
 
 class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
       owner: null,
+      ownerENS: null,
       beneficiary: null,
+      beneficiaryENS: null,
       etherscan: null
     }
 
+    this.ens = new ENS(this.props.drizzle.web3);
     this.getOwner();
     this.getBeneficiary();
   }
@@ -22,11 +26,33 @@ class Details extends Component {
   getOwner = async () => {
     const owner = await this.props.fund.methods.owner().call();
     this.setState({owner});
+
+    try {
+      let name = await this.ens.reverse(owner).name();
+      if(owner !== await this.ens.resolver(name).addr()) {
+        name = null;
+      } else {
+        this.setState({ownerENS: name});
+      } 
+    } catch {
+      
+    }
   }
 
   getBeneficiary = async () => {
     const beneficiary = await this.props.fund.methods.beneficiary().call();
     this.setState({beneficiary});
+
+    try {
+      let name = await this.ens.reverse(beneficiary).name();
+      if(beneficiary !== await this.ens.resolver(name).addr()) {
+        name = null;
+      } else {
+        this.setState({beneficiaryENS: name});
+      } 
+    } catch {
+      
+    }
   }
 
   render() {
@@ -41,15 +67,17 @@ class Details extends Component {
         </a>
         <p className="fund__detail">
           <span className="fund__detail--bold">Owner:</span> 
-          {this.state.owner ? 
-            `${this.state.owner.slice(0, 4)}...${this.state.owner.slice(this.state.owner.length - 4, this.state.owner.length)}` : 
-            null}
+          {this.state.ownerENS ? `${this.state.ownerENS}` :
+            this.state.owner ? 
+              `${this.state.owner.slice(0, 4)}...${this.state.owner.slice(this.state.owner.length - 4, this.state.owner.length)}` : 
+              null}
         </p>
         <p className="fund__detail">
           <span className="fund__detail--bold">Beneficiary:</span> 
-          {this.state.beneficiary ? 
-            `${this.state.beneficiary.slice(0, 4)}...${this.state.beneficiary.slice(this.state.beneficiary.length - 4, this.state.beneficiary.length)}` : 
-            null}
+          {this.state.beneficiaryENS ? `${this.state.beneficiaryENS}` :
+            this.state.beneficiary ? 
+              `${this.state.beneficiary.slice(0, 4)}...${this.state.beneficiary.slice(this.state.beneficiary.length - 4, this.state.beneficiary.length)}` : 
+              null}
         </p>
       </div>
     );
