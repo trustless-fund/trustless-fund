@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Button from '../Shared/Button';
 
+import TrustlessFundFactoryV1 from '../../contracts/TrustlessFundFactory.json';
+import TrustlessFundFactoryV2 from '../../contracts/TrustlessFundFactoryV2.json';
+
 import '../../layout/components/hero.sass';
 
 class Hero extends Component {
@@ -8,17 +11,26 @@ class Hero extends Component {
     super(props);
     this.state = {
       userFunds: [],
-      render: false
+      render: false,
+      FactoryV1: null,
+      FactoryV2: null
     }
 
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts) => {
-        this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
         this.isUserFunds();
       });
     }
+  }
 
-    if(this.props.drizzle.web3.givenProvider) {
+  componentDidMount = async () => {
+    const FactoryV1 = await new this.props.web3.eth.Contract(TrustlessFundFactoryV1);
+    const FactoryV2 = await new this.props.web3.eth.Contract(TrustlessFundFactoryV2);
+
+    await this.setState({FactoryV1});
+    await this.setState({FactoryV2});
+
+    if(this.props.web3.givenProvider) {
       this.isUserFunds();
     } else {
       this.state = {render: true}
@@ -26,11 +38,11 @@ class Hero extends Component {
   }
 
   isUserFunds = async () => {
-    const v1UserFunds = await this.props.drizzle.contracts.TrustlessFundFactory.methods.getUserFunds(
-      this.props.drizzleState.accounts[0]
+    const v1UserFunds = await this.state.FactoryV1.methods.getUserFunds(
+      this.props.address
     ).call();
-    const v2UserFunds = await this.props.drizzle.contracts.TrustlessFundFactoryV2.methods.getUserFunds(
-      this.props.drizzleState.accounts[0]
+    const v2UserFunds = await this.state.FactoryV2.methods.getUserFunds(
+      this.props.address
     ).call();
 
     const userFunds = v1UserFunds.concat(v2UserFunds);
