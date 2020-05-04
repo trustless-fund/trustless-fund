@@ -1,61 +1,132 @@
 import React, { Component } from "react";
+import Web3 from 'web3';
+import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import keys from '../keys';
+
 import UserFunds from '../components/Index/UserFunds';
 import Hero from '../components/Index/Hero';
 import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
-import { DrizzleContext } from "@drizzle/react-plugin";
-import { Drizzle } from "@drizzle/store";
-import logo from '../assets/logo.png';
 
-import TrustlessFundFactoryV2 from '../contracts/TrustlessFundFactoryV2.json';
-import TrustlessFundFactoryV1 from '../contracts/TrustlessFundFactory.json';
 import '../layout/components/loading.sass';
 
-const drizzleOptions = {
-  contracts: [
-    TrustlessFundFactoryV2,
-    TrustlessFundFactoryV1
-  ], 
-  events: {
-    TrustlessFundFactoryV2: [
-      'CreateFund'
-    ],
-    TrustlessFundFactoryV1: [
-      'CreateFund'
-    ]
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: keys.infura
+    }
   }
 }
 
-let drizzle = new Drizzle(drizzleOptions);
+function initWeb3(provider) {
+  const web3 = new Web3(provider);
+
+  web3.eth.extend({
+    methods: [
+      {
+        name: 'chainId',
+        call: 'eth_chainId',
+        outputFormatter: web3.utils.hexToNumber
+      }
+    ]
+  });
+
+  return web3;
+}
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      web3: null,
+      provider: null,
+      connected: null,
+      address: null,
+      chainId: null,
+      networkId: null
+    }
+
+    this.web3modal = new Web3Modal({
+      network: "mainnet",
+      cacheProvider: true,
+      providerOptions
+    });
+  } 
+
+  componentDidMount = async () => {  
+    if (this.web3modal.cachedProvider) {
+      this.onConnect()
+    }
+  }
+
+  onConnect = async () => {
+    const provider = await this.web3modal.connect();
+    await this.subscribeProvider(provider);
+    const web3 = initWeb3(provider);
+    const accounts = await web3.eth.getAccounts();
+    const address = accounts[0];
+    const networkId = await web3.eth.net.getId();
+    const chainId = await web3.eth.chainId();
+
+    await this.setState({
+      web3,
+      provider,
+      connected: true,
+      address,
+      chainId,
+      networkId
+    });
+
+    console.log(this.state.address);
+  }
+
+  subscribeProvider = async (provider) => {
+    provider.on('close', () => this.disconnect());
+
+    provider.on('accountsChanged', async (accounts) => {
+      await this.setState({ address: accounts[0] });
+    });
+
+    provider.on('chainChanged', async (chainId) => {
+      const { web3 } = this.state
+      const networkId = await web3.eth.net.getId()
+      await this.setState({ chainId, networkId });
+    });
+
+    provider.on('networkChanged', async (networkId) => {
+      const { web3 } = this.state;
+      const chainId = await web3.eth.chainId();
+      await this.setState({ chainId, networkId });
+    });
+  }
+
+  disconnect = async () => {
+    const { web3 } = this.state
+    if (web3 && web3.currentProvider && web3.currentProvider.close) {
+      await web3.currentProvider.close()
+    }
+    await this.web3modal.clearCachedProvider();
+    this.setState({connected: false, address: null});
+  }
+
   render() {
-    return (
-      <DrizzleContext.Provider drizzle={drizzle}>
-        <DrizzleContext.Consumer>
-          {drizzleContext => {
-            const {drizzle, drizzleState, initialized} = drizzleContext;
-
-            if(window.ethereum && !initialized) {
-              return (
-                <div className="loading">
-                  <img src={logo} alt="Trustless Fund" className="loading__image" />
-                </div>
-              );
-            }
-
-            return(
-              <>
-                <Nav drizzle={drizzle} drizzleState={drizzleState} />
-                <Hero drizzle={drizzle} drizzleState={drizzleState} />
-                <UserFunds drizzle={drizzle} drizzleState={drizzleState} />
-                <Footer drizzle={drizzle} drizzleState={drizzleState} />
-              </>
-            );
-          }}
-        </DrizzleContext.Consumer>
-      </DrizzleContext.Provider>
-    );
+    return(
+      <>
+        <Nav 
+          web3={this.state.web3}
+          address={this.state.address}
+          networkId={this.state.networkId}
+          onConnect={this.onConnect}
+          disconnect={this.disconnect} />
+        <Hero 
+          web3={this.state.web3}
+          address={this.state.address} />
+        <UserFunds />
+        <Footer />
+      </>
+    );     
   }
 }
 
