@@ -21,29 +21,27 @@ class Nav extends Component {
     }
 
     if(window.ethereum) {
-      this.state.address = this.props.drizzleState.accounts[0];
+      this.state.address = this.props.address;
 
       window.ethereum.on('accountsChanged', (accounts) => {
-        this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
         this.setState({address: accounts[0]});
       });
-
-      this.ens = new ENS(this.props.drizzle.web3);
     }
   }
 
   componentDidMount = async () => {
     try {
-      if(!this.props.drizzle.web3.givenProvider) {
+      if(!this.props.web3.givenProvider) {
         this.setState({address: null});
         this.setState({noProvider: true});
       } else {
-        await this.setState({address: this.props.drizzleState.accounts[0]});
+        await this.setState({address: this.props.address});
         this.setState({noProvider: false});
+        this.ens = await new ENS(this.props.web3);
         await this.getENSContracts();
         this.getENSName();
       }
-      if(this.props.drizzleState.web3.networkId !== 1) {
+      if(this.props.networkId !== 1) {
         this.setState({testNetwork: true});
       } else {
         this.setState({testNetwork: false})
@@ -67,7 +65,7 @@ class Nav extends Component {
   }
 
   getENSContracts = () => {
-    const registry = new this.props.drizzle.web3.eth.Contract(ENSRegistry, '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e');
+    const registry = new this.props.web3.eth.Contract(ENSRegistry, '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e');
     this.setState({registry});
   }
 
@@ -81,7 +79,7 @@ class Nav extends Component {
         const normalizedName = await namehash.normalize(name);
         const hashedName = await namehash.hash(normalizedName);
         const resolverAddress = await this.state.registry.methods.resolver(hashedName).call();
-        const resolver = await new this.props.drizzle.web3.eth.Contract(ENSResolver, resolverAddress);
+        const resolver = await new this.props.web3.eth.Contract(ENSResolver, resolverAddress);
         const avatar = await resolver.methods.text(hashedName, 'avatar').call();
         if(avatar) {
           this.setState({avatar});
@@ -97,7 +95,7 @@ class Nav extends Component {
       return (
         <nav className="nav-error">
           <p className="nav-error__error">
-            Note: You are currently connected to the {this.getNetwork(this.props.drizzleState.web3.networkId)} testnet.
+            Note: You are currently connected to the {this.getNetwork(this.props.networkId)} testnet.
           </p>
           <div className="nav-error__content">
             <a href="/" className="nav__header">
