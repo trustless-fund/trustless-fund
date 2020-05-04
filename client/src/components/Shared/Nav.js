@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import ENS from 'ethereum-ens';
+import namehash from 'eth-ens-namehash';
+import ENSResolver from '../../contracts/ENSResolver.json';
+import ENSRegistry from '../../contracts/ENSRegistry.json';
 
 import logo from '../../assets/logo.png';
 
@@ -12,7 +15,9 @@ class Nav extends Component {
       address: null,
       noProvider: false,
       testNetwork: false,
-      ENSName: null
+      ENSName: null,
+      registry: null,
+      avatar: null
     }
 
     if(window.ethereum) {
@@ -35,6 +40,7 @@ class Nav extends Component {
       } else {
         await this.setState({address: this.props.drizzleState.accounts[0]});
         this.setState({noProvider: false});
+        await this.getENSContracts();
         this.getENSName();
       }
       if(this.props.drizzleState.web3.networkId !== 1) {
@@ -60,6 +66,11 @@ class Nav extends Component {
     return networks[id];
   }
 
+  getENSContracts = () => {
+    const registry = new this.props.drizzle.web3.eth.Contract(ENSRegistry, '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e');
+    this.setState({registry});
+  }
+
   getENSName = async () => {
     try {
       let name = await this.ens.reverse(this.state.address).name();
@@ -67,6 +78,14 @@ class Nav extends Component {
         name = null;
       } else {
         this.setState({ENSName: name});
+        const normalizedName = await namehash.normalize(name);
+        const hashedName = await namehash.hash(normalizedName);
+        const resolverAddress = await this.state.registry.methods.resolver(hashedName).call();
+        const resolver = await new this.props.drizzle.web3.eth.Contract(ENSResolver, resolverAddress);
+        const avatar = await resolver.methods.text(hashedName, 'avatar').call();
+        if(avatar) {
+          this.setState({avatar});
+        }
       } 
     } catch {
       
@@ -90,6 +109,8 @@ class Nav extends Component {
                 this.state.address ? 
                   `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
                   'Connect Wallet'}
+              {this.state.avatar &&
+                <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
             </button>
           </div>
         </nav>
@@ -112,6 +133,8 @@ class Nav extends Component {
                   this.state.address ? 
                     `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
                     'Connect Wallet'}
+              {this.state.avatar &&
+                <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
             </button>
           </div>
         </nav>
@@ -129,6 +152,8 @@ class Nav extends Component {
             this.state.address ? 
               `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
               'Connect Wallet'}
+          {this.state.avatar &&
+            <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
         </button>
       </nav>
     );
