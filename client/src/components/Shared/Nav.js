@@ -16,7 +16,8 @@ class Nav extends Component {
       testNetwork: false,
       ENSName: null,
       registry: null,
-      avatar: null
+      avatar: null,
+      disconnect: null
     }
 
     if(window.ethereum) {
@@ -38,6 +39,9 @@ class Nav extends Component {
     }
     if(!this.state.registry) {
       this.initialize();
+    }
+    if(this.state.disconnected !== !this.props.connected) {
+      this.setState({disconnected: !this.props.connected});
     }
   }
 
@@ -74,7 +78,6 @@ class Nav extends Component {
 
   getENSName = async () => {
     try {
-      console.log(this.state.address)
       let name = await this.ens.reverse(this.state.address).name();
       if(this.state.address !== await this.ens.resolver(name).addr()) {
         name = null;
@@ -108,14 +111,16 @@ class Nav extends Component {
             </a>
             <button 
               className="nav__button"
-              onClick={this.props.connected ? 
+              onClick={!this.state.disconnected ? 
                 this.props.disconnect :
                 this.props.onConnect}>
-              {this.state.ENSName ? `${this.state.ENSName}` :
+              {!this.state.disconnected ? 
+                this.state.ENSName ? `${this.state.ENSName}` :
                 this.state.address ? 
                   `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+                  'Connect Wallet' :
                   'Connect Wallet'}
-              {this.state.avatar &&
+              {!this.state.disconnected && this.state.avatar &&
                 <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
             </button>
           </div>
@@ -131,14 +136,16 @@ class Nav extends Component {
         </a>
         <button 
           className="nav__button"
-          onClick={this.props.connected ? 
+          onClick={!this.state.disconnected ? 
             this.props.disconnect :
             this.props.onConnect}>
-          {this.state.ENSName ? `${this.state.ENSName}` :
+          {!this.state.disconnected ? 
+            this.state.ENSName ? `${this.state.ENSName}` :
             this.state.address ? 
               `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
+              'Connect Wallet' :
               'Connect Wallet'}
-          {this.state.avatar &&
+          {!this.state.disconnected && this.state.avatar &&
             <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
         </button>
       </nav>
