@@ -60,22 +60,26 @@ class Index extends Component {
   } 
 
   onConnect = async () => {
-    const provider = await this.web3modal.connect();
-    await this.subscribeProvider(provider);
-    const web3 = initWeb3(provider);
-    const accounts = await web3.eth.getAccounts();
-    const address = accounts[0];
-    const networkId = await web3.eth.net.getId();
-    const chainId = await web3.eth.chainId();
+    try {
+      const provider = await this.web3modal.connect();
+      await this.subscribeProvider(provider);
+      const web3 = initWeb3(provider);
+      const accounts = await web3.eth.getAccounts();
+      const address = accounts[0];
+      const networkId = await web3.eth.net.getId();
+      const chainId = await web3.eth.chainId();
 
-    await this.setState({
-      web3,
-      provider,
-      connected: true,
-      address,
-      chainId,
-      networkId
-    });
+      await this.setState({
+        web3,
+        provider,
+        connected: true,
+        address,
+        chainId,
+        networkId
+      });
+    } catch {
+      console.log('No web3 provider');
+    }
   }
 
   subscribeProvider = async (provider) => {
@@ -115,7 +119,8 @@ class Index extends Component {
           address={this.state.address}
           networkId={this.state.networkId}
           onConnect={this.onConnect}
-          disconnect={this.disconnect} />
+          disconnect={this.disconnect}
+          connected={this.state.connected} />
         <Hero 
           web3={this.state.web3}
           address={this.state.address}

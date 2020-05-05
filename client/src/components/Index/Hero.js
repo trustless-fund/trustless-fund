@@ -52,6 +52,10 @@ class Hero extends Component {
       } else {
         this.setState({render: true});
       }
+    } else {
+      if(!this.state.render) {
+        this.setState({render: true});
+      }
     }
   }
 

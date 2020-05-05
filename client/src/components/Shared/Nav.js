@@ -13,7 +13,6 @@ class Nav extends Component {
     super(props);
     this.state = {
       address: null,
-      noProvider: false,
       testNetwork: false,
       ENSName: null,
       registry: null,
@@ -30,31 +29,29 @@ class Nav extends Component {
   }
 
   componentDidMount = async () => {
-    try {
-      if(!this.props.web3.givenProvider) {
-        this.setState({address: null});
-        this.setState({noProvider: true});
-      } else {
-        await this.setState({address: this.props.address});
-        this.setState({noProvider: false});
-        this.ens = await new ENS(this.props.web3);
-        await this.getENSContracts();
-        this.getENSName();
-      }
-      if(this.props.networkId !== 1) {
-        this.setState({testNetwork: true});
-      } else {
-        this.setState({testNetwork: false})
-      }
-    } catch {
-      this.setState({address: null});
-      this.setState({noProvider: true});
-    }
+    this.initialize();
   }
 
   componentDidUpdate = () => {
     if(this.state.address !== this.props.address) {
       this.setState({address: this.props.address});
+    }
+    if(!this.state.registry) {
+      this.initialize();
+    }
+  }
+
+  initialize = async () => {
+    if(this.props.web3) {
+      this.ens = await new ENS(this.props.web3);
+      await this.getENSContracts();
+      this.getENSName();
+
+      if(this.props.networkId !== 1) {
+        this.setState({testNetwork: true});
+      } else {
+        this.setState({testNetwork: false})
+      }
     }
   }
 
@@ -77,6 +74,7 @@ class Nav extends Component {
 
   getENSName = async () => {
     try {
+      console.log(this.state.address)
       let name = await this.ens.reverse(this.state.address).name();
       if(this.state.address !== await this.ens.resolver(name).addr()) {
         name = null;
@@ -108,35 +106,15 @@ class Nav extends Component {
               <img src={logo} alt="Trustless Fund" className="nav__logo" />
               Trustless Fund
             </a>
-            <button className="nav__button">
+            <button 
+              className="nav__button"
+              onClick={this.props.connected ? 
+                this.props.disconnect :
+                this.props.onConnect}>
               {this.state.ENSName ? `${this.state.ENSName}` :
                 this.state.address ? 
                   `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
                   'Connect Wallet'}
-              {this.state.avatar &&
-                <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
-            </button>
-          </div>
-        </nav>
-      );
-    }
-
-    if(this.state.noProvider) {
-      return (
-        <nav className="nav-error">
-          <p className="nav-error__error">
-            No web3 detected. Please download and connect to Metamask.
-          </p>
-          <div className="nav-error__content">
-            <a href="/" className="nav__header">
-              <img src={logo} alt="Trustless Fund" className="nav__logo" />
-              Trustless Fund
-            </a>
-            <button className="nav__button">
-              {this.state.ENSName ? `${this.state.ENSName}` :
-                  this.state.address ? 
-                    `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
-                    'Connect Wallet'}
               {this.state.avatar &&
                 <img src={this.state.avatar} alt="ENS Avatar" className="nav__avatar" />}
             </button>
@@ -151,7 +129,11 @@ class Nav extends Component {
           <img src={logo} alt="Trustless Fund" className="nav__logo" />
           Trustless Fund
         </a>
-        <button className="nav__button">
+        <button 
+          className="nav__button"
+          onClick={this.props.connected ? 
+            this.props.disconnect :
+            this.props.onConnect}>
           {this.state.ENSName ? `${this.state.ENSName}` :
             this.state.address ? 
               `${this.state.address.slice(0, 4)}...${this.state.address.slice(this.state.address.length - 4, this.state.address.length)}` : 
