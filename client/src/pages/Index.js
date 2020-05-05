@@ -53,13 +53,11 @@ class Index extends Component {
       cacheProvider: true,
       providerOptions
     });
-  } 
 
-  componentDidMount = async () => {  
     if (this.web3modal.cachedProvider) {
       this.onConnect()
     }
-  }
+  } 
 
   onConnect = async () => {
     const provider = await this.web3modal.connect();
@@ -78,8 +76,6 @@ class Index extends Component {
       chainId,
       networkId
     });
-
-    console.log(this.state.address);
   }
 
   subscribeProvider = async (provider) => {
@@ -122,8 +118,12 @@ class Index extends Component {
           disconnect={this.disconnect} />
         <Hero 
           web3={this.state.web3}
-          address={this.state.address} />
-        <UserFunds />
+          address={this.state.address}
+          networkId={this.state.networkId} />
+        <UserFunds
+          web3={this.state.web3}
+          address={this.state.address}
+          networkId={this.state.networkId} />
         <Footer />
       </>
     );     

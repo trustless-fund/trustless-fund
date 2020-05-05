@@ -23,17 +23,35 @@ class Hero extends Component {
     }
   }
 
-  componentDidMount = async () => {
-    const FactoryV1 = await new this.props.web3.eth.Contract(TrustlessFundFactoryV1);
-    const FactoryV2 = await new this.props.web3.eth.Contract(TrustlessFundFactoryV2);
+  componentDidMount = () => {
+    this.initialize();
+  }
 
-    await this.setState({FactoryV1});
-    await this.setState({FactoryV2});
+  componentDidUpdate = () => {
+    if(!this.state.FactoryV1) {
+      this.initialize();
+    }
+  }
 
-    if(this.props.web3.givenProvider) {
-      this.isUserFunds();
-    } else {
-      this.state = {render: true}
+  initialize = async () => {
+    if(this.props.web3) {
+      const FactoryV1 = await new this.props.web3.eth.Contract(
+        TrustlessFundFactoryV1.abi, 
+        TrustlessFundFactoryV1.networks[this.props.networkId].address
+      );
+      const FactoryV2 = await new this.props.web3.eth.Contract(
+        TrustlessFundFactoryV2.abi, 
+        TrustlessFundFactoryV2.networks[this.props.networkId].address
+      );
+
+      await this.setState({FactoryV1});
+      await this.setState({FactoryV2});
+
+      if(this.props.web3.givenProvider) {
+        this.isUserFunds();
+      } else {
+        this.setState({render: true});
+      }
     }
   }
 

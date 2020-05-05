@@ -52,6 +52,12 @@ class Nav extends Component {
     }
   }
 
+  componentDidUpdate = () => {
+    if(this.state.address !== this.props.address) {
+      this.setState({address: this.props.address});
+    }
+  }
+
   getNetwork = (id) => {
     const networks = {
       1: 'Mainnet',
