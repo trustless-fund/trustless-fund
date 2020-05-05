@@ -12,13 +12,13 @@ class Message extends Component {
   }
 
   componentWillReceiveProps = async () => {
-    const etherscan = await getEtherscanLink(this.props.drizzleState.web3.networkId, `/tx/${this.props.txHash}`);
+    const etherscan = await getEtherscanLink(this.props.networkId, `/tx/${this.props.txHash}`);
     this.setState({etherscan});
   }
  
   render() {
     if(this.props.message) {
-      if(this.props.drizzleState.web3.networkId) {
+      if(this.props.networkId) {
         return(
           <a 
             className="message"
