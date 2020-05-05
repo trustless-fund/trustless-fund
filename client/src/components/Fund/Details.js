@@ -13,13 +13,13 @@ class Details extends Component {
       etherscan: null
     }
 
-    this.ens = new ENS(this.props.drizzle.web3);
+    this.ens = new ENS(this.props.web3);
     this.getOwner();
     this.getBeneficiary();
   }
 
   componentDidMount = async () => {
-    const etherscan = await getEtherscanLink(this.props.drizzleState.web3.networkId, `/address/${this.props.fund._address}`);
+    const etherscan = await getEtherscanLink(this.props.networkId, `/address/${this.props.fund._address}`);
     this.setState({etherscan});
   }
 

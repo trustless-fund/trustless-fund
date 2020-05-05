@@ -375,7 +375,9 @@ class FundContainer extends Component {
             message="This application is unaudited. Use at your own risk."
             className="fund__warning"/>
           <Details 
-            fund={this.state.fund} />
+            fund={this.state.fund}
+            web3={this.props.web3}
+            networkId={this.props.networkId} />
           {this.state.renderSettings && 
             <p 
               className="fund__settings"
