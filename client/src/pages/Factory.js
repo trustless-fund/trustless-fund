@@ -120,7 +120,10 @@ class Factory extends Component {
           onConnect={this.onConnect}
           disconnect={this.disconnect}
           connected={this.state.connected} />
-        <FactoryContainer />
+        <FactoryContainer
+          web3={this.state.web3}
+          networkId={this.state.networkId}
+          address={this.state.address} />
         <Footer />
       </>
     );

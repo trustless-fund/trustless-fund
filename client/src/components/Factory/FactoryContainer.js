@@ -4,6 +4,8 @@ import Message from '../Shared/Message';
 import Button from '../Shared/Button';
 import {resolveENSAddress} from '../../utils/helpers';
 
+import TrustlessFundFactoryV2 from '../../contracts/TrustlessFundFactoryV2.json';
+
 import '../../layout/components/fundcreated.sass';
 
 class FactoryContainer extends Component {
@@ -22,12 +24,27 @@ class FactoryContainer extends Component {
   }
 
   componentDidMount = () => {
-    this.getDate();
-    this.getFactoryContract();
+    this.initialize();
+  }
+
+  componentDidUpdate = () => {
+    if(!this.state.expiration) {
+      this.initialize();
+    }
+  }
+
+  initialize = () => {
+    if(this.props.web3) {
+      this.getDate();
+      this.getFactoryContract();
+    }
   }
 
   getFactoryContract = () => {
-    const contract = this.props.drizzle.contracts.TrustlessFundFactoryV2;
+    const contract = new this.props.web3.eth.Contract(
+      TrustlessFundFactoryV2.abi,
+      TrustlessFundFactoryV2.networks[this.props.networkId].address
+    );
     this.setState({factory: contract});
   }
 
@@ -53,8 +70,8 @@ class FactoryContainer extends Component {
   }
 
   isENSAddress = async () => {
-    console.log(this.props.drizzle.web3.eth.ens);
-    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+    console.log(this.props.web3.eth.ens);
+    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.web3);
     if(address) {
       this.setState({ENSAddress: address});
     } else {
@@ -63,11 +80,11 @@ class FactoryContainer extends Component {
   }
 
   isAddress = async () => {
-    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
+    if(this.props.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
       this.setState({beneficiary: this.state.beneficiaryValue});
       this.setState({invalidAddress: false});
     } else {
-      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.web3);
       if(address) {
         this.setState({invalidAddress: false});
         this.setState({beneficiary: address});
@@ -93,7 +110,7 @@ class FactoryContainer extends Component {
       await this.state.factory.methods.createFund(
         expiration,
         this.state.beneficiary
-      ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+      ).send({from: this.props.address}, (err, txHash) => {
         this.setMessage('Transaction Pending...', txHash);
       }).on('confirmation', async (number, receipt) => {
         if(number === 0) {
@@ -143,8 +160,8 @@ class FactoryContainer extends Component {
           </div>
           <Message 
             message={this.state.message} 
-            txHash={this.state.txHash} 
-            drizzleState={this.props.drizzleState} />
+            txHash={this.state.txHash}
+            networkId={this.props.networkId} />
         </section>
       );
     }
@@ -164,8 +181,8 @@ class FactoryContainer extends Component {
           ENSAddress={this.state.ENSAddress} />
         <Message 
           message={this.state.message} 
-          txHash={this.state.txHash} 
-          drizzleState={this.props.drizzleState} />
+          txHash={this.state.txHash}
+          networkId={this.props.networkId} />
       </section>
     );
   }
