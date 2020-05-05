@@ -395,7 +395,9 @@ class FundContainer extends Component {
               <Settings 
                 fund={this.state.fund}
                 setMessage={this.setMessage}
-                clearMessage={this.clearMessage} />
+                clearMessage={this.clearMessage}
+                web3={this.props.web3}
+                address={this.props.address} />
             </div>
           }
           <Message 

@@ -40,7 +40,7 @@ class Settings extends Component {
   }
 
   isENSAddress = async () => {
-    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+    const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.web3);
     if(address) {
       this.setState({ENSAddress: address});
     } else {
@@ -49,11 +49,11 @@ class Settings extends Component {
   }
 
   isAddress = async () => {
-    if(this.props.drizzle.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
+    if(this.props.web3.utils.isAddress(this.state.beneficiaryValue) || this.state.beneficiaryValue === '') {
       this.setState({beneficiary: this.state.beneficiaryValue});
       this.setState({invalidAddress: false});
     } else {
-      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.drizzle.web3);
+      const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.web3);
       if(address) {
         this.setState({invalidAddress: false});
         this.setState({beneficiary: address});
@@ -70,7 +70,7 @@ class Settings extends Component {
 
     if(!this.state.invalidAddress) {
       await this.props.fund.methods.updateBeneficiary(this.state.beneficiary).send({
-        from: this.props.drizzleState.accounts[0]
+        from: this.props.address
       }, (err, txHash) => {
         this.props.setMessage('Transaction Pending...', txHash);
       }).on('confirmation', (number, receipt) => {
@@ -100,7 +100,7 @@ class Settings extends Component {
     }
 
     await this.props.fund.methods.increaseTime(expiration).send({
-      from: this.props.drizzleState.accounts[0]
+      from: this.props.address
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', (number, receipt) => {
@@ -122,7 +122,7 @@ class Settings extends Component {
     e.preventDefault()
 
     await this.props.fund.methods.renounceOwnership().send({
-      from: this.props.drizzleState.accounts[0]
+      from: this.props.address
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', (number, receipt) => {
