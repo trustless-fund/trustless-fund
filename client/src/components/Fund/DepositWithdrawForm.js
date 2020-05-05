@@ -55,7 +55,7 @@ class DepositWithdrawForm extends Component {
 
   getDecimals = async () => {
     if(this.state.token !== '0x0000000000000000000000000000000000000000') {
-      const token = await new this.props.drizzle.web3.eth.Contract(
+      const token = await new this.props.web3.eth.Contract(
         ERC20, this.state.token
       );
       const decimals = await token.methods.decimals().call();
@@ -113,9 +113,9 @@ class DepositWithdrawForm extends Component {
     let amount;
 
     if(decimals && decimals !== '18') {
-      amount = this.props.drizzle.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
+      amount = this.props.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
     } else {
-      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+      amount = this.props.web3.utils.toHex(this.props.web3.utils.toWei(this.state.amount));
     }
 
     let sendAmount;
@@ -130,7 +130,7 @@ class DepositWithdrawForm extends Component {
       amount,
       this.state.token
     ).send({
-      from: this.props.drizzleState.accounts[0],
+      from: this.props.address,
       value: sendAmount
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
@@ -158,16 +158,16 @@ class DepositWithdrawForm extends Component {
     let amount;
 
     if(decimals && decimals !== '18') {
-      amount = this.props.drizzle.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
+      amount = this.props.web3.utils.toHex(this.toWeiDecimals(this.state.amount, decimals));
     } else {
-      amount = this.props.drizzle.web3.utils.toHex(this.props.drizzle.web3.utils.toWei(this.state.amount));
+      amount = this.props.web3.utils.toHex(this.props.web3.utils.toWei(this.state.amount));
     }
 
     await this.props.fund.methods.withdraw(
       amount,
       this.state.token
     ).send({
-      from: this.props.drizzleState.accounts[0]
+      from: this.props.address
     }, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
       this.props.closeWithdrawalModal();
@@ -192,12 +192,12 @@ class DepositWithdrawForm extends Component {
       return this.setState({approve: false});
     }
     
-    const token = await new this.props.drizzle.web3.eth.Contract(
+    const token = await new this.props.web3.eth.Contract(
       ERC20, this.state.token
     );
 
     const allowance = await token.methods.allowance(
-      this.props.drizzleState.accounts[0], 
+      this.props.address, 
       this.props.fund._address
     ).call()
     
@@ -209,14 +209,14 @@ class DepositWithdrawForm extends Component {
   }
 
   approveToken = async () => {
-    const token = await new this.props.drizzle.web3.eth.Contract(
+    const token = await new this.props.web3.eth.Contract(
       ERC20, this.state.token
     );
 
     token.methods.approve(
       this.props.fund._address,
-      this.props.drizzle.web3.utils.toWei(this.state.amount)
-    ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+      this.props.web3.utils.toWei(this.state.amount)
+    ).send({from: this.props.address}, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', async (number, receipt) => {
       if(number === 0) {
@@ -236,15 +236,15 @@ class DepositWithdrawForm extends Component {
   }
 
   infiniteApproveToken = async () => {
-    const token = await new this.props.drizzle.web3.eth.Contract(
+    const token = await new this.props.web3.eth.Contract(
       ERC20, this.state.token
     );
 
     token.methods.approve(
       this.props.fund._address,
       // 2147483647 = Javascript max safe integer
-      this.props.drizzle.web3.utils.toWei('2147483647')
-    ).send({from: this.props.drizzleState.accounts[0]}, (err, txHash) => {
+      this.props.web3.utils.toWei('2147483647')
+    ).send({from: this.props.address}, (err, txHash) => {
       this.props.setMessage('Transaction Pending...', txHash);
     }).on('confirmation', async (number, receipt) => {
       if(number === 0) {
@@ -276,7 +276,7 @@ class DepositWithdrawForm extends Component {
         if(decimals && decimals !== '18') {
           balance = this.fromWeiDecimals(asset.balance, decimals);
         } else {
-          balance = this.props.drizzle.web3.utils.fromWei(asset.balance);
+          balance = this.props.web3.utils.fromWei(asset.balance);
         }
 
         return this.setState({balance});
@@ -315,9 +315,7 @@ class DepositWithdrawForm extends Component {
                 className={`deposit__token-button-carat`} />
             </button>
             {this.state.renderDropdown &&
-              <TokenInputDropdown 
-                drizzle={this.props.drizzle}
-                drizzleState={this.props.drizzleState}
+              <TokenInputDropdown
                 searchToken={this.state.searchToken}
                 setToken={this.setToken}
                 allTokens={this.props.allTokens}

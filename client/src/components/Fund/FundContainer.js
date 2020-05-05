@@ -356,7 +356,9 @@ class FundContainer extends Component {
                 tokenList={this.state.tokenList}
                 deposit={true}
                 expiration={this.state.expiration}
-                closeDepositModal={this.closeDepositModal} />
+                closeDepositModal={this.closeDepositModal}
+                web3={this.props.web3}
+                address={this.props.address} />
             </div>
           }
           {this.state.withdrawalModal &&
