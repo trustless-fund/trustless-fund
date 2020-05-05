@@ -37,7 +37,7 @@ class Assets extends Component {
                 key={i} 
                 token={token} 
                 allTokens={this.props.allTokens}
-                drizzle={this.props.drizzle} />);
+                web3={this.props.web3} />);
             } else {
               return null;
             }

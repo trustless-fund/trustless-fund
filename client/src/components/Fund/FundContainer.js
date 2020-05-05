@@ -321,10 +321,13 @@ class FundContainer extends Component {
             fund={this.state.fund}
             expiration={this.state.expiration}
             setExpiration={this.setExpiration} />
-          <Assets 
-            userAssets={this.state.userAssets}
-            tokenList={this.state.tokenList}
-            allTokens={this.state.allTokens} />
+          {this.state.allTokens &&
+            <Assets 
+              userAssets={this.state.userAssets}
+              tokenList={this.state.tokenList}
+              allTokens={this.state.allTokens}
+              web3={this.props.web3} />
+          }
           <div className="fund__buttons">
             <div onClick={this.renderDepositModal}>
               <Button 
@@ -395,7 +398,8 @@ class FundContainer extends Component {
           }
           <Message 
             message={this.state.message} 
-            txHash={this.state.txHash} />
+            txHash={this.state.txHash}
+            networkId={this.props.networkId} />
         </div>
       );
     }

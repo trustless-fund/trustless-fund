@@ -28,7 +28,7 @@ class Asset extends Component {
 
   getDecimals = async () => {
     if(this.state.token.address !== '0x0000000000000000000000000000000000000000') {
-      const token = await new this.props.drizzle.web3.eth.Contract(
+      const token = await new this.props.web3.eth.Contract(
         ERC20, this.state.token.address
       );
       const decimals = await token.methods.decimals().call();
@@ -48,7 +48,7 @@ class Asset extends Component {
     if(decimals && decimals !== '18') {
       balance = this.fromWeiDecimals(this.state.token.balance, decimals);
     } else {
-      balance = this.props.drizzle.web3.utils.fromWei(this.state.token.balance);
+      balance = this.props.web3.utils.fromWei(this.state.token.balance);
     }
 
     this.setState({realBalance: balance});
