@@ -63,12 +63,6 @@ class FundContainer extends Component {
       this.renderWithdrawal();
       this.renderSettings();
     }
-
-    if(window.ethereum) {
-      window.ethereum.on('accountsChanged', async (accounts) => {
-        this.renderWithdrawal();
-      });
-    }
   }
 
   getFactoryContract = () => {

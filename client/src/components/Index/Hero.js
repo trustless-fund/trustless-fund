@@ -15,12 +15,6 @@ class Hero extends Component {
       FactoryV1: null,
       FactoryV2: null
     }
-
-    if(window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts) => {
-        this.isUserFunds();
-      });
-    }
   }
 
   componentDidMount = () => {
