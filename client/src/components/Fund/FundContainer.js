@@ -8,8 +8,10 @@ import Settings from './Settings';
 import Button from '../Shared/Button';
 import Message from '../Shared/Message';
 import Warning from '../Shared/Warning';
-import TrustlessFund from '../../contracts/TrustlessFund.json';
+import TrustlessFundV1 from '../../contracts/TrustlessFund.json';
 import TrustlessFundV2 from '../../contracts/TrustlessFundV2.json';
+import TrustlessFundFactoryV1 from '../../contracts/TrustlessFundFactory.json';
+import TrustlessFundFactoryV2 from '../../contracts/TrustlessFundFactoryV2.json';
 import {TOKEN_LIST} from '../../utils/tokenList';
 import ERC20 from '../../contracts/ERC20.json';
 import {getUsdValue, isZeroAddress} from '../../utils/helpers';
@@ -33,34 +35,37 @@ class FundContainer extends Component {
       allTokens: null,
       usdAmounts: null,
       searchToken: '',
-      noProvider: false,
       expiration: null,
       factory: null,
       settingsModal: false,
       renderSettings: false
     }
-
-    if(window.ethereum) {
-      this.state.allTokens = TOKEN_LIST[this.props.drizzleState.web3.networkId];
-    }
   }
 
   componentDidMount = async () => {
-    if(this.props.drizzle.web3.givenProvider) {
+    this.initialize();
+  }
+
+  componentDidUpdate = () => {
+    if(!this.state.factory) {
+      this.initialize();
+    }
+  } 
+
+  initialize = async () => {
+    if(this.props.web3 && this.props.web3.givenProvider) {
       await this.getFactoryContract();
       await this.getFund();
       await this.getAssets();
       await this.getUsdAmounts();
+      await this.setState({allTokens: TOKEN_LIST[this.props.networkId]});
       this.getTokenList();
       this.renderWithdrawal();
       this.renderSettings();
-    } else {
-      this.setState({noProvider: true});
     }
 
     if(window.ethereum) {
       window.ethereum.on('accountsChanged', async (accounts) => {
-        await this.props.drizzle.store.dispatch({type: 'ACCOUNTS_FETCHED', accounts});
         this.renderWithdrawal();
       });
     }
@@ -69,9 +74,15 @@ class FundContainer extends Component {
   getFactoryContract = () => {
     let factory;
     if(this.props.version === 'v1') {
-      factory = this.props.drizzle.contracts.TrustlessFundFactory;
+      factory = new this.props.web3.eth.Contract(
+        TrustlessFundFactoryV1.abi,
+        TrustlessFundFactoryV1.networks[this.props.networkId].address
+      )
     } else if(this.props.version === 'v2') {
-      factory = this.props.drizzle.contracts.TrustlessFundFactoryV2;
+      factory = new this.props.web3.eth.Contract(
+        TrustlessFundFactoryV2.abi,
+        TrustlessFundFactoryV2.networks[this.props.networkId].address
+      )
     }
     this.setState({factory});
   }
@@ -86,12 +97,12 @@ class FundContainer extends Component {
     if(!this.state.invalidFund) {
       let fund;
       if(this.props.version === 'v1') {
-        fund = await new this.props.drizzle.web3.eth.Contract(
-          TrustlessFund.abi,
+        fund = await new this.props.web3.eth.Contract(
+          TrustlessFundV1.abi,
           fundAddress
         );
       } else if(this.props.version === 'v2') {
-        fund = await new this.props.drizzle.web3.eth.Contract(
+        fund = await new this.props.web3.eth.Contract(
           TrustlessFundV2.abi,
           fundAddress
         );
@@ -116,7 +127,7 @@ class FundContainer extends Component {
     const expiration = await this.getExpiration();
     const ts = Math.round((new Date()).getTime() / 1000);
 
-    if(beneficiary.toLowerCase() === this.props.drizzleState.accounts[0].toLowerCase() && expiration < ts) {
+    if(beneficiary.toLowerCase() === this.props.address.toLowerCase() && expiration < ts) {
       this.setState({renderWithdrawal: true});
     } else {
       this.setState({renderWithdrawal: false});
@@ -126,7 +137,7 @@ class FundContainer extends Component {
   renderSettings = async () => {
     const owner = await this.state.fund.methods.owner().call();
 
-    if(this.props.drizzleState.accounts[0] === owner) {
+    if(this.props.address === owner) {
       this.setState({renderSettings: true});
     } else {
       this.setState({renderSettings: false});
@@ -201,9 +212,9 @@ class FundContainer extends Component {
         } else if(this.props.version === 'v2') {
           let balance;
           if(tokenAddress === '0x0000000000000000000000000000000000000000') {
-            balance = await this.props.drizzle.web3.eth.getBalance(this.state.fund._address);
+            balance = await this.props.web3.eth.getBalance(this.state.fund._address);
           } else {
-            const token = await new this.props.drizzle.web3.eth.Contract(
+            const token = await new this.props.web3.eth.Contract(
               ERC20, tokenAddress
             );
             balance = await token.methods.balanceOf(this.state.fund._address).call();
@@ -303,38 +314,14 @@ class FundContainer extends Component {
       return (<InvalidFund />);
     }
 
-    if(this.state.noProvider) {
-      return(
-        <div className="fund-error">
-          <h2 className="fund-error__header">
-            Error
-          </h2>
-          <p className="fund-error__info">
-            You must be connected to web3 to view this page.
-            <a 
-              href="https://metamask.io/" 
-              className="fund-error__link"
-              target="_blank"
-              rel="noopener noreferrer">
-              Download Metamask.
-            </a>
-          </p>
-        </div>
-      );
-    }
-
     if(this.state.fund) {
       return (
         <div className="fund">
           <Expiration 
-            drizzle={this.props.drizzle} 
-            drizzleState={this.props.drizzleState}
             fund={this.state.fund}
             expiration={this.state.expiration}
             setExpiration={this.setExpiration} />
           <Assets 
-            drizzle={this.props.drizzle} 
-            drizzleState={this.props.drizzleState}
             userAssets={this.state.userAssets}
             tokenList={this.state.tokenList}
             allTokens={this.state.allTokens} />
@@ -356,8 +343,6 @@ class FundContainer extends Component {
           {this.state.depositModal && 
             <div className="deposit__background" onClick={this.depositBackgroundClick}>
               <DepositWithdrawForm 
-                drizzle={this.props.drizzle} 
-                drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
@@ -374,8 +359,6 @@ class FundContainer extends Component {
           {this.state.withdrawalModal &&
             <div className="withdraw__background" onClick={this.withdrawBackgroundClick}>
               <DepositWithdrawForm 
-                drizzle={this.props.drizzle} 
-                drizzleState={this.props.drizzleState}
                 fund={this.state.fund}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage}
@@ -392,8 +375,6 @@ class FundContainer extends Component {
             message="This application is unaudited. Use at your own risk."
             className="fund__warning"/>
           <Details 
-            drizzle={this.props.drizzle} 
-            drizzleState={this.props.drizzleState}
             fund={this.state.fund} />
           {this.state.renderSettings && 
             <p 
@@ -406,16 +387,13 @@ class FundContainer extends Component {
             <div className="settings__background" onClick={this.closeSettingsModal}> 
               <Settings 
                 fund={this.state.fund}
-                drizzleState={this.props.drizzleState}
-                drizzle={this.props.drizzle}
                 setMessage={this.setMessage}
                 clearMessage={this.clearMessage} />
             </div>
           }
           <Message 
             message={this.state.message} 
-            txHash={this.state.txHash}
-            drizzleState={this.props.drizzleState} />
+            txHash={this.state.txHash} />
         </div>
       );
     }
