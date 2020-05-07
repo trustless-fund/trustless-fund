@@ -587,6 +587,12 @@ export const TOKEN_LIST = {
       [DECIMALS]: 18,
       [LOGO]:
       'https://assets.coingecko.com/coins/images/10959/large/BTC__.png?1586499443' },
+  '0xb683d83a532e2cb7dfa5275eed3698436371cc9f':
+    { [NAME]: 'BTU Protocol',
+      [SYMBOL]: 'BTU',
+      [DECIMALS]: 18,
+      [LOGO]:
+      'https://etherscan.io/token/images/btu_28.png' },
   '0x8BA6DcC667d3FF64C1A2123cE72FF5F0199E5315':
     { [NAME]: 'AlexMasmej',
       [SYMBOL]: 'ALEX',
@@ -647,12 +653,54 @@ export const TOKEN_LIST = {
       [DECIMALS]: 4,
       [LOGO]:
       'https://roll-token.s3.amazonaws.com/MARC/31bc67ca-4c6d-452b-addd-9ba71876f56d' },
-  '0xb683d83a532e2cb7dfa5275eed3698436371cc9f':
-    { [NAME]: 'BTU Protocol',
-      [SYMBOL]: 'BTU',
-      [DECIMALS]: 18,
+  '0x8f464bfe2292748A0FED58Bb53D3838B4CE018b0':
+    { [NAME]: 'KEVIN',
+      [SYMBOL]: 'KEVIN',
+      [DECIMALS]: 4,
       [LOGO]:
-      'https://etherscan.io/token/images/btu_28.png' },
+      'https://user-images.githubusercontent.com/54278412/73881400-3e59f600-482e-11ea-92b3-5ee6f06246d1.png' },
+  '0x1e906717De2E4A4600F13b6909736b0346bDde3E':
+    { [NAME]: 'Pixel',
+      [SYMBOL]: 'PIXEL',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/PIXEL/c2d1f8cf-491b-4b26-a574-054c6304c3ea' },
+  '0xc53f6C2Ac35D30cc47Ddf3C320874b21dFA38791':
+    { [NAME]: 'Gcash',
+      [SYMBOL]: 'GCASH',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/GCASH/68dfd85a-150d-46f5-8a44-414e0e897477' },
+  '0xC1fB6C015fC535aBD331D3029De76a62e412Fb23':
+    { [NAME]: 'Forcer',
+      [SYMBOL]: 'FORCER',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/FORCER/0a3a8b3f-f523-46d7-8313-43d97619c3f1' },
+  '0xbB98Fc1fD1080D2B8bdaD75c51D30B50c6F59b62':
+    { [NAME]: 'PYGOZ',
+      [SYMBOL]: 'PYGOZ',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/PYGOZ/a9cbb0d0-b06a-4a30-9866-13680345551b' },
+  '0x8AAA0D43cc86ed98b7aA9c8e1f87A319Cd873DC4':
+    { [NAME]: 'SCB',
+      [SYMBOL]: 'SCB',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/SCB/e1c91e1b-7b40-413d-a9c4-bb7d71863968' },
+  '0x81B1bFD6CB9Ad42DB395c2a27F73D4DCf5777e2D':
+    { [NAME]: 'Rare',
+      [SYMBOL]: 'RARE',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/RARE/e152ac37-8996-4acb-84d4-84100dedb947' },
+  '0x9355372396e3F6daF13359B7b607a3374cc638e0':
+    { [NAME]: 'WHALE',
+      [SYMBOL]: 'WHALE',
+      [DECIMALS]: 4,
+      [LOGO]:
+      'https://roll-token.s3.amazonaws.com/WHALE/1d6351aa-eb9f-4b77-9e9b-bd0729eb98d6' },
   },
   3: { 
   '0x0000000000000000000000000000000000000000':
