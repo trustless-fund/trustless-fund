@@ -33,9 +33,10 @@ class Nav extends Component {
     this.initialize();
   }
 
-  componentDidUpdate = () => {
+  componentDidUpdate = async () => {
     if(this.state.address !== this.props.address) {
-      this.setState({address: this.props.address});
+      await this.setState({address: this.props.address});
+      this.initialize();
     }
     if(!this.state.registry) {
       this.initialize();
@@ -87,13 +88,18 @@ class Nav extends Component {
         const hashedName = await namehash.hash(normalizedName);
         const resolverAddress = await this.state.registry.methods.resolver(hashedName).call();
         const resolver = await new this.props.web3.eth.Contract(ENSResolver, resolverAddress);
-        const avatar = await resolver.methods.text(hashedName, 'avatar').call();
-        if(avatar) {
-          this.setState({avatar});
+        try {
+          const avatar = await resolver.methods.text(hashedName, 'avatar').call();
+          if(avatar) {
+            this.setState({avatar});
+          }
+        } catch {
+          this.setState({avatar: null});
         }
       } 
     } catch {
-      
+      this.setState({ENSName: null});
+      this.setState({avatar: null});
     }
   }
 
