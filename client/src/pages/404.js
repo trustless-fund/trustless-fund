@@ -13,7 +13,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: keys.infura
+      infuraId: process.env.NODE_ENV === 'production' ? process.env.REACT_APP_INFURA : keys.infura
     }
   }
 }
