@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import keys from '../keys';
 
 import UserFunds from '../components/Index/UserFunds';
 import Hero from '../components/Index/Hero';
@@ -10,6 +9,13 @@ import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 
 import '../layout/components/loading.sass';
+
+let infura
+if(process.env.NODE_ENV === 'development') {
+  import('../keys').then((res) => {
+    infura = res.infura;
+  });
+}
 
 let providerOptions;
 
@@ -27,7 +33,7 @@ if(process.env.NODE_ENV === 'production') {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: keys.infura
+        infuraId: infura
       }
     }
   }
