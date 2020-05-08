@@ -9,11 +9,24 @@ import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 import '../layout/components/loading.sass';
 
-const providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider,
-    options: {
-      infuraId: process.env.NODE_ENV === 'production' ? process.env.REACT_APP_INFURA : keys.infura
+let providerOptions;
+
+if(process.env.NODE_ENV === 'production') {
+  providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: process.env.REACT_APP_INFURA
+      }
+    }
+  }
+} else {
+  providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: keys.infura
+      }
     }
   }
 }
