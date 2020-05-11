@@ -1,10 +1,9 @@
-<p><img src="https://i.imgur.com/AI6KLt7.png" width="280px"/></p>
-<p>
+<p align="center"><img src="https://i.imgur.com/AI6KLt7.png" width="280px"/></p>
+<h1 align="center">Trustless Fund</h1>
+<p align="center">An advanced timelock for ETH and ERC-20 assets.</p>
+<p align="center">
   <img src="https://img.shields.io/github/license/trustless-fund/trustless-fund" alt="GNU GPL 3">
 </p>
-
-# Trustless Fund
-An advanced timelock for ETH and ERC-20 assets.
 
 - Website: [app.trustless.fund](https://app.trustless.fund/)
 - Docs: [docs.trustless.fund](https://docs.trustless.fund/)
