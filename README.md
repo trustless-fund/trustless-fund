@@ -1,4 +1,5 @@
-<p align="center"><img src="https://i.imgur.com/5sGESpd.png"/></p>
+# Trustless Fund
+An advanced timelock for ETH & ERC-20 assets.
 
 - Website: [app.trustless.fund](https://app.trustless.fund/)
 - Docs: [docs.trustless.fund](https://docs.trustless.fund/)
