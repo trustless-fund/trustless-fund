@@ -143,7 +143,8 @@ class Fund extends Component {
           fundId={this.props.match.params.fundId}
           version={this.props.match.params.version}
           networkId={this.state.networkId}
-          address={this.state.address} />
+          address={this.state.address}
+          provider={this.state.provider} />
         <Footer />
       </>
     );    

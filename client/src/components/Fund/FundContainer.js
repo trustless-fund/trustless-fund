@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import InvalidFund from './InvalidFund';
+import NoWeb3 from './NoWeb3';
 import DepositWithdrawForm from './DepositWithdrawForm';
 import Assets from './Assets';
 import Expiration from './Expiration';
@@ -304,6 +305,10 @@ class FundContainer extends Component {
   }
 
   render() {
+    if(!this.props.provider) {
+      return (<NoWeb3 />);
+    }
+
     if(this.state.invalidFund) {
       return (<InvalidFund />);
     }
