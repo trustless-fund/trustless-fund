@@ -30,6 +30,9 @@ class Nav extends Component {
   }
 
   componentDidMount = async () => {
+    if(this.state.disconnected !== !this.props.connected) {
+      this.setState({disconnected: !this.props.connected});
+    }
     this.initialize();
   }
 
@@ -104,6 +107,7 @@ class Nav extends Component {
   }
 
   render() {
+    console.log(this.state.disconnected)
     if(this.state.testNetwork) {
       return (
         <nav className="nav-error">
