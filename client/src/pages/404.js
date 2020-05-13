@@ -2,40 +2,12 @@ import React, {Component} from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import Fortmatic from 'fortmatic';
 
 import Nav from '../components/Shared/Nav';
 import Footer from '../components/Shared/Footer';
 
 import '../layout/components/loading.sass';
-
-let infura
-if(process.env.NODE_ENV === 'development') {
-  import('../keys').then((res) => {
-    infura = res.infura;
-  });
-}
-
-let providerOptions;
-
-if(process.env.NODE_ENV === 'production') {
-  providerOptions = {
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        infuraId: process.env.REACT_APP_INFURA
-      }
-    }
-  }
-} else {
-  providerOptions = {
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        infuraId: infura
-      }
-    }
-  }
-}
 
 function initWeb3(provider) {
   const web3 = new Web3(provider);
@@ -64,6 +36,10 @@ class FourOFour extends Component {
       chainId: null,
       networkId: null
     }
+  } 
+
+  componentDidMount = async () => {
+    const providerOptions = await this.getProviderOptions();
 
     this.web3modal = new Web3Modal({
       network: "mainnet",
@@ -74,7 +50,52 @@ class FourOFour extends Component {
     if (this.web3modal.cachedProvider) {
       this.onConnect()
     }
-  } 
+  }
+
+  getProviderOptions = async () => {
+    let keys = {};
+    if(process.env.NODE_ENV === 'development') {
+      await import('../keys').then(async (res) => {
+        keys.infura = await res.infura;
+        keys.fortmatic = await res.fortmatic;
+      });
+    }
+
+    let providerOptions;
+    if(process.env.NODE_ENV === 'production') {
+      providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            infuraId: process.env.REACT_APP_INFURA
+          }
+        },
+        fortmatic: {
+          package: Fortmatic,
+          options: {
+            key: process.env.REACT_APP_FORTMATIC
+          }
+        }
+      }
+      return providerOptions;
+    } else {
+      providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            infuraId: keys.infura
+          }
+        },
+        fortmatic: {
+          package: Fortmatic,
+          options: {
+            key: keys.fortmatic
+          }
+        }
+      }
+      return providerOptions;
+    }
+  }
 
   onConnect = async () => {
     try {
