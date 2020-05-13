@@ -34,8 +34,8 @@ class FactoryContainer extends Component {
   }
 
   initialize = () => {
+    this.getDate();
     if(this.props.web3) {
-      this.getDate();
       this.getFactoryContract();
     }
   }
