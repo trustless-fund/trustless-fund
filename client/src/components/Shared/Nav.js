@@ -107,7 +107,6 @@ class Nav extends Component {
   }
 
   render() {
-    console.log(this.state.disconnected)
     if(this.state.testNetwork) {
       return (
         <nav className="nav-error">
