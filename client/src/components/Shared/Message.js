@@ -21,7 +21,7 @@ class Message extends Component {
       if(this.props.networkId) {
         return(
           <a 
-            className="message"
+            className={`message${this.props.error ? ' message--error' : ''}`}
             target="_blank"
             rel="noopener noreferrer"
             href={this.props.txHash ? this.state.etherscan : null}
@@ -31,7 +31,7 @@ class Message extends Component {
         );
       } else {
         return(
-          <p className="message">
+          <p className={`message${this.props.error ? ' message--error' : ''}`}>
             {this.props.message}
           </p>
         );

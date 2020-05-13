@@ -97,6 +97,14 @@ class FactoryContainer extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!this.props.web3) {
+      this.setMessage('No Wallet Connected', null, true);
+      setTimeout(() => {
+        this.clearMessage();
+      }, 5000);
+      return;
+    }
+
     await this.isAddress();
 
     if(!this.state.invalidAddress) {
@@ -130,17 +138,19 @@ class FactoryContainer extends Component {
     }
   }
 
-  setMessage = (newMessage, txHash) => {
+  setMessage = (newMessage, txHash, error) => {
     this.setState({
       message: newMessage,
-      txHash
+      txHash,
+      messageError: error
     });
   }
 
   clearMessage = () => {
     this.setState({
       message: null,
-      txHash: null
+      txHash: null,
+      messageError: null
     });
   }
 
@@ -182,7 +192,8 @@ class FactoryContainer extends Component {
         <Message 
           message={this.state.message} 
           txHash={this.state.txHash}
-          networkId={this.props.networkId} />
+          networkId={this.props.networkId}
+          error={this.state.messageError} />
       </section>
     );
   }
