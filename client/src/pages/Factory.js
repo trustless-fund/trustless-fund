@@ -170,7 +170,8 @@ class Factory extends Component {
         <FactoryContainer
           web3={this.state.web3}
           networkId={this.state.networkId}
-          address={this.state.address} />
+          address={this.state.address}
+          connected={this.state.connected} />
         <Footer />
       </>
     );

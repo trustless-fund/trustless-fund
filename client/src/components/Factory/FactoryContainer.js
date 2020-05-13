@@ -20,7 +20,8 @@ class FactoryContainer extends Component {
     invalidExpiration: false,
     minDate: null,
     factory: null,
-    ENSAddress: null
+    ENSAddress: null,
+    connected: null
   }
 
   componentDidMount = () => {
@@ -28,7 +29,7 @@ class FactoryContainer extends Component {
   }
 
   componentDidUpdate = () => {
-    if(!this.state.expiration) {
+    if(!this.state.expiration || this.props.connected !== this.state.connected) {
       this.initialize();
     }
   }
@@ -37,6 +38,9 @@ class FactoryContainer extends Component {
     this.getDate();
     if(this.props.web3) {
       this.getFactoryContract();
+    }
+    if(this.props.connected !== this.state.connected) {
+      this.setState({connected: this.props.connected});
     }
   }
 
