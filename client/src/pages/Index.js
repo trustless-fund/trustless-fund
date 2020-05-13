@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Fortmatic from 'fortmatic';
+import Authereum from 'authereum';
 
 import UserFunds from '../components/Index/UserFunds';
 import Hero from '../components/Index/Hero';
@@ -77,6 +78,9 @@ class Index extends Component {
           options: {
             key: process.env.REACT_APP_FORTMATIC
           }
+        },
+        authereum: {
+          package: Authereum
         }
       }
       return providerOptions;
@@ -93,6 +97,9 @@ class Index extends Component {
           options: {
             key: keys.fortmatic
           }
+        },
+        authereum: {
+          package: Authereum
         }
       }
       return providerOptions;

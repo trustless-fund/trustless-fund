@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Fortmatic from 'fortmatic';
+import Authereum from 'authereum';
 
 import FundContainer from '../components/Fund/FundContainer';
 import Nav from '../components/Shared/Nav';
@@ -75,6 +76,9 @@ class Fund extends Component {
           options: {
             key: process.env.REACT_APP_FORTMATIC
           }
+        },
+        authereum: {
+          package: Authereum
         }
       }
       return providerOptions;
@@ -91,6 +95,9 @@ class Fund extends Component {
           options: {
             key: keys.fortmatic
           }
+        },
+        authereum: {
+          package: Authereum
         }
       }
       return providerOptions;
