@@ -128,6 +128,10 @@ class Fund extends Component {
   }
 
   subscribeProvider = async (provider) => {
+    if (!provider.on) {
+      return;
+    }
+
     provider.on('close', () => this.disconnect());
 
     provider.on('accountsChanged', async (accounts) => {
