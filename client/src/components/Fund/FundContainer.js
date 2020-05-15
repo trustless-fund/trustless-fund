@@ -372,7 +372,9 @@ class FundContainer extends Component {
                 allTokens={this.state.allTokens}
                 tokenList={this.state.tokenList}
                 deposit={false}
-                closeWithdrawalModal={this.closeWithdrawalModal} />
+                closeWithdrawalModal={this.closeWithdrawalModal}
+                web3={this.props.web3}
+                address={this.props.address} />
             </div>
           }
           <Warning 
