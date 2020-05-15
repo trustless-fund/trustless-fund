@@ -74,7 +74,6 @@ class FactoryContainer extends Component {
   }
 
   isENSAddress = async () => {
-    console.log(this.props.web3.eth.ens);
     const address = await resolveENSAddress(this.state.beneficiaryValue, this.props.web3);
     if(address) {
       this.setState({ENSAddress: address});
