@@ -28,6 +28,15 @@ function initWeb3(provider) {
   return web3;
 }
 
+async function getKeys() {
+  let keys = {};
+  await import('../keys').then(async (res) => {
+    keys.infura = await res.infura;
+    keys.fortmatic = await res.fortmatic;
+    return keys;
+  });
+}
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +65,6 @@ class Index extends Component {
   }
 
   getProviderOptions = async () => {
-    let keys = {};
     let providerOptions;
     if(process.env.NODE_ENV === 'production') {
       providerOptions = {
@@ -78,10 +86,7 @@ class Index extends Component {
       }
       return providerOptions;
     } else if(process.env.NODE_ENV === 'development') {
-      await import('../keys').then(async (res) => {
-        keys.infura = await res.infura;
-        keys.fortmatic = await res.fortmatic;
-      });
+      const keys = await getKeys();
       providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
