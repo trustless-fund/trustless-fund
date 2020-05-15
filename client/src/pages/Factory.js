@@ -56,13 +56,6 @@ class Factory extends Component {
 
   getProviderOptions = async () => {
     let keys = {};
-    if(process.env.NODE_ENV === 'development') {
-      await import('../keys').then(async (res) => {
-        keys.infura = await res.infura;
-        keys.fortmatic = await res.fortmatic;
-      });
-    }
-
     let providerOptions;
     if(process.env.NODE_ENV === 'production') {
       providerOptions = {
@@ -84,6 +77,10 @@ class Factory extends Component {
       }
       return providerOptions;
     } else {
+      await import('../keys').then(async (res) => {
+        keys.infura = await res.infura;
+        keys.fortmatic = await res.fortmatic;
+      });
       providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
