@@ -59,7 +59,6 @@ class Index extends Component {
     let keys = {};
     let providerOptions;
     if(process.env.NODE_ENV === 'production') {
-      console.log('production')
       providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
@@ -79,7 +78,6 @@ class Index extends Component {
       }
       return providerOptions;
     } else if(process.env.NODE_ENV === 'development') {
-      console.log('development')
       await import('../keys').then(async (res) => {
         keys.infura = await res.infura;
         keys.fortmatic = await res.fortmatic;
