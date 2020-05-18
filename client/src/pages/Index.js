@@ -13,11 +13,51 @@ import Footer from '../components/Shared/Footer';
 import '../layout/components/loading.sass';
 
 let keys = {};
-if(process.env.NODE_ENV === 'development') {
-  import('../keys').then((res) => {
-    keys.infura = res.infura;
-    keys.fortmatic = res.fortmatic;
+let providerOptions;
+
+const devProviderOptions = async () => {
+  await import('../keys').then(async (res) => {
+    keys.infura = await res.infura;
+    keys.fortmatic = await res.fortmatic;
   });
+
+  providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: keys.infura
+      }
+    },
+    fortmatic: {
+      package: Fortmatic,
+      options: {
+        key: keys.fortmatic
+      }
+    },
+    authereum: {
+      package: Authereum
+    }
+  };
+}
+
+const prodProviderOptions = async () => {
+  providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: process.env.REACT_APP_INFURA
+      }
+    },
+    fortmatic: {
+      package: Fortmatic,
+      options: {
+        key: process.env.REACT_APP_FORTMATIC
+      }
+    },
+    authereum: {
+      package: Authereum
+    }
+  };
 }
 
 function initWeb3(provider) {
@@ -50,7 +90,11 @@ class Index extends Component {
   } 
 
   componentDidMount = async () => {
-    const providerOptions = await this.getProviderOptions();
+    if(process.env.NODE_ENV === 'development') {
+      await devProviderOptions();
+    } else {
+      await prodProviderOptions();
+    }
 
     this.web3modal = new Web3Modal({
       network: "mainnet",
@@ -60,49 +104,6 @@ class Index extends Component {
 
     if (this.web3modal.cachedProvider) {
       this.onConnect()
-    }
-  }
-
-  getProviderOptions = async () => {
-    let providerOptions;
-    if(process.env.NODE_ENV === 'production') {
-      providerOptions = {
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: process.env.REACT_APP_INFURA
-          }
-        },
-        fortmatic: {
-          package: Fortmatic,
-          options: {
-            key: process.env.REACT_APP_FORTMATIC
-          }
-        },
-        authereum: {
-          package: Authereum
-        }
-      }
-      return providerOptions;
-    } else {
-      providerOptions = {
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: keys.infura
-          }
-        },
-        fortmatic: {
-          package: Fortmatic,
-          options: {
-            key: keys.fortmatic
-          }
-        },
-        authereum: {
-          package: Authereum
-        }
-      }
-      return providerOptions;
     }
   }
 
