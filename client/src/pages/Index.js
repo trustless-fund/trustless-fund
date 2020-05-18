@@ -78,10 +78,12 @@ class Index extends Component {
       }
       return providerOptions;
     } else if(process.env.NODE_ENV === 'development') {
-      await import('../keys').then(async (res) => {
-        keys.infura = await res.infura;
-        keys.fortmatic = await res.fortmatic;
-      });
+      if(!process.env.REACT_APP_ENV === 'production') {
+        await import('../keys').then(async (res) => {
+          keys.infura = await res.infura;
+          keys.fortmatic = await res.fortmatic;
+        });
+      }
       providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
