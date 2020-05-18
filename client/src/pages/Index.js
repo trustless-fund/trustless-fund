@@ -12,6 +12,14 @@ import Footer from '../components/Shared/Footer';
 
 import '../layout/components/loading.sass';
 
+let keys = {};
+if(process.env.NODE_ENV === 'development') {
+  import('../keys').then((res) => {
+    keys.infura = res.infura;
+    keys.fortmatic = res.fortmatic;
+  });
+}
+
 function initWeb3(provider) {
   const web3 = new Web3(provider);
 
@@ -29,7 +37,6 @@ function initWeb3(provider) {
 }
 
 class Index extends Component {
-  keys = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -39,10 +46,6 @@ class Index extends Component {
       address: null,
       chainId: null,
       networkId: null
-    }
-
-    if(process.env.NODE_ENV === 'development') {
-      this.getKeys();
     }
   } 
 
@@ -58,13 +61,6 @@ class Index extends Component {
     if (this.web3modal.cachedProvider) {
       this.onConnect()
     }
-  }
-
-  getKeys = async () => {
-    await import('../keys').then(async (res) => {
-      this.keys.infura = await res.infura;
-      this.keys.fortmatic = await res.fortmatic;
-    });
   }
 
   getProviderOptions = async () => {
@@ -93,13 +89,13 @@ class Index extends Component {
         walletconnect: {
           package: WalletConnectProvider,
           options: {
-            infuraId: this.keys.infura
+            infuraId: keys.infura
           }
         },
         fortmatic: {
           package: Fortmatic,
           options: {
-            key: this.keys.fortmatic
+            key: keys.fortmatic
           }
         },
         authereum: {
