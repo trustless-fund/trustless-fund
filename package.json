@@ -12,7 +12,7 @@
     "@openzeppelin/test-helpers": "^0.5.5",
     "@truffle/hdwallet-provider": "^1.0.33",
     "@walletconnect/web3-provider": "^1.0.0-beta.47",
-    "authereum": "0.0.4-beta.141",
+    "authereum": "^0.0.4-beta.155",
     "chai": "^4.2.0",
     "eth-ens-namehash": "^2.0.8",
     "fortmatic": "^2.0.6",
