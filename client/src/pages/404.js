@@ -76,9 +76,9 @@ class FourOFour extends Component {
       }
       return providerOptions;
     } else if(process.env.NODE_ENV === 'development') {
-      import('../keys').then((res) => {
-        keys.infura = res.infura;
-        keys.fortmatic = res.fortmatic;
+      await import('../keys').then(async (res) => {
+        keys.infura = await res.infura;
+        keys.fortmatic = await res.fortmatic;
       });
       providerOptions = {
         walletconnect: {
