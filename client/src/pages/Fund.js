@@ -27,6 +27,7 @@ function initWeb3(provider) {
 }
 
 class Fund extends Component {
+  keys = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -36,6 +37,10 @@ class Fund extends Component {
       address: null,
       chainId: null,
       networkId: null
+    }
+
+    if(process.env.NODE_ENV === 'development') {
+      this.getKeys();
     }
   } 
 
@@ -53,8 +58,14 @@ class Fund extends Component {
     }
   }
 
+  getKeys = async () => {
+    await import('../keys').then(async (res) => {
+      this.keys.infura = await res.infura;
+      this.keys.fortmatic = await res.fortmatic;
+    });
+  }
+
   getProviderOptions = async () => {
-    let keys = {};
     let providerOptions;
     if(process.env.NODE_ENV === 'production') {
       providerOptions = {
@@ -75,24 +86,18 @@ class Fund extends Component {
         }
       }
       return providerOptions;
-    } else if(process.env.NODE_ENV === 'development') {
-      if(!process.env.REACT_APP_ENV === 'production') {
-        await import('../keys').then(async (res) => {
-          keys.infura = await res.infura;
-          keys.fortmatic = await res.fortmatic;
-        });
-      }
+    } else {
       providerOptions = {
         walletconnect: {
           package: WalletConnectProvider,
           options: {
-            infuraId: keys.infura
+            infuraId: this.keys.infura
           }
         },
         fortmatic: {
           package: Fortmatic,
           options: {
-            key: keys.fortmatic
+            key: this.keys.fortmatic
           }
         },
         authereum: {
