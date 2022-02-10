@@ -8,7 +8,7 @@
     "authereum": "^0.0.4-beta.155",
     "ethereum-ens": "^0.8.0",
     "fortmatic": "^2.0.6",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-datepicker": "^2.14.1",
